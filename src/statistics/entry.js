@@ -6,10 +6,12 @@ import ChartView from './ChartView'
 import PostView from './PostView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
+import pikaday from '../_directives/pikaday'
 
 // install router
 Vue.use(Router)
 Vue.directive('echarts', echarts)
+Vue.directive('pikaday', pikaday)
 
 // routing
 var router = new Router()

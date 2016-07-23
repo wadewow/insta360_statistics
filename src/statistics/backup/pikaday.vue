@@ -1,14 +1,14 @@
 <template>
   <div class="pikaday">
-    <div class="right">
-      <label for="end_time">To</label>
-      <input type="text" class="form-control" id="end_time" placeholder="End Time" v-pikaday="endTime">
-    </div>
-    <div class="right">
-      <label for="start_time">From</label>
-      <input type="text" class="form-control" id="start_time" placeholder="Start Time" v-pikaday="startTime">
-    </div>
-    <span class="clearfix"></span>
+  <div class="form-group">
+    <label for="pickStartDate">Default</label>
+    <input type="text" class="form-control" id="pickStartDate" placeholder="Pick a date" v-pikaday="defaultDate">
+  </div>
+
+  <div class="form-group">
+    <label for="differentFormat">Different format</label>
+    <input type="text" class="form-control" id="differentFormat" placeholder="Pick a date" v-pikaday="differentFormatDate" format="MMMM Do, YYYY">
+  </div>
   </div>
 
   <chart :name="name" :data="data"></chart>
@@ -36,8 +36,9 @@ export default {
   },
 
   data: {
-    startTime: '',
-    endTime: ''
+    defaultDate: '',
+    chineseDate: '',
+    differentFormatDate: ''
   },
 
   route: {
@@ -54,9 +55,4 @@ export default {
 <style lang="less">
   @import "../_less/v2/base";
   @import "../_less/component/animation";
-
-  .pikaday{
-    overflow: auto;
-    padding: 1em;
-  }
 </style>
