@@ -38,23 +38,31 @@ const state = {
 }
 
 // 定义一个方法通过接口处理数据并更新到store
-const apiQuery = (path, options) => {
+const apiQuery = (path, query) => {
 
   const baseUrl = 'http://statistics.internal.insta360.com/'
   const api = {
-    nano_active: baseUrl + 'nano_active'
+    nano_active: {
+      url: baseUrl + 'nano_active',
+      serialize: 'nano_active'
+    }
   }
 
-  const ajax = (url, options) => {
-    Vue.http.get(url, {params: options}).then((res) => {
+  const ajax = (params) => {
+    Vue.http.get(params.url, {params: params.query}).then((res) => {
       // success callback
-      state.chart.data = Serialize.nano_active(JSON.parse(res.body))
+      state.chart.data = Serialize[params.serialize](JSON.parse(res.body))
     }, (res) => {
       // error callback
       console.log(res)
     })
   }
-  ajax(api[path], options)
+
+  ajax({
+    url: api[path].url,
+    serialize: api[path].serialize,
+    query: query
+  })
 }
 
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数
