@@ -1,5 +1,5 @@
 import 'pikaday/css/pikaday.css'
-import Pickaday from'pikaday'
+import Pikaday from'pikaday'
 
 export default {
   twoWay: true,
@@ -23,7 +23,7 @@ export default {
       weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     }
 
-    _this.instance = new Pickaday({
+    _this.instance = new Pikaday({
       field: _this.el,
       i18n: i18n,
       format: _this.params.format || 'YYYY-MM-DD',
