@@ -1,6 +1,6 @@
-# vue.thonatos.com
+# statistics.fe.insta360.com
 
-> www.thonatos.com vue version
+> statistics.fe.insta360.com vue version
 
 ## Build Setup
 
