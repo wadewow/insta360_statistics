@@ -35,9 +35,23 @@ export default {
     }
   },
 
-  data: {
-    startTime: '',
-    endTime: ''
+  data () {
+    return {
+      startTime: '',
+      endTime: ''
+    }
+  },
+
+  computed: {
+    submit: (e) => {
+    }
+  },
+
+  created () {
+    // var _this = this
+    // setInterval(() => {
+    //   console.log(_this.startTime)
+    // }, 2000)
   },
 
   route: {
