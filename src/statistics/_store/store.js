@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
-import Data from './data'
-import Serialize from './serialize'
+import Api from './_api'
+import ChartList from './_chartList'
+import ChartData from './_chartData'
+import ChartSerializer from './_chartSerializer'
 
 // 告诉 vue “使用” vuex
 Vue.use(Vuex)
@@ -21,11 +23,7 @@ const state = {
     data: null
   },
   chart: {
-    list: [
-      { 'name': 'line', 'url': 'line' },
-      { 'name': 'pie', 'url': 'pie' },
-      { 'name': 'bar', 'url': 'bar' }
-    ],
+    list: ChartList,
     name: 'pie',
     data: {
       tooltip: {},
@@ -39,29 +37,12 @@ const state = {
 
 // 定义一个方法通过接口处理数据并更新到store
 const apiQuery = (path, query) => {
-
-  const baseUrl = 'http://statistics.internal.insta360.com/'
-  const api = {
-    nano_active: {
-      url: baseUrl + 'nano_active',
-      serialize: 'nano_active'
-    }
-  }
-
-  const ajax = (params) => {
-    Vue.http.get(params.url, {params: params.query}).then((res) => {
-      // success callback
-      state.chart.data = Serialize[params.serialize](JSON.parse(res.body))
-    }, (res) => {
-      // error callback
-      console.log(res)
-    })
-  }
-
-  ajax({
-    url: api[path].url,
-    serialize: api[path].serialize,
-    query: query
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
   })
 }
 
@@ -84,7 +65,7 @@ const mutations = {
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
     if (cname !== 'nano_active') {
-      state.chart.data = Data[cname]
+      state.chart.data = ChartData[cname]
     } else {
       apiQuery('nano_active', query)
     }
