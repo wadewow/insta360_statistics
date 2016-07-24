@@ -3,23 +3,31 @@
     <div id="sidedrawer-brand" class="mui--appbar-line-height">Statistics</div>
     <div class="mui-divider"></div>
     <ul>
+      <!--主菜单-->
       <li>
-        <strong @click="toggleCollapse">Main</strong>
+        <strong @click="toggleCollapse">主页面板</strong>
         <ul>
           <li><a v-link="{ path: '/posts/1' }">Home</a></li>
         </ul>
       </li>
+      <!--nano激活-->
       <li>
-        <strong @click="toggleCollapse">Charts</strong>
+        <strong @click="toggleCollapse">激活信息</strong>
+        <ul>
+          <li>
+            <a href="#!/chart/nano_active">时段查询</a>
+          </li>
+          <li>
+            <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->
+          </li>
+        </ul>
+      </li>
+      <!--示例内容-->
+      <li>
+        <strong @click="toggleCollapse">示例内容</strong>
         <ul>
           <li class="li-chart" v-for="chart in list">
             <a href="{{'#/chart/' + chart.url}}">{{chart.name}}</a>
-          </li>
-          <li>
-            <a href="#!/chart/nano_active">时间段</a>
-          </li>
-          <li>
-            <a href="#!/chart/nano_active?new_time=7">最近七天</a>
           </li>
         </ul>
       </li>
@@ -43,7 +51,7 @@
   </div>
   <footer id="footer">
     <div class="mui-container-fluid">
-      <p class="text-right copy-right">Copyright © 2015 Arashi Vision All Rights Reserved.</p>
+      <p class="text-right copy-right">Copyright © {{year}} Arashi Vision All Rights Reserved.</p>
     </div>
   </footer>
 </template>
@@ -68,7 +76,8 @@ export default {
   data () {
     return {
       sidedrawerActive: true,
-      sidedrawerStatus: 'active'
+      sidedrawerStatus: 'active',
+      year: new Date().getFullYear()
     }
   },
   methods: {
@@ -100,7 +109,6 @@ export default {
   html,
   body {
     height: 100%;
-    background-color: #f8f8f8;
   }
   
   html,

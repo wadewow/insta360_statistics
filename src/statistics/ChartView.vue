@@ -52,7 +52,7 @@ export default {
   },
 
   methods: {
-    queryDate (ev) {
+    queryDate () {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.startTime,

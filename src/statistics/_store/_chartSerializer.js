@@ -1,5 +1,5 @@
 export default {
-  nano_active: data =>{
+  nano_active: data => {
 
     const x = []
     const y = []
@@ -9,11 +9,15 @@ export default {
     }
 
     return {
+      color: ['#A5D6A7'],
       title: {
         text: 'Nano激活数量',
         textAlign: 'left'
       },
       tooltip: {},
+      legend: {
+        data: ['激活数量']
+      },
       xAxis: {
         data: x
       },
@@ -21,7 +25,17 @@ export default {
       series: [{
         name: '激活数量',
         type: 'bar',
-        data: y
+        data: y,
+        markLine: {
+          lineStyle: {
+            normal: {
+              type: 'dashed'
+            }
+          },
+          data: [
+            [{ type: 'min' }, { type: 'max' }]
+          ]
+        }
       }]
     }
   }
