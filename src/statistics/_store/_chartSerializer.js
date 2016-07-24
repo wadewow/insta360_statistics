@@ -19,7 +19,7 @@ export default {
         data: ['激活数量']
       },
       xAxis: {
-        data: x
+        data: x // 横向则将data放到yAxis
       },
       yAxis: {},
       series: [{
