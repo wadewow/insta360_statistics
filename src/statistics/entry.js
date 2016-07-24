@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import App from './app'
 import PostsView from './PostsView'
-import ChartsView from './ChartsView'
 import ChartView from './ChartView'
 import PostView from './PostView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import pikaday from '../_directives/pikaday'
+
+import 'muicss/lib/css/mui.min.css'
 
 // install router
 Vue.use(Router)
@@ -22,9 +23,6 @@ router.map({
   },
   '/post/:pid': {
     component: PostView
-  },
-  '/charts/': {
-    component: ChartsView
   },
   '/chart/:cname': {
     component: ChartView

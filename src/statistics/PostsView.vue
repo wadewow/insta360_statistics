@@ -2,9 +2,10 @@
   <div class="blog">
     <post v-for="post in list" :post="post"></post>
     <div class="pager">
-      <a class="prev" @click='prev'>prev</a>
+      
+      <a class="mui-btn mui-btn--raised mui-btn--primary prev" @click='prev'>prev</a>
       <span class="current">{{page}}</span>
-      <a class="next" @click='next'>next</a>
+      <a class="mui-btn mui-btn--raised mui-btn--primary next" @click='next'>next</a>
     </div>
   </div>
 </template>
@@ -51,9 +52,6 @@ export default {
     .prev,
     .next{
       display: inline-block;
-      padding: 0.2em 1em;
-      background: #e8e8e8;
-      border-radius: 0.4em;
     }
     .current{
       padding:0.2em 1em;
