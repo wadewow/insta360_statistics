@@ -16,7 +16,7 @@
             <a href="{{'#/chart/' + chart.url}}">{{chart.name}}</a>
           </li>
           <li>
-            <a href="#!/chart/nano_active?start_time=2016-07-01&end_time=2016-07-24">时间段</a>
+            <a href="#!/chart/nano_active">时间段</a>
           </li>
           <li>
             <a href="#!/chart/nano_active?new_time=7">最近七天</a>
