@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import echarts from 'echarts'
+import chinaJson from './echarts/china.json'
+
+echarts.registerMap('china', chinaJson)
 
 export default {
   deep: true,

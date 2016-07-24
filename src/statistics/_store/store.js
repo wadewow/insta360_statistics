@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 import Api from './_api'
 import ChartList from './_chartList'
-import ChartData from './_chartData'
+// import ChartData from './_chartData'
 import ChartSerializer from './_chartSerializer'
 
 // 告诉 vue “使用” vuex
@@ -64,11 +64,12 @@ const mutations = {
   },
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
-    if (cname !== 'nano_active') {
-      state.chart.data = ChartData[cname]
-    } else {
-      apiQuery('nano_active', query)
-    }
+    apiQuery(cname, query)
+    // if (cname !== 'nano_active') {
+    //   state.chart.data = ChartData[cname]
+    // } else {
+    //   apiQuery('nano_active', query)
+    // }
   }
 }
 

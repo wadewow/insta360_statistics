@@ -18,6 +18,9 @@
             <a href="#!/chart/nano_active">时段查询</a>
           </li>
           <li>
+            <a href="#!/chart/nano_active_map">区域查询</a>
+          </li>
+          <li>
             <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->
           </li>
         </ul>
