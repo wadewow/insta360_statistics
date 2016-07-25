@@ -25,6 +25,16 @@ export default {
           type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
         }
       },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar'] },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
       legend: {
         data: ['国内激活数量', '国外激活数量', '全部激活数量']
       },
