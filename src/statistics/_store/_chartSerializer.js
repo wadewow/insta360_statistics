@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default {
   nano_active: data => {
 
@@ -32,7 +34,7 @@ export default {
       yAxis: {},
       series: [{
         name: '全部激活数量',
-        type: 'bar',
+        type: 'line',
         data: y_all
         // markLine: {
         //   lineStyle: {
@@ -47,7 +49,7 @@ export default {
       },
       {
         name: '国内激活数量',
-        type: 'bar',
+        type: 'line',
         data: y_native
         // markLine: {
         //   lineStyle: {
@@ -62,7 +64,7 @@ export default {
       },
       {
         name: '国外激活数量',
-        type: 'bar',
+        type: 'line',
         data: y_abroad
         // markLine: {
         //   lineStyle: {
@@ -78,9 +80,17 @@ export default {
     }
   },
   nano_active_map: data => {
-    const randomData = () => {
-      return Math.round(Math.random() * 1000)
+    const native_data = data['native']
+    // const abroad_data = data['abroad']
+    function getData () {
+      const result = []
+      for (var index in native_data['data']) {
+        result.push(_.assign({'name': native_data['data'][index]['location'], 'value': native_data['data'][index]['total']}))
+      }
+      return result
     }
+
+    const _data = getData()
 
     const _china = {
       name: 'nano',
@@ -104,42 +114,7 @@ export default {
           show: true
         }
       },
-      data: [
-        { name: '北京', value: randomData() },
-        { name: '天津', value: randomData() },
-        { name: '上海', value: randomData() },
-        { name: '重庆', value: randomData() },
-        { name: '河北', value: randomData() },
-        { name: '河南', value: randomData() },
-        { name: '云南', value: randomData() },
-        { name: '辽宁', value: randomData() },
-        { name: '黑龙江', value: randomData() },
-        { name: '湖南', value: randomData() },
-        { name: '安徽', value: randomData() },
-        { name: '山东', value: randomData() },
-        { name: '新疆', value: randomData() },
-        { name: '江苏', value: randomData() },
-        { name: '浙江', value: randomData() },
-        { name: '江西', value: randomData() },
-        { name: '湖北', value: randomData() },
-        { name: '广西', value: randomData() },
-        { name: '甘肃', value: randomData() },
-        { name: '山西', value: randomData() },
-        { name: '内蒙古', value: randomData() },
-        { name: '陕西', value: randomData() },
-        { name: '吉林', value: randomData() },
-        { name: '福建', value: randomData() },
-        { name: '贵州', value: randomData() },
-        { name: '广东', value: randomData() },
-        { name: '青海', value: randomData() },
-        { name: '西藏', value: randomData() },
-        { name: '四川', value: randomData() },
-        { name: '宁夏', value: randomData() },
-        { name: '海南', value: randomData() },
-        { name: '台湾', value: randomData() },
-        { name: '香港', value: randomData() },
-        { name: '澳门', value: randomData() }
-      ]
+      data: _data
     }
 
     // const _world = {
@@ -334,7 +309,7 @@ export default {
     var option = {
       title: {
         text: '区域查询',
-        subtext: '以下为echarts演示数据',
+        // subtext: '',
         left: 'center'
       },
       tooltip: {
@@ -349,7 +324,6 @@ export default {
       visualMap: {
         min: 0,
         max: 10000,
-        color: ['#000', '#fff'],
         left: 'left',
         top: 'bottom',
         text: ['高', '低'],           // 文本，默认为数值文本

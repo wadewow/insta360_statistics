@@ -6,7 +6,7 @@ export default {
     serialize: 'nano_active'
   },
   nano_active_map: {
-    url: baseUrl + 'nano_active',
+    url: baseUrl + 'location_active',
     serialize: 'nano_active_map'
   }
 }
