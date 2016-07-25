@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <button @click="queryPeriod(1)">今天</button>
+    <button @click="queryPeriod(1)">昨天</button>
+    <button @click="queryPeriod(7)">最近7天</button>
+    <button @click="queryPeriod(30)">最近一个月</button>
+  </div>
   <div class="mui-row pikaday">
     <div class="mui-col-md-8"></div>
     <div class="mui-col-md-3">
@@ -57,6 +63,13 @@ export default {
       const query = {
         start_time: this.startTime,
         end_time: this.endTime
+      }
+      store.dispatch('CHART_UPDATE', cname, query)
+    },
+    queryPeriod (val) {
+      const cname = this.$route.params.cname
+      const query = {
+        new_time: val
       }
       store.dispatch('CHART_UPDATE', cname, query)
     }

@@ -2,40 +2,78 @@ export default {
   nano_active: data => {
 
     const x = []
-    const y = []
+    const y_native = []
+    const y_abroad = []
+    const y_all = []
     for (var index in data) {
       x.push(index)
-      y.push(data[index])
+      y_native.push(data[index]['native'])
+      y_abroad.push(data[index]['abroad'])
+      y_all.push(data[index]['all'])
     }
 
     return {
-      color: ['#A5D6A7'],
       title: {
         text: 'Nano激活数量',
         textAlign: 'left'
       },
-      tooltip: {},
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
       legend: {
-        data: ['激活数量']
+        data: ['国内激活数量', '国外激活数量', '全部激活数量']
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
       },
       yAxis: {},
       series: [{
-        name: '激活数量',
+        name: '全部激活数量',
         type: 'bar',
-        data: y,
-        markLine: {
-          lineStyle: {
-            normal: {
-              type: 'dashed'
-            }
-          },
-          data: [
-            [{ type: 'min' }, { type: 'max' }]
-          ]
-        }
+        data: y_all
+        // markLine: {
+        //   lineStyle: {
+        //     normal: {
+        //       type: 'dashed'
+        //     }
+        //   },
+        //   data: [
+        //     [{ type: 'min' }, { type: 'max' }]
+        //   ]
+        // }
+      },
+      {
+        name: '国内激活数量',
+        type: 'bar',
+        data: y_native
+        // markLine: {
+        //   lineStyle: {
+        //     normal: {
+        //       type: 'dashed'
+        //     }
+        //   },
+        //   data: [
+        //     [{ type: 'min' }, { type: 'max' }]
+        //   ]
+        // }
+      },
+      {
+        name: '国外激活数量',
+        type: 'bar',
+        data: y_abroad
+        // markLine: {
+        //   lineStyle: {
+        //     normal: {
+        //       type: 'dashed'
+        //     }
+        //   },
+        //   data: [
+        //     [{ type: 'min' }, { type: 'max' }]
+        //   ]
+        // }
       }]
     }
   },
