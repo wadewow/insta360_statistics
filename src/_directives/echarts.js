@@ -1,5 +1,10 @@
 import Vue from 'vue'
 import echarts from 'echarts'
+import chinaJson from './echarts/china.json'
+import worldJson from './echarts/world.json'
+
+echarts.registerMap('china', chinaJson)
+echarts.registerMap('world', worldJson)
 
 export default {
   deep: true,

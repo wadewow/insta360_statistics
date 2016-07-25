@@ -26,8 +26,6 @@ export default {
     data ({ to }) {
       const pid = to.params.pid
       store.dispatch('POST_UPDATE', pid)
-      // return {
-      // }
     }
   }
 

@@ -1,16 +1,20 @@
 <template>
-  <div class="pikaday">
-    <div class="right">
-      <label for="end_time">To</label>
-      <input type="text" class="form-control" id="end_time" placeholder="End Time" v-pikaday="endTime">
+  <div class="mui-row pikaday">
+    <div class="mui-col-md-8"></div>
+    <div class="mui-col-md-3">
+      <div class="mui-textfield right">
+        <label for="end_time">To</label>
+        <input type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
+      </div>
+      <div class="mui-textfield right">
+        <label for="start_time">From</label>
+        <input type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
+      </div>
     </div>
-    <div class="right">
-      <label for="start_time">From</label>
-      <input type="text" class="form-control" id="start_time" placeholder="Start Time" v-pikaday="startTime">
+    <div class="mui-col-md-1">
+      <button @click="queryDate" class="mui-btn mui-btn--raised text-right">Submit</button>
     </div>
-    <span class="clearfix"></span>
   </div>
-
   <chart :name="name" :data="data"></chart>
 </template>
 
@@ -42,22 +46,29 @@ export default {
     }
   },
 
-  computed: {
-    submit: (e) => {
-    }
+  created () {
+    this.startTime = new Date(Date.parse(new Date()) - 7 * 24 * 3600 * 1000).toLocaleDateString()
+    this.endTime = new Date().toLocaleDateString()
   },
 
-  created () {
-    // var _this = this
-    // setInterval(() => {
-    //   console.log(_this.startTime)
-    // }, 2000)
+  methods: {
+    queryDate () {
+      const cname = this.$route.params.cname
+      const query = {
+        start_time: this.startTime,
+        end_time: this.endTime
+      }
+      store.dispatch('CHART_UPDATE', cname, query)
+    }
   },
 
   route: {
     data ({ to }) {
       const cname = to.params.cname
-      const query = to.query
+      const query = {
+        start_time: this.startTime,
+        end_time: this.endTime
+      }
       store.dispatch('CHART_UPDATE', cname, query)
     }
   }
@@ -68,9 +79,11 @@ export default {
 <style lang="less">
   @import "../_less/v2/base";
   @import "../_less/component/animation";
-
-  .pikaday{
+  .pikaday {
     overflow: auto;
     padding: 1em;
+    .mui-textfield {
+      margin-left: 16px;
+    }
   }
 </style>
