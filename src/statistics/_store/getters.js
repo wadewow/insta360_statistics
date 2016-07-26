@@ -11,3 +11,6 @@ export const getPostsItem = state => state.posts.post
 export const getChartList = state => state.chart.list
 export const getChartName = state => state.chart.name
 export const getChartData = state => state.chart.data
+export const getMapList = state => state.map.list
+export const getMapName = state => state.map.name
+export const getMapData = state => state.map.data

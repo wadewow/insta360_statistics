@@ -102,6 +102,16 @@ export default {
 
     const _data = getData()
 
+    const _top = []
+    var count = 0
+    for (var index in _data) {
+      _top.push(_data[index])
+      count++
+      if (count === 10) {
+        break
+      }
+    }
+
     const _china = {
       name: 'nano',
       type: 'map',
@@ -317,6 +327,7 @@ export default {
     // }
 
     var option = {
+      top: _top,
       title: {
         text: '区域查询',
         // subtext: '',

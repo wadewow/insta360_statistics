@@ -32,7 +32,7 @@ export default {
   .echart {
     padding: 1em 0;
     width: 100%;
-    height: 100%;
-    min-height: 700px;
+    height: 50%;
+    min-height: 500px;
   }
 </style>
