@@ -8,5 +8,9 @@ export default {
   nano_active_map: {
     url: baseUrl + 'location_active',
     serialize: 'nano_active_map'
+  },
+  share_list: {
+    url: baseUrl + 'share_list',
+    serialize: 'share_list'
   }
 }

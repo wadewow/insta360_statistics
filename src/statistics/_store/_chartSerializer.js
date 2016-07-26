@@ -15,6 +15,19 @@ export default {
     }
 
     return {
+      total: [{
+        name: '国内激活量',
+        value: _.sum(y_native)
+      },
+      {
+        name: '国外激活量',
+        value: _.sum(y_abroad)
+      },
+      {
+        name: '总激活量',
+        value: _.sum(y_all)
+      }
+      ],
       title: {
         text: 'Nano激活数量',
         textAlign: 'left'
@@ -356,9 +369,11 @@ export default {
         right: 'right',
         bottom: 'bottom',
         feature: {
-          dataView: { readOnly: false },
-          restore: {},
-          saveAsImage: {}
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar'] },
+          restore: { show: true },
+          saveAsImage: { show: true }
         }
       },
       series: [_china]
@@ -366,5 +381,25 @@ export default {
     }
 
     return option
+  },
+
+  share_list: data => {
+    const page_total = data['page_total']
+    const column = []
+    for (var item in data['data'][0]) {
+      column.push(item)
+    }
+    for (var i in data['data']) {
+      data['data'][i]['share_location'] = data['data'][i]['share_location'].replace(/\,/g, ' ')
+      if (data['data'][i]['title'] === '') {
+        data['data'][i]['title'] = '-'
+      }
+    }
+    return {
+      current_page: data['current_page'],
+      page_total: page_total,
+      column: column,
+      series: data['data']
+    }
   }
 }
