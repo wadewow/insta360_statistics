@@ -83,7 +83,7 @@ const mutations = {
   },
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
-    if (cname === 'nano_active' || cname === 'nano_active_map') {
+    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail') {
       apiQuery(cname, query)
     } else {
       state.chart.data = ChartData[cname]

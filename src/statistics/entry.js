@@ -5,6 +5,7 @@ import ChartView from './ChartView'
 import MapView from './MapView'
 import TableView from './TableView'
 import PostView from './PostView'
+import LocationActiveDetail from './LocationActiveDetail'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import pikaday from '../_directives/pikaday'
@@ -34,6 +35,9 @@ router.map({
   },
   '/table/:tname': {
     component: TableView
+  },
+  '/location_active_detail/:cname/:city': {
+    component: LocationActiveDetail
   }
 })
 

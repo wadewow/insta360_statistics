@@ -102,6 +102,67 @@ export default {
       }]
     }
   },
+  location_active_detail: data => {
+    const x = []
+    const y = []
+    var total = 0
+
+    for (var index in data) {
+      x.push(data[index]['day_time'])
+      y.push(data[index]['active_nums'])
+      total = total + parseInt(data[index]['active_nums'], 10)
+    }
+
+    return {
+      total: [{
+        name: '激活量',
+        value: total
+      }],
+      title: {
+        text: '地区月激活数量',
+        textAlign: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar'] },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      calculable: true,
+      legend: {
+        data: ['地区月激活数量']
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [{
+        name: '地区月激活数量',
+        type: 'line',
+        data: y
+        // markLine: {
+        //   lineStyle: {
+        //     normal: {
+        //       type: 'dashed'
+        //     }
+        //   },
+        //   data: [
+        //     [{ type: 'min' }, { type: 'max' }]
+        //   ]
+        // }
+      }]
+    }
+  },
   nano_active_map: data => {
     const native_data = data['native']
     // const abroad_data = data['abroad']
@@ -340,6 +401,19 @@ export default {
     // }
 
     var option = {
+      total: [{
+        name: '国内激活量',
+        value: data['native']['total']
+      },
+        {
+          name: '国外激活量',
+          value: data['abroad']['total']
+        },
+        {
+          name: '总激活量',
+          value: data['all']['total']
+        }
+      ],
       top: _top,
       title: {
         text: '区域查询',

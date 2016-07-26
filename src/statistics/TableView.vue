@@ -117,9 +117,10 @@ export default {
       var val = element.value
       var re = /^[0-9]*[1-9][0-9]*$/
       element.value = ''
-      if (!re.test(val) || val > total) {
+      if ((!re.test(val)) || parseInt(val, 10) > parseInt(total, 10)) {
         return false
       }
+      this.page = val
       const tname = this.$route.params.tname
       const query = {
         start_time: this.startTime,
@@ -133,7 +134,7 @@ export default {
     },
     nextPage () {
       var total = document.getElementById('total_page').value
-      if (this.page >= total) {
+      if (this.page >= parseInt(total, 10)) {
         return false
       }
       this.page ++
