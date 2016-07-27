@@ -16,7 +16,7 @@
         <!--<td v-for="i in item">{{ i }}</td>-->
         <td>{{ item.type }}</td>
         <td>{{ item.share_location }}</td>
-        <td><a href= "{{ item.page_url }}">{{ item.title }}</a></td>
+        <td><a href= "{{ item.page_url }}" target="_blank">{{ item.title }}</a></td>
         <td>{{ item.serial_num }}</td>
         <td>{{ item.view_times }}</td>
         <td>{{ item.time }}</td>
