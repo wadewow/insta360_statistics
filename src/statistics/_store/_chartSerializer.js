@@ -59,46 +59,76 @@ export default {
         name: '全部激活数量',
         type: 'line',
         data: y_all
-        // markLine: {
-        //   lineStyle: {
-        //     normal: {
-        //       type: 'dashed'
-        //     }
-        //   },
-        //   data: [
-        //     [{ type: 'min' }, { type: 'max' }]
-        //   ]
-        // }
       },
       {
         name: '国内激活数量',
         type: 'line',
         data: y_native
-        // markLine: {
-        //   lineStyle: {
-        //     normal: {
-        //       type: 'dashed'
-        //     }
-        //   },
-        //   data: [
-        //     [{ type: 'min' }, { type: 'max' }]
-        //   ]
-        // }
       },
       {
         name: '国外激活数量',
         type: 'line',
         data: y_abroad
-        // markLine: {
-        //   lineStyle: {
-        //     normal: {
-        //       type: 'dashed'
-        //     }
-        //   },
-        //   data: [
-        //     [{ type: 'min' }, { type: 'max' }]
-        //   ]
-        // }
+      }]
+    }
+  },
+  month_share_trends: data => {
+
+    const x = []
+    const y_video = []
+    const y_image = []
+    for (var index in data) {
+      x.push(data[index]['time'])
+      y_video.push(parseInt(data[index]['share_video_nums'], 10))
+      y_image.push(parseInt(data[index]['share_image_nums'], 10))
+    }
+
+    return {
+      total: [{
+        name: '累计图片数量',
+        value: _.sum(y_image)
+      },
+      {
+        name: '累计视频数量',
+        value: _.sum(y_video)
+      }
+      ],
+      title: {
+        text: '分享走势',
+        textAlign: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar'] },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        data: ['图片数量', '视频数量']
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [{
+        name: '图片数量',
+        type: 'line',
+        data: y_image
+      },
+      {
+        name: '视频数量',
+        type: 'line',
+        data: y_video
       }]
     }
   },
@@ -165,6 +195,12 @@ export default {
   },
   nano_active_map: data => {
     const native_data = data['native']
+    const all_data = data['all']
+    var max = 500
+    if (!_.isEmpty(all_data['data'])) {
+      var m = all_data['data'][0]['total']
+      max = (parseInt(m / 50, 10) + 1) * 50
+    }
     // const abroad_data = data['abroad']
     function getData () {
       const result = []
@@ -431,7 +467,7 @@ export default {
       },
       visualMap: {
         min: 0,
-        max: 10000,
+        max: max,
         left: 'left',
         top: 'bottom',
         text: ['高', '低'],           // 文本，默认为数值文本
@@ -470,6 +506,7 @@ export default {
       }
     }
     return {
+      total: data['total'],
       current_page: data['current_page'],
       page_total: page_total,
       column: column,

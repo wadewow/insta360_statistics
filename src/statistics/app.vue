@@ -32,7 +32,7 @@
             <a href="#!/table/share_list">分享列表明细</a>
           </li>
           <li>
-            <a href="#!/chart/nano_active">分享次数走势</a>
+            <a href="#!/chart/month_share_trends">分享次数走势</a>
           </li>
           <li>
             <a href="#!/chart/nano_active">分享地区分布</a>

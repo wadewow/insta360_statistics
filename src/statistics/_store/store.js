@@ -17,7 +17,7 @@ const state = {
     list: [
       { 'id': 1, 'title': 'cjb', 'content': 'first' },
       { 'id': 2, 'title': 'sb', 'content': 'second' },
-      { 'id': 3, 'title': 'sb pm', 'content': 'third' }
+      { 'id': 3, 'title': 'ch', 'content': 'third' }
     ],
     post: {},
     data: null
@@ -83,7 +83,7 @@ const mutations = {
   },
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
-    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail') {
+    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends') {
       apiQuery(cname, query)
     } else {
       state.chart.data = ChartData[cname]

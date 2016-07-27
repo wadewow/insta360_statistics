@@ -43,6 +43,7 @@
   <input id="skip" class="skip" type="text" v-on:keyup.enter="queryPage"></input>
   <span>页</span>
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='queryPage'>GO</button>
+  <span> 总计 </span><span>{{ data.total }}</span><span> 条</span>
   <input type="hidden" id="total_page" number value="{{ data.page_total }}"></input>
 </template>
 

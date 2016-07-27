@@ -16,5 +16,9 @@ export default {
   share_list: {
     url: baseUrl + 'share_list',
     serialize: 'share_list'
+  },
+  month_share_trends: {
+    url: baseUrl + 'api/share/month_share_trends',
+    serialize: 'month_share_trends'
   }
 }
