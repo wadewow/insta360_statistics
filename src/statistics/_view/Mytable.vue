@@ -33,3 +33,7 @@ export default {
   }
 }
 </script>
+<style lang='less'>
+  @import '../../_less/v2/base';
+  @import '../../_less/component/animation';
+</style>

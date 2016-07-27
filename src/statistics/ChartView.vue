@@ -2,10 +2,10 @@
   <div class="mui-row pikaday">
     <div class="mui-col-md-8">
       <div>
-        <button class="mui-btn" @click="queryPeriod(0)">今天</button>
-        <button class="mui-btn" @click="queryPeriod(1)">昨天</button>
-        <button class="mui-btn" @click="queryPeriod(7)">最近7天</button>
-        <button class="mui-btn" @click="queryPeriod(30)">最近一个月</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(0)">今天</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(1)">昨天</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(7)">最近7天</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
       </div>
     </div>
     <div class="mui-col-md-3">
@@ -22,10 +22,6 @@
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">Submit</button>
     </div>
   </div>
-  <!--<div class="rect" style="float:left;margin-left:50px;width:80px;height:80px;background:#ffffff" v-for="item in data['total']">
-    <span>{{ item.name }}</span><br/>
-    <span>{{ item.value }}</span>
-  </div>-->
   <block :items="data"></block>
   <chart :name="name" :data="data"></chart>
 </template>
@@ -56,13 +52,17 @@ export default {
   data () {
     return {
       startTime: '',
-      endTime: ''
+      endTime: '',
+      start: '',
+      end: ''
     }
   },
 
   created () {
     this.startTime = new Date(Date.parse(new Date()) - 7 * 24 * 3600 * 1000).toLocaleDateString()
     this.endTime = new Date().toLocaleDateString()
+    this.start = this.startTime
+    this.end = this.endTime
   },
 
   methods: {
@@ -73,6 +73,8 @@ export default {
         end_time: this.endTime
       }
       store.dispatch('CHART_UPDATE', cname, query)
+      this.start = this.startTime
+      this.end = this.endTime
     },
     queryPeriod (val) {
       const cname = this.$route.params.cname
@@ -80,6 +82,10 @@ export default {
         new_time: val
       }
       store.dispatch('CHART_UPDATE', cname, query)
+      this.startTime = new Date(Date.parse(new Date()) - val * 24 * 3600 * 1000).toLocaleDateString()
+      this.endTime = new Date().toLocaleDateString()
+      this.start = this.startTime
+      this.end = this.endTime
     }
   },
 
@@ -87,10 +93,12 @@ export default {
     data ({ to }) {
       const cname = to.params.cname
       const query = {
-        start_time: this.startTime,
-        end_time: this.endTime
+        start_time: this.start,
+        end_time: this.end
       }
       store.dispatch('CHART_UPDATE', cname, query)
+      this.startTime = this.start
+      this.endTime = this.end
     }
   }
 

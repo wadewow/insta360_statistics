@@ -2,10 +2,10 @@
   <div class="mui-row pikaday">
     <div class="mui-col-md-8">
       <div>
-        <button class="mui-btn" @click="queryPeriod(0)">今天</button>
-        <button class="mui-btn" @click="queryPeriod(1)">昨天</button>
-        <button class="mui-btn" @click="queryPeriod(7)">最近7天</button>
-        <button class="mui-btn" @click="queryPeriod(30)">最近一个月</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(0)">今天</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(1)">昨天</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(7)">最近7天</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
       </div>
     </div>
     <div class="mui-col-md-3">
@@ -23,8 +23,8 @@
     </div>
   </div>
   <block :items="data"></block>
-  <chart style="width:70%; float:left" :name="name" :data="data"></chart>
-    <table style="display:inline" class="mui-table mui-table--bordered">
+  <chart class="chart" :name="name" :data="data"></chart>
+    <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
             <th>激活所在地</th>
@@ -66,13 +66,17 @@ export default {
   data () {
     return {
       startTime: '',
-      endTime: ''
+      endTime: '',
+      start: '',
+      end: ''
     }
   },
 
   created () {
     this.startTime = new Date(Date.parse(new Date()) - 7 * 24 * 3600 * 1000).toLocaleDateString()
     this.endTime = new Date().toLocaleDateString()
+    this.start = this.startTime
+    this.end = this.endTime
   },
 
   methods: {
@@ -83,6 +87,8 @@ export default {
         end_time: this.endTime
       }
       store.dispatch('CHART_UPDATE', cname, query)
+      this.start = this.startTime
+      this.end = this.endTime
     },
     queryPeriod (val) {
       const cname = this.$route.params.cname
@@ -90,6 +96,10 @@ export default {
         new_time: val
       }
       store.dispatch('CHART_UPDATE', cname, query)
+      this.startTime = new Date(Date.parse(new Date()) - val * 24 * 3600 * 1000).toLocaleDateString()
+      this.endTime = new Date().toLocaleDateString()
+      this.start = this.startTime
+      this.end = this.endTime
     }
   },
 
@@ -101,6 +111,8 @@ export default {
         end_time: this.endTime
       }
       store.dispatch('CHART_UPDATE', cname, query)
+      this.startTime = this.start
+      this.endTime = this.end
     }
   }
 
@@ -116,5 +128,12 @@ export default {
     .mui-textfield {
       margin-left: 16px;
     }
+  }
+  .chart {
+    width: 80%;
+    float: left;
+  }
+  .table {
+    display: inline;
   }
 </style>
