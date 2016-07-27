@@ -34,14 +34,16 @@
     </div>
   </div>
   <mytable :name="name" :data="data"></mytable>
-  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='prevPage'>prev</button>
-      <span class="current">{{ data.current_page }} / {{ data.page_total }}</span>
-  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='nextPage'>next</button>
+  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='firstPage'>首页</button>
+  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='prevPage'>上页</button>
+  <span class="currentPage">{{ data.current_page }}</span> / <span class="totalPage">{{ data.page_total }}</span>
+  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='nextPage'>下页</button>
+  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='lastPage'>尾页</button>
   <span>跳转到第</span>
   <input id="skip" class="skip" type="text" v-on:keyup.enter="queryPage"></input>
   <span>页</span>
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='queryPage'>GO</button>
-  <input type="hidden" id="total_page" value="{{ data.page_total }}"></input>
+  <input type="hidden" id="total_page" number value="{{ data.page_total }}"></input>
 </template>
 
 <script>
@@ -91,19 +93,10 @@ export default {
 
   methods: {
     queryDate () {
-      const tname = this.$route.params.tname
-      const query = {
-        start_time: this.startTime,
-        end_time: this.endTime,
-        query_type: this.type,
-        query_order: this.order,
-        page_size: this.pageSize
-      }
-      store.dispatch('TABLE_UPDATE', tname, query)
-      this.page = 1
       this.start = this.startTime
       this.end = this.endTime
-
+      this.page = 1
+      this.query()
     },
     queryPeriod (val) {
       const tname = this.$route.params.tname
@@ -130,17 +123,16 @@ export default {
         return false
       }
       this.page = val
-      const tname = this.$route.params.tname
-      const query = {
-        start_time: this.start,
-        end_time: this.end,
-        page_number: val,
-        query_type: this.type,
-        query_order: this.order,
-        page_size: this.pageSize
-      }
-      store.dispatch('TABLE_UPDATE', tname, query)
-      this.keepSame()
+      this.query()
+    },
+    firstPage () {
+      this.page = 1
+      this.query()
+    },
+    lastPage () {
+      var total = document.getElementById('total_page').value
+      this.page = parseInt(total, 10)
+      this.query()
     },
     nextPage () {
       var total = document.getElementById('total_page').value
@@ -148,6 +140,25 @@ export default {
         return false
       }
       this.page ++
+      this.query()
+    },
+    prevPage () {
+      if (this.page > 1) {
+        this.page --
+        this.query()
+      }
+    },
+    queryType (val) {
+      this.type = val
+      this.page = 1
+      this.query()
+    },
+    sort (val) {
+      this.order = val
+      this.page = 1
+      this.query()
+    },
+    query () {
       const tname = this.$route.params.tname
       const query = {
         start_time: this.start,
@@ -158,48 +169,6 @@ export default {
         page_size: this.pageSize
       }
       store.dispatch('TABLE_UPDATE', tname, query)
-      this.keepSame()
-    },
-    prevPage () {
-      if (this.page > 1) {
-        this.page --
-        const tname = this.$route.params.tname
-        const query = {
-          start_time: this.start,
-          end_time: this.end,
-          page_number: this.page,
-          query_type: this.type,
-          query_order: this.order,
-          page_size: this.pageSize
-        }
-        store.dispatch('TABLE_UPDATE', tname, query)
-        this.keepSame()
-      }
-    },
-    queryType (val) {
-      const tname = this.$route.params.tname
-      const query = {
-        start_time: this.start,
-        end_time: this.end,
-        query_type: val,
-        query_order: this.order,
-        page_size: this.pageSize
-      }
-      store.dispatch('TABLE_UPDATE', tname, query)
-      this.page = 1
-      this.keepSame()
-    },
-    sort (val) {
-      const tname = this.$route.params.tname
-      const query = {
-        start_time: this.start,
-        end_time: this.end,
-        query_type: this.type,
-        query_order: val,
-        page_size: this.pageSize
-      }
-      store.dispatch('TABLE_UPDATE', tname, query)
-      this.page = 1
       this.keepSame()
     },
     keepSame () {

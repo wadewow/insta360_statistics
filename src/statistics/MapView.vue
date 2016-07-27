@@ -107,8 +107,8 @@ export default {
     data ({ to }) {
       const cname = to.params.cname
       const query = {
-        start_time: this.startTime,
-        end_time: this.endTime
+        start_time: this.start,
+        end_time: this.end
       }
       store.dispatch('CHART_UPDATE', cname, query)
       this.startTime = this.start
