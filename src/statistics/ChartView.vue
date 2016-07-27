@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="mui-col-md-1">
-      <button @click="queryDate" class="mui-btn mui-btn--raised text-right">Submit</button>
+      <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
     </div>
   </div>
   <block :items="data"></block>
@@ -59,7 +59,7 @@ export default {
   },
 
   created () {
-    this.startTime = new Date(Date.parse(new Date()) - 7 * 24 * 3600 * 1000).toLocaleDateString()
+    this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
     this.endTime = new Date().toLocaleDateString()
     this.start = this.startTime
     this.end = this.endTime
@@ -82,8 +82,16 @@ export default {
         new_time: val
       }
       store.dispatch('CHART_UPDATE', cname, query)
-      this.startTime = new Date(Date.parse(new Date()) - val * 24 * 3600 * 1000).toLocaleDateString()
-      this.endTime = new Date().toLocaleDateString()
+      if (val === 30 || val === 7) {
+        this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString()
+        this.endTime = new Date().toLocaleDateString()
+      } else if (val === 1) {
+        this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString()
+        this.endTime = this.startTime
+      } else if (val === 0) {
+        this.startTime = new Date(Date.parse(new Date())).toLocaleDateString()
+        this.endTime = this.startTime
+      }
       this.start = this.startTime
       this.end = this.endTime
     }
@@ -91,14 +99,16 @@ export default {
 
   route: {
     data ({ to }) {
+      this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
+      this.endTime = new Date().toLocaleDateString()
+      this.start = this.startTime
+      this.end = this.endTime
       const cname = to.params.cname
       const query = {
         start_time: this.start,
         end_time: this.end
       }
       store.dispatch('CHART_UPDATE', cname, query)
-      this.startTime = this.start
-      this.endTime = this.end
     }
   }
 

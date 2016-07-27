@@ -7,17 +7,25 @@
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(7)">最近7天</button>
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
         </div>
-        <div class="mui-radio">
-            <input type="radio" checked="checked" name="type" value="all" v-model='type' @click="queryType('all')">全部</input>
-            <input type="radio" name="type" value="video" v-model='type' @click="queryType('video')">视频</input>
-            <input type="radio" name="type" value="img" v-model='type' @click="queryType('img')">图片</input>
+        <div class="mui-radio" style="margin-left:50px">
+            <input class="radio" type="radio" checked="checked" name="type" value="all" v-model='type' @click="queryType('all')">全部</input>
+            <input class="radio" type="radio" name="type" value="video" v-model='type' @click="queryType('video')">视频</input>
+            <input class="radio" type="radio" name="type" value="img" v-model='type' @click="queryType('img')">图片</input>
         </div>
-        <div class="mui-radio">
+        <!--<div class="mui-radio">
             <input type="radio" checked="checked" name="order" value="time_desc" v-model='order' @click="sort('time_desc')">时间降序</input>
             <input type="radio" name="order" value="time_asc" v-model='order' @click="sort('time_asc')">时间升序</input>
             <input type="radio" name="order" value="view_desc" v-model='order' @click="sort('view_desc')">浏览量降序</input>
             <input type="radio" name="order" value="view_asc" v-model='order' @click="sort('view_asc')">浏览量升序</input>
-        </div>
+        </div>-->
+        <div class="mui-select" style="display:inline-block; width:120px;margin-left:50px ">
+          <select v-model='order' v-on:change="sort(this)">
+            <option name="order" value="time_desc" v-on:click="sort('time_desc')">时间降序</option>
+            <option name="order" value="time_asc" v-on:click="sort('time_asc')">时间升序</option>
+            <option name="order" value="view_desc" v-on:click="sort('view_desc')">浏览量降序</option>
+            <option name="order" value="view_asc" v-on:click="sort('view_asc')">浏览量升序</option>
+          </select>
+       </div>
     </div>
     <div class="mui-col-md-3">
       <div class="mui-textfield right">
@@ -30,7 +38,7 @@
       </div>
     </div>
     <div class="mui-col-md-1">
-      <button @click="queryDate" class="mui-btn mui-btn--raised text-right">Submit</button>
+      <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
     </div>
   </div>
   <mytable :name="name" :data="data"></mytable>
@@ -82,7 +90,7 @@ export default {
   },
 
   created () {
-    this.startTime = new Date(Date.parse(new Date()) - 7 * 24 * 3600 * 1000).toLocaleDateString()
+    this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
     this.endTime = new Date().toLocaleDateString()
     this.start = this.startTime
     this.end = this.endTime
@@ -108,8 +116,16 @@ export default {
         page_size: this.pageSize
       }
       store.dispatch('TABLE_UPDATE', tname, query)
-      this.startTime = new Date(Date.parse(new Date()) - val * 24 * 3600 * 1000).toLocaleDateString()
-      this.endTime = new Date().toLocaleDateString()
+      if (val === 30 || val === 7) {
+        this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString()
+        this.endTime = new Date().toLocaleDateString()
+      } else if (val === 1) {
+        this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString()
+        this.endTime = this.startTime
+      } else if (val === 0) {
+        this.startTime = new Date(Date.parse(new Date())).toLocaleDateString()
+        this.endTime = this.startTime
+      }
       this.start = this.startTime
       this.end = this.endTime
       this.page = 1
@@ -155,7 +171,8 @@ export default {
       this.query()
     },
     sort (val) {
-      this.order = val
+      // alert(this.order)
+      // this.order = val
       this.page = 1
       this.query()
     },
@@ -211,6 +228,9 @@ export default {
     }
     .mui-radio {
       display:inline;
+      .radio {
+        margin-left: 10px;
+      }
     }
   }
   .skip {

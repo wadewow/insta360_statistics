@@ -46,7 +46,7 @@ router.beforeEach(function () {
 })
 
 router.redirect({
-  '*': '/posts/1'
+  '*': '/chart/nano_active'
 })
 
 router.start(App, '#app')

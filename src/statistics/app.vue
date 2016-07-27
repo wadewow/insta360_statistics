@@ -4,21 +4,21 @@
     <div class="mui-divider"></div>
     <ul>
       <!--主菜单-->
-      <li>
+      <!--<li>
         <strong @click="toggleCollapse">主页面板</strong>
         <ul>
           <li><a v-link="{ path: '/posts/1' }">Home</a></li>
         </ul>
-      </li>
+      </li>-->
       <!--nano激活-->
       <li>
         <strong @click="toggleCollapse">设备激活情况</strong>
         <ul>
           <li>
-            <a href="#!/chart/nano_active">时段查询</a>
+            <a href="#!/chart/nano_active">激活情况</a>
           </li>
           <li>
-            <a href="#!/map/nano_active_map">区域查询</a>
+            <a href="#!/map/nano_active_map">区域激活</a>
           </li>
           <li>
             <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->

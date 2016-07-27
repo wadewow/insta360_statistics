@@ -19,20 +19,35 @@
       </div>
     </div>
     <div class="mui-col-md-1">
-      <button @click="queryDate" class="mui-btn mui-btn--raised text-right">Submit</button>
+      <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
     </div>
   </div>
-  <block :items="data"></block>
+  <div style="display:block;height:100px">
+  <block :items="data"></block></div>
   <chart class="chart" :name="name" :data="data"></chart>
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
-            <th>激活所在地</th>
+            <th>国内激活所在地</th>
             <th>激活数量</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in data['top']">
+        <tr v-for="item in data['top']['native']">
+            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
+            <td>{{ item.value }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="mui-table mui-table--bordered table">
+      <thead>
+        <tr>
+            <th>国外激活所在地</th>
+            <th>激活数量</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data['top']['abroad']">
             <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
             <td>{{ item.value }}</td>
         </tr>
@@ -73,7 +88,7 @@ export default {
   },
 
   created () {
-    this.startTime = new Date(Date.parse(new Date()) - 7 * 24 * 3600 * 1000).toLocaleDateString()
+    this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
     this.endTime = new Date().toLocaleDateString()
     this.start = this.startTime
     this.end = this.endTime
@@ -96,8 +111,16 @@ export default {
         new_time: val
       }
       store.dispatch('CHART_UPDATE', cname, query)
-      this.startTime = new Date(Date.parse(new Date()) - val * 24 * 3600 * 1000).toLocaleDateString()
-      this.endTime = new Date().toLocaleDateString()
+      if (val === 30 || val === 7) {
+        this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString()
+        this.endTime = new Date().toLocaleDateString()
+      } else if (val === 1) {
+        this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString()
+        this.endTime = this.startTime
+      } else if (val === 0) {
+        this.startTime = new Date(Date.parse(new Date())).toLocaleDateString()
+        this.endTime = this.startTime
+      }
       this.start = this.startTime
       this.end = this.endTime
     }
@@ -130,8 +153,9 @@ export default {
     }
   }
   .chart {
-    width: 80%;
-    float: left;
+    width: 70%;
+    display: inline;
+    float:left
   }
   .table {
     display: inline;
