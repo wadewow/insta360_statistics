@@ -7,7 +7,7 @@
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(7)">最近7天</button>
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
         </div>
-        <div class="mui-radio" style="margin-left:50px">
+        <div class="mui-radio" style="margin-left:20px">
             <input class="radio" type="radio" checked="checked" name="type" value="all" v-model='type' @click="queryType('all')">全部</input>
             <input class="radio" type="radio" name="type" value="video" v-model='type' @click="queryType('video')">视频</input>
             <input class="radio" type="radio" name="type" value="img" v-model='type' @click="queryType('img')">图片</input>
@@ -18,7 +18,7 @@
             <input type="radio" name="order" value="view_desc" v-model='order' @click="sort('view_desc')">浏览量降序</input>
             <input type="radio" name="order" value="view_asc" v-model='order' @click="sort('view_asc')">浏览量升序</input>
         </div>-->
-        <div class="mui-select" style="display:inline-block; width:120px;margin-left:50px ">
+        <div class="mui-select" style="display:inline-block; width:120px;margin-left:20px;margin-top:-10px">
           <select v-model='order' v-on:change="sort(this)">
             <option name="order" value="time_desc" v-on:click="sort('time_desc')">时间降序</option>
             <option name="order" value="time_asc" v-on:click="sort('time_asc')">时间升序</option>

@@ -1,7 +1,8 @@
 <template>
     <div id="block" class="mui-panel mui--text-center" v-for="item in items['total']">
         <span>{{ item.name }}</span><br/>
-        <span>{{ item.value }}</span>
+        <span>{{ item.value }}</span><br/>
+        <span>{{ item.comment }}</span>
     </div>
 </template>
 

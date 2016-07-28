@@ -23,8 +23,10 @@
     </div>
   </div>
   <div style="display:block;height:100px">
-  <block :items="data"></block></div>
+    <block :items="data"></block>
+  </div>
   <chart class="chart" :name="name" :data="data"></chart>
+  <div>
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
@@ -53,6 +55,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
 </template>
 
 <script>
@@ -159,6 +162,7 @@ export default {
   }
   .table {
     display: inline;
-    margin-left:10px;
+    margin-left: 10px;
+    margin-top: -20px;
   }
 </style>

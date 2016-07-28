@@ -17,7 +17,8 @@ export default {
     return {
       total: [{
         name: '总激活量',
-        value: _.sum(y_all)
+        value: _.sum(y_all),
+        comment: '(未加200)'
       },
       {
         name: '国内激活量',
@@ -30,7 +31,7 @@ export default {
       ],
       title: {
         text: '设备激活情况',
-        x: 'center'
+        x: 'left'
       },
       tooltip: {
         trigger: 'axis',
@@ -68,7 +69,7 @@ export default {
         }
       },
       legend: {
-        x: 'left',
+        x: 'center',
         data: ['国内激活数量', '国外激活数量', '全部激活数量']
       },
       xAxis: {
@@ -93,7 +94,6 @@ export default {
     }
   },
   month_share_trends: data => {
-
     const x = []
     const y_video = []
     const y_image = []
@@ -114,8 +114,8 @@ export default {
       }
       ],
       title: {
-        text: '分享次数走势',
-        x: 'center'
+        text: '分享内容数统计',
+        x: 'left'
       },
       tooltip: {
         trigger: 'axis',
@@ -134,7 +134,7 @@ export default {
         }
       },
       legend: {
-        x: 'left',
+        x: 'center',
         data: ['图片数量', '视频数量']
       },
       xAxis: {
@@ -153,7 +153,7 @@ export default {
       }]
     }
   },
-  location_active_detail: data => {
+  location_active_detail: (data, location) => {
     const x = []
     const y = []
     var total = 0
@@ -170,8 +170,8 @@ export default {
         value: total
       }],
       title: {
-        text: '地区月激活数量',
-        x: 'center'
+        text: location + '地区月激活数量',
+        x: 'left'
       },
       tooltip: {
         trigger: 'axis',
@@ -191,7 +191,7 @@ export default {
       },
       calculable: true,
       legend: {
-        x: 'left',
+        x: 'center',
         data: ['地区月激活数量']
       },
       xAxis: {
@@ -338,7 +338,8 @@ export default {
     var option = {
       total: [{
         name: '总激活量',
-        value: data['all']['total']
+        value: data['all']['total'],
+        comment: '(未加200)'
       },
         {
           name: '国内激活量',
@@ -346,7 +347,7 @@ export default {
         },
         {
           name: '国外激活量',
-          value: data['abroad']['total']
+          value: parseInt(data['all']['total'], 10) - parseInt(data['native']['total'], 10)
         }
       ],
       top: {
@@ -356,14 +357,14 @@ export default {
       title: {
         text: '区域激活情况',
         // subtext: '',
-        left: 'center'
+        left: 'left'
       },
       tooltip: {
         trigger: 'item'
       },
       legend: {
         orient: 'horizontal',
-        left: 'left',
+        left: 'center',
         selectedMode: 'single',
         data: ['全国', '世界']
       },
@@ -413,6 +414,77 @@ export default {
       page_total: page_total,
       column: column,
       series: data['data']
+    }
+  },
+  nano_store: data => {
+
+    const x = []
+    const y = []
+    for (var index in data) {
+      x.push(index)
+      y.push(data[index])
+    }
+
+    return {
+      total: [{
+        name: '总流量',
+        value: _.sum(y)
+      }],
+      title: {
+        text: '店铺流量分布',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: {
+          //   show: true,
+          //   title: {
+          //     dataZoom: '区域缩放',
+          //     dataZoomReset: '区域缩放后退'
+          //   }
+          // },
+          // mark: {
+          //   show: true,
+          //   title: {
+          //     mark: '辅助线开关',
+          //     markUndo: '删除辅助线',
+          //     markClear: '清空辅助线'
+          //   },
+          //   lineStyle: {
+          //     width: 2,
+          //     color: '#1e90ff',
+          //     type: 'dashed'
+          //   }
+          // },
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar'] },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['店铺流量']
+      },
+      xAxis: {
+        data: x, // 横向则将data放到yAxis
+        axisLabel: {
+          interval: 0
+        }
+      },
+      yAxis: {},
+      series: [{
+        name: '店铺流量',
+        type: 'bar',
+        data: y
+      }]
     }
   }
 }

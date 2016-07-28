@@ -20,5 +20,13 @@ export default {
   month_share_trends: {
     url: baseUrl + 'api/share/month_share_trends',
     serialize: 'month_share_trends'
+  },
+  nano_store: {
+    url: baseUrl + 'nano_store',
+    serialize: 'nano_store'
+  },
+  click_buylink: {
+    url: baseUrl + 'click_buylink',
+    serialize: 'click_buylink'
   }
 }

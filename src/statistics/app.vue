@@ -13,7 +13,7 @@
       <!--nano激活-->
       <li>
         <strong @click="toggleCollapse">设备激活情况</strong>
-        <ul>
+        <ul style="display:block">
           <li>
             <a href="#!/chart/nano_active">激活情况</a>
           </li>
@@ -27,12 +27,12 @@
       </li>
       <li>
         <strong @click="toggleCollapse">Nano内容分享</strong>
-        <ul>
+        <ul style="display:block">
           <li>
             <a href="#!/table/share_list">分享列表明细</a>
           </li>
           <li>
-            <a href="#!/chart/month_share_trends">分享次数走势</a>
+            <a href="#!/chart/month_share_trends">分享内容数统计</a>
           </li>
           <li>
             <a href="#!/chart/nano_active">分享地区分布</a>
@@ -48,10 +48,21 @@
           </li>
         </ul>
       </li>
+      <li>
+        <strong @click="toggleCollapse">Nano购买链接</strong>
+        <ul style="display:block">
+          <li>
+            <a href="#!/chart/nano_store">店铺流量分布</a>
+          </li>
+          <li>
+            <a href="#!/chart/click_buylink">链接点击地区分布</a>
+          </li>
+        </ul>
+      </li>
       <!--示例内容-->
       <li>
         <strong @click="toggleCollapse">示例内容</strong>
-        <ul>
+        <ul style="display:block">
           <li class="li-chart" v-for="chart in list">
             <a href="{{'#/chart/' + chart.url}}">{{chart.name}}</a>
           </li>
