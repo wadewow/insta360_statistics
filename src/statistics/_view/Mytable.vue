@@ -7,8 +7,8 @@
         <th>地理位置</th>
         <th>标题</th>
         <th>序列号</th>
-        <th @click="update('test')">浏览量</th>
-        <th>时间</th>
+        <th class="sort" id="view" @click="sort('view')" value="0">浏览量</th>
+        <th class="sort" id="time" @click="sort('time')" value="1">时间 ↓</th>
       </tr>
     </thead>
     <tbody>
@@ -33,8 +33,27 @@ export default {
   },
 
   methods: {
-    update (v) {
-      this.$dispatch('fk', v)
+    sort (v) {
+      var element = document.getElementById(v)
+      var val = element.innerText
+      var s = ''
+      if (val.charAt(val.length - 1) === '↓') {
+        if (v === 'time') {
+          s = '时间 ↑'
+        }else if (v === 'view') {
+          s = '浏览量 ↑'
+        }
+      }else {
+        if (v === 'time') {
+          s = '时间 ↓'
+        }else if (v === 'view') {
+          s = '浏览量 ↓'
+        }
+      }
+      document.getElementById('view').innerText = '浏览量'
+      document.getElementById('time').innerText = '时间'
+      element.innerText = s
+      this.$dispatch('sort', v)
     }
   }
 }
@@ -42,4 +61,7 @@ export default {
 <style lang='less'>
   @import '../../_less/v2/base';
   @import '../../_less/component/animation';
+  .sort{
+    cursor:pointer
+  }
 </style>

@@ -276,11 +276,11 @@ export default {
     }
     count = 0
     for (var j in _abroad_data) {
-      if (count !== 0) {
+      if (_abroad_data[j]['name'] !== 'China') {
         _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value']}))
+        count++
       }
-      count++
-      if (count === 11) {
+      if (count === 10) {
         break
       }
     }
@@ -361,6 +361,7 @@ export default {
       },
       tooltip: {
         trigger: 'item'
+        // formatter: '{c}'
       },
       legend: {
         orient: 'horizontal',
@@ -398,16 +399,23 @@ export default {
   location_share: data => {
     const native_data = data['native']
     const abroad_data = data['abroad']
-    var max = 500
+    var m = 499
     var k = 0
-    for (var n in native_data) {
-      var m = native_data[n]['total']
+    for (var n in abroad_data) {
+      m = abroad_data[n]['total']
       if (k === 1) {
         break
       }
       k++
     }
-    max = (parseInt(m / 100, 10) + 1) * 100
+    for (var o in native_data) {
+      var temp = native_data[o]['total']
+      if (temp > m) {
+        m = temp
+      }
+      break
+    }
+    var max = (parseInt(m / 100, 10) + 1) * 100
     function getNativeData () {
       const result = []
       for (var index in native_data) {
@@ -471,7 +479,7 @@ export default {
 
     const total_abroad = _.sumBy(_abroad_data, function (o) {
       return o.value
-    })
+    }) - parseInt(abroad_data['China']['total'], 10)
     const total_native = _.sumBy(_native_data, function (o) {
       return o.value
     })

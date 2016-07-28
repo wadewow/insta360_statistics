@@ -18,14 +18,14 @@
             <input type="radio" name="order" value="view_desc" v-model='order' @click="sort('view_desc')">浏览量降序</input>
             <input type="radio" name="order" value="view_asc" v-model='order' @click="sort('view_asc')">浏览量升序</input>
         </div>-->
-        <div class="mui-select" style="display:inline-block; width:120px;margin-left:20px;margin-top:-10px">
+        <!--<div class="mui-select" style="display:inline-block; width:120px;margin-left:20px;margin-top:-10px">
           <select v-model='order' v-on:change="sort(this)">
             <option name="order" value="time_desc" v-on:click="sort('time_desc')">时间降序</option>
             <option name="order" value="time_asc" v-on:click="sort('time_asc')">时间升序</option>
             <option name="order" value="view_desc" v-on:click="sort('view_desc')">浏览量降序</option>
             <option name="order" value="view_asc" v-on:click="sort('view_asc')">浏览量升序</option>
           </select>
-       </div>
+       </div>-->
     </div>
     <div class="mui-col-md-3">
       <div class="mui-textfield right">
@@ -212,11 +212,24 @@ export default {
   },
 
   events: {
-    'fk': (msg) => {
-      console.log(msg)
+    sort (msg) {
+      if (msg === 'time') {
+        if (this.order === 'time_desc') {
+          this.order = 'time_asc'
+        }else {
+          this.order = 'time_desc'
+        }
+      }else if (msg === 'view') {
+        if (this.order === 'view_desc') {
+          this.order = 'view_asc'
+        }else {
+          this.order = 'view_desc'
+        }
+      }
+      this.page = 1
+      this.query()
     }
   }
-
 }
 </script>
 
