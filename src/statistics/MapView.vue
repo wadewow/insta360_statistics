@@ -153,11 +153,12 @@ export default {
     }
   }
   .chart {
-    width: 70%;
+    width: 68.5%;
     display: inline;
     float:left
   }
   .table {
     display: inline;
+    margin-left:10px;
   }
 </style>

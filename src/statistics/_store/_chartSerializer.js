@@ -1,5 +1,5 @@
 import _ from 'lodash'
-
+import dict_json from './dict.json'
 export default {
   nano_active: data => {
 
@@ -222,7 +222,7 @@ export default {
     var max = 500
     if (!_.isEmpty(all_data['data'])) {
       var m = all_data['data'][0]['total']
-      max = (parseInt(m / 50, 10) + 1) * 50
+      max = (parseInt(m / 100, 10) + 1) * 100
     }
     function getNativeData () {
       const result = []
@@ -231,10 +231,33 @@ export default {
       }
       return result
     }
+    const itemStyle = {
+      normal: {
+        color: '#32cd32',
+        label: {
+          show: true
+          // textStyle: {
+          //   color: '#fff',
+          //   fontSize: 15
+          // }
+        }
+      },
+      emphasis: {               // 也是选中样式
+        // borderWidth: 5,
+        // borderColor: 'yellow',
+        color: '#ccc',
+        label: {
+          // show: false,
+          textStyle: {
+            // color: '#eee'
+          }
+        }
+      }
+    }
     function getAbroadData () {
       const result = []
       for (var index in abroad_data['data']) {
-        result.push(_.assign({'name': abroad_data['data'][index]['location'], 'value': abroad_data['data'][index]['total']}))
+        result.push(_.assign({'name': abroad_data['data'][index]['location'], 'value': abroad_data['data'][index]['total'], 'itemStyle': itemStyle}))
       }
       return result
     }
@@ -253,9 +276,11 @@ export default {
     }
     count = 0
     for (var j in _abroad_data) {
-      _abroad_top.push(_abroad_data[j])
+      if (count !== 0) {
+        _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value']}))
+      }
       count++
-      if (count === 10) {
+      if (count === 11) {
         break
       }
     }
@@ -342,7 +367,7 @@ export default {
         selectedMode: 'single',
         data: ['全国', '世界']
       },
-      visualMap: {
+      dataRange: {
         min: 0,
         max: max,
         left: 'left',

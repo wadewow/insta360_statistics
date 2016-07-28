@@ -13,6 +13,7 @@
     </div>
   </div>
   <chart :name="name" :data="data"></chart>
+  <!--<div class="mui--text-right"><button @click="" class="mui-btn mui-btn--raised">返回</button></div>-->
 </template>
 
 <script>
