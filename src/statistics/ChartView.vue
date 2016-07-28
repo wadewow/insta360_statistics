@@ -77,11 +77,11 @@ export default {
       this.end = this.endTime
     },
     queryPeriod (val) {
-      const cname = this.$route.params.cname
-      const query = {
-        new_time: val
-      }
-      store.dispatch('CHART_UPDATE', cname, query)
+      // const cname = this.$route.params.cname
+      // const query = {
+      //   new_time: val
+      // }
+      // store.dispatch('CHART_UPDATE', cname, query)
       if (val === 30 || val === 7) {
         this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString()
         this.endTime = new Date().toLocaleDateString()
@@ -94,6 +94,12 @@ export default {
       }
       this.start = this.startTime
       this.end = this.endTime
+      const cname = this.$route.params.cname
+      const query = {
+        start_time: this.start,
+        end_time: this.end
+      }
+      store.dispatch('CHART_UPDATE', cname, query)
     }
   },
 
