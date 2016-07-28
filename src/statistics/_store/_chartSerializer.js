@@ -486,5 +486,61 @@ export default {
         data: y
       }]
     }
+  },
+  click_buylink: data => {
+
+    const x = []
+    const y = []
+    for (var index in data) {
+      x.push(index)
+      y.push(data[index])
+    }
+
+    return {
+      total: [{
+        name: '总点击数',
+        value: _.sum(y)
+      }],
+      title: {
+        text: '链接点击地区分布',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar'] },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['链接点击数']
+      },
+      xAxis: {
+        data: x, // 横向则将data放到yAxis
+        axisLabel: {
+          interval: 1,
+          rotate: 45,
+          textStyle: {
+            fontSize: 1,
+            fontWeight: 'lighter'
+          }
+        }
+      },
+      yAxis: {},
+      series: [{
+        name: '链接点击数',
+        type: 'bar',
+        data: y
+      }]
+    }
   }
 }
