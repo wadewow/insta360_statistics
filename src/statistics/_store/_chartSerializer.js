@@ -5,7 +5,7 @@ export default {
     const y = []
     for (var index in data) {
       x.push(index)
-      y.push(data[index])
+      y.push(data[index]['native'])
     }
 
     return {
