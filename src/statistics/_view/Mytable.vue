@@ -7,7 +7,7 @@
         <th>地理位置</th>
         <th>标题</th>
         <th>序列号</th>
-        <th @click="sortByViewTimes">浏览量</th>
+        <th @click="update('test')">浏览量</th>
         <th>时间</th>
       </tr>
     </thead>
@@ -30,6 +30,12 @@ export default {
   name: 'Mytable',
   props: {
     data: Object
+  },
+
+  methods: {
+    update (v) {
+      this.$dispatch('fk', v)
+    }
   }
 }
 </script>

@@ -209,6 +209,12 @@ export default {
       store.dispatch('TABLE_UPDATE', tname, query)
       this.keepSame()
     }
+  },
+
+  events: {
+    'fk': (msg) => {
+      console.log(msg)
+    }
   }
 
 }

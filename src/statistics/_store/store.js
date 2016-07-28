@@ -48,6 +48,7 @@ const state = {
 const apiQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
+    console.log(res)
     state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body), query.location)
   }, (res) => {
     // error callback
@@ -83,7 +84,7 @@ const mutations = {
   },
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
-    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink') {
+    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink' || cname === 'location_share') {
       apiQuery(cname, query)
     } else {
       state.chart.data = ChartData[cname]

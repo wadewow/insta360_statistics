@@ -28,5 +28,9 @@ export default {
   click_buylink: {
     url: baseUrl + 'click_buylink',
     serialize: 'click_buylink'
+  },
+  location_share: {
+    url: baseUrl + 'api/share/getlocationShareData',
+    serialize: 'location_share'
   }
 }

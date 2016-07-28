@@ -30,13 +30,13 @@
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
-            <th>国内</th>
-            <th>数量</th>
+            <th>国内激活所在地</th>
+            <th>激活数量</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in data['top']['native']">
-            <td>{{ item.name }}</td>
+            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
             <td>{{ item.value }}</td>
         </tr>
       </tbody>
@@ -44,13 +44,13 @@
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
-            <th>国外</th>
-            <th>数量</th>
+            <th>国外激活所在地</th>
+            <th>激活数量</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in data['top']['abroad']">
-            <td>{{ item.name }}</td>
+            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
             <td>{{ item.value }}</td>
         </tr>
       </tbody>

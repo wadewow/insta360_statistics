@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './app'
 import PostsView from './PostsView'
 import ChartView from './ChartView'
+import ActiveMapView from './ActiveMapView'
 import MapView from './MapView'
 import TableView from './TableView'
 import PostView from './PostView'
@@ -29,6 +30,9 @@ router.map({
   },
   '/chart/:cname': {
     component: ChartView
+  },
+  '/active_map/:cname': {
+    component: ActiveMapView
   },
   '/map/:cname': {
     component: MapView

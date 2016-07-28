@@ -18,7 +18,7 @@
             <a href="#!/chart/nano_active">激活情况</a>
           </li>
           <li>
-            <a href="#!/map/nano_active_map">区域激活</a>
+            <a href="#!/active_map/nano_active_map">激活地区分布</a>
           </li>
           <li>
             <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->
@@ -35,7 +35,7 @@
             <a href="#!/chart/month_share_trends">分享内容数统计</a>
           </li>
           <li>
-            <a href="#!/chart/nano_active">分享地区分布</a>
+            <a href="#!/map/location_share">分享地区分布</a>
           </li>
           <li>
             <a href="#!/chart/nano_active">分享浏览次数走势</a>
