@@ -6,6 +6,7 @@
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(1)">昨天</button>
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(7)">最近7天</button>
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(100)">历史总数</button>
       </div>
     </div>
     <div class="mui-col-md-5">
@@ -24,6 +25,7 @@
   </div>
   <block :items="data"></block>
   <chart :name="name" :data="data"></chart>
+  <input type='hidden' id="chartType" value="{{ data['series'][0]['type'] }}"/>
 </template>
 
 <script>
@@ -82,10 +84,18 @@ export default {
         this.endTime = new Date().toLocaleDateString()
       } else if (val === 1) {
         this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString()
-        this.endTime = new Date().toLocaleDateString()
+        var chartType = document.getElementById('chartType').value
+        if (chartType === 'line') {
+          this.endTime = new Date().toLocaleDateString()
+        }else {
+          this.endTime = this.startTime
+        }
       } else if (val === 0) {
         this.startTime = new Date(Date.parse(new Date())).toLocaleDateString()
         this.endTime = this.startTime
+      } else if (val === 100) {
+        this.startTime = '2016-06-01'
+        this.endTime = new Date(Date.parse(new Date())).toLocaleDateString()
       }
       this.start = this.startTime
       this.end = this.endTime

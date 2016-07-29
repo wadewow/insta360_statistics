@@ -6,6 +6,7 @@
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(1)">昨天</button>
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(7)">最近7天</button>
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
+        <button class="mui-btn mui-btn--primary" @click="queryPeriod(100)">历史总数</button>
       </div>
     </div>
     <div class="mui-col-md-5">
@@ -109,11 +110,6 @@ export default {
       this.end = this.endTime
     },
     queryPeriod (val) {
-      const cname = this.$route.params.cname
-      const query = {
-        new_time: val
-      }
-      store.dispatch('CHART_UPDATE', cname, query)
       if (val === 30 || val === 7) {
         this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString()
         this.endTime = new Date().toLocaleDateString()
@@ -123,9 +119,18 @@ export default {
       } else if (val === 0) {
         this.startTime = new Date(Date.parse(new Date())).toLocaleDateString()
         this.endTime = this.startTime
+      } else if (val === 100) {
+        this.startTime = '2016-06-01'
+        this.endTime = new Date(Date.parse(new Date())).toLocaleDateString()
       }
       this.start = this.startTime
       this.end = this.endTime
+      const cname = this.$route.params.cname
+      const query = {
+        start_time: this.start,
+        end_time: this.end
+      }
+      store.dispatch('CHART_UPDATE', cname, query)
     }
   },
 

@@ -36,5 +36,9 @@ export default {
   share_visitor: {
     url: baseUrl + 'share_vistor',
     serialize: 'share_visitor'
+  },
+  share_visitor_trend: {
+    url: baseUrl + 'api/share/share_vistor_trends',
+    serialize: 'share_visitor_trend'
   }
 }

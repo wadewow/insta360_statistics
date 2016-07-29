@@ -57,7 +57,7 @@ export default {
           // },
           dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar'] },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
           restore: { show: true },
           saveAsImage: { show: true }
         }
@@ -73,17 +73,20 @@ export default {
       series: [{
         name: '全部激活数量',
         type: 'line',
-        data: y_all
+        data: y_all,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: '国内激活数量',
         type: 'line',
-        data: y_native
+        data: y_native,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: '国外激活数量',
         type: 'line',
-        data: y_abroad
+        data: y_abroad,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }]
     }
   },
@@ -123,7 +126,7 @@ export default {
           mark: { show: true },
           dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar'] },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
           restore: { show: true },
           saveAsImage: { show: true }
         }
@@ -139,12 +142,77 @@ export default {
       series: [{
         name: '图片数量',
         type: 'line',
-        data: y_image
+        data: y_image,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: '视频数量',
         type: 'line',
-        data: y_video
+        data: y_video,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      }]
+    }
+  },
+  share_visitor_trend: data => {
+    const x = []
+    const y_video = []
+    const y_image = []
+    for (var index in data) {
+      x.push(index)
+      y_video.push(parseInt(data[index]['视频'], 10))
+      y_image.push(parseInt(data[index]['图片'], 10))
+    }
+
+    return {
+      total: [{
+        name: '图片浏览量',
+        value: _.sum(y_image)
+      },
+      {
+        name: '视频浏览量',
+        value: _.sum(y_video)
+      }
+      ],
+      title: {
+        text: '分享内容浏览量统计',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['图片浏览量', '视频浏览量']
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [{
+        name: '图片浏览量',
+        type: 'line',
+        data: y_image,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      },
+      {
+        name: '视频浏览量',
+        type: 'line',
+        data: y_video,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }]
     }
   },
@@ -180,7 +248,7 @@ export default {
           mark: { show: true },
           dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar'] },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
           restore: { show: true },
           saveAsImage: { show: true }
         }
@@ -197,17 +265,8 @@ export default {
       series: [{
         name: location + '地区激活数量',
         type: 'line',
-        data: y
-        // markLine: {
-        //   lineStyle: {
-        //     normal: {
-        //       type: 'dashed'
-        //     }
-        //   },
-        //   data: [
-        //     [{ type: 'min' }, { type: 'max' }]
-        //   ]
-        // }
+        data: y,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }]
     }
   },
@@ -923,7 +982,7 @@ export default {
           // },
           dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar'] },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
           restore: { show: true },
           saveAsImage: { show: true }
         }
@@ -943,17 +1002,20 @@ export default {
       series: [{
         name: '全部',
         type: 'bar',
-        data: y_all
+        data: y_all,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: 'PC端',
         type: 'bar',
-        data: y_pc
+        data: y_pc,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: '手机端',
         type: 'bar',
-        data: y_mobile
+        data: y_mobile,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }
       ]
     }
@@ -1000,7 +1062,7 @@ export default {
           // mark: {show: true, title: { mark: '辅助线开关', markUndo: '删除辅助线', markClear: '清空辅助线'}},
           dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar'] },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
           restore: { show: true },
           saveAsImage: { show: true }
         }
@@ -1024,17 +1086,20 @@ export default {
       series: [{
         name: '全部',
         type: 'bar',
-        data: y_all
+        data: y_all,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: 'PC端',
         type: 'bar',
-        data: y_pc
+        data: y_pc,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: '手机端',
         type: 'bar',
-        data: y_mobile
+        data: y_mobile,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }
       ]
     }

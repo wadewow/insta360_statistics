@@ -5,9 +5,10 @@
         <!--<th v-for="column in data['column']">{{ column }}</th>-->
         <th class="mui-col-md-1">类型</th>
         <th class="mui-col-md-2">地理位置</th>
-        <th class="mui-col-md-4">标题</th>
+        <th class="mui-col-md-3">标题</th>
         <th class="mui-col-md-2">序列号</th>
-        <th class="sort mui-col-md-1" id="view" @click="sort('view')" value="0">浏览量</th>
+        <th class="sort mui-col-md-1" @click="sort('view')" value="0">周浏览</th>
+        <th class="sort mui-col-md-1" id="view" @click="sort('view')" value="0">总浏览</th>
         <th class="sort mui-col-md-2" id="time" @click="sort('time')" value="1">时间 ↓</th>
       </tr>
     </thead>
@@ -16,8 +17,9 @@
         <!--<td v-for="i in item">{{ i }}</td>-->
         <td class="mui-col-md-1">{{ item.type }}</td>
         <td class="mui-col-md-2">{{ item.share_location }}</td>
-        <td class="mui-col-md-4"><a href= "{{ item.page_url }}" target="_blank">{{ item.title }}</a></td>
+        <td class="mui-col-md-3"><a href= "{{ item.page_url }}" title="{{ item.title }}" target="_blank">{{ item.title | substring }}</a></td>
         <td class="mui-col-md-2">{{ item.serial_num }}</td>
+        <td class="mui-col-md-1">{{ item.week_prews }}</td>
         <td class="mui-col-md-1">{{ item.view_times }}</td>
         <td class="mui-col-md-2">{{ item.time }}</td>
       </tr>
@@ -41,19 +43,25 @@ export default {
         if (v === 'time') {
           s = '时间 ↑'
         }else if (v === 'view') {
-          s = '浏览量 ↑'
+          s = '总浏览 ↑'
         }
       }else {
         if (v === 'time') {
           s = '时间 ↓'
         }else if (v === 'view') {
-          s = '浏览量 ↓'
+          s = '总浏览 ↓'
         }
       }
-      document.getElementById('view').innerText = '浏览量'
+      document.getElementById('view').innerText = '总浏览'
       document.getElementById('time').innerText = '时间'
       element.innerText = s
       this.$dispatch('sort', v)
+    }
+  },
+
+  filters: {
+    substring (s) {
+      return s.substring(0, 28)
     }
   }
 }
