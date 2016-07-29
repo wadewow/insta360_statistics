@@ -165,7 +165,7 @@ export default {
         value: total
       }],
       title: {
-        text: location + '地区月激活数量',
+        text: location + '地区激活数量',
         x: 'left'
       },
       tooltip: {
@@ -188,14 +188,14 @@ export default {
       calculable: true,
       legend: {
         x: 'center',
-        data: ['地区月激活数量']
+        data: [location + '地区激活数量']
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
       },
       yAxis: {},
       series: [{
-        name: '地区月激活数量',
+        name: location + '地区激活数量',
         type: 'line',
         data: y
         // markLine: {
