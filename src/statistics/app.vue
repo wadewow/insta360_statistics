@@ -38,10 +38,10 @@
             <a href="#!/map/location_share">分享地区分布</a>
           </li>
           <li>
-            <a href="#!/chart/nano_active">分享浏览次数走势</a>
+            <a href="#!/chart/nano_active">分享浏览次数走势(ToDo)</a>
           </li>
           <li>
-            <a href="#!/chart/nano_active">分享浏览地区分布</a>
+            <a href="#!/chart/nano_active">分享浏览地区分布(ToDo)</a>
           </li>
           <li>
             <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->
@@ -60,14 +60,14 @@
         </ul>
       </li>
       <!--示例内容-->
-      <li>
+      <!--<li>
         <strong @click="toggleCollapse">示例内容</strong>
         <ul style="display:block">
           <li class="li-chart" v-for="chart in list">
             <a href="{{'#/chart/' + chart.url}}">{{chart.name}}</a>
           </li>
         </ul>
-      </li>
+      </li>-->
     </ul>
   </div>
   <header id="header">

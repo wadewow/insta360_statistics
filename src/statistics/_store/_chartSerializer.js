@@ -42,13 +42,6 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          // dataZoom: {
-          //   show: true,
-          //   title: {
-          //     dataZoom: '区域缩放',
-          //     dataZoomReset: '区域缩放后退'
-          //   }
-          // },
           // mark: {
           //   show: true,
           //   title: {
@@ -62,6 +55,7 @@ export default {
           //     type: 'dashed'
           //   }
           // },
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
           magicType: { show: true, type: ['line', 'bar'] },
           restore: { show: true },
@@ -127,6 +121,7 @@ export default {
         show: true,
         feature: {
           mark: { show: true },
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
           magicType: { show: true, type: ['line', 'bar'] },
           restore: { show: true },
@@ -183,6 +178,7 @@ export default {
         show: true,
         feature: {
           mark: { show: true },
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
           magicType: { show: true, type: ['line', 'bar'] },
           restore: { show: true },
@@ -261,7 +257,9 @@ export default {
       }
       return result
     }
-
+    const total_all = parseInt(data['all']['total'], 10)
+    const total_native = parseInt(data['native']['total'], 10)
+    const total_abroad = total_all - total_native
     const _native_data = getNativeData()
     const _abroad_data = getAbroadData()
     const _native_top = []
@@ -276,10 +274,8 @@ export default {
     }
     count = 0
     for (var j in _abroad_data) {
-      if (_abroad_data[j]['name'] !== 'China') {
-        _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value']}))
-        count++
-      }
+      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value']}))
+      count++
       if (count === 10) {
         break
       }
@@ -296,7 +292,7 @@ export default {
           borderColor: '#ccc'
         },
         emphasis: {
-          areaColor: '#eee'
+          areaColor: '#FFFF00'
         }
       },
       label: {
@@ -321,7 +317,7 @@ export default {
           borderColor: '#ccc'
         },
         emphasis: {
-          areaColor: '#eee'
+          areaColor: '#FFFF00'
         }
       },
       label: {
@@ -338,16 +334,16 @@ export default {
     var option = {
       total: [{
         name: '总激活量',
-        value: data['all']['total'],
+        value: total_all,
         comment: '(未加200)'
       },
         {
           name: '国内激活量',
-          value: data['native']['total']
+          value: total_native
         },
         {
           name: '国外激活量',
-          value: parseInt(data['all']['total'], 10) - parseInt(data['native']['total'], 10)
+          value: total_abroad
         }
       ],
       top: {
@@ -360,8 +356,25 @@ export default {
         left: 'left'
       },
       tooltip: {
-        trigger: 'item'
-        // formatter: '{c}'
+        trigger: 'item',
+        formatter: function (params, ticket, callback) {
+          var value = params['value']
+          var percent = 0
+          var res = params['name'] + ' : '
+          if (isNaN(value)) {
+            value = '-'
+            res = res + value
+          }else {
+            res = res + value
+            if (params['seriesName'] === '全国') {
+              percent = _.round((parseInt(value, 10) / total_native * 100), 1)
+            }else {
+              percent = _.round((parseInt(value, 10) / total_all * 100), 1)
+            }
+            res = res + '<br/>' + '占比' + ' : ' + percent + '%'
+          }
+          return res
+        }
       },
       legend: {
         orient: 'horizontal',
@@ -379,19 +392,17 @@ export default {
       },
       toolbox: {
         show: true,
-        orient: 'vertical',
-        right: 'right',
-        bottom: 'bottom',
+        // orient: 'vertical',
+        x: 'right',
+        y: 'top',
         feature: {
           mark: { show: true },
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar'] },
           restore: { show: true },
           saveAsImage: { show: true }
         }
       },
       series: [_china, _world]
-      // series: [_world]
     }
 
     return option
@@ -458,25 +469,6 @@ export default {
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
-    var count = 0
-    for (var i in _native_data) {
-      _native_top.push(_native_data[i])
-      count++
-      if (count === 10) {
-        break
-      }
-    }
-    count = 0
-    for (var j in _abroad_data) {
-      if (count !== 0) {
-        _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value']}))
-      }
-      count++
-      if (count === 11) {
-        break
-      }
-    }
-
     const total_abroad = _.sumBy(_abroad_data, function (o) {
       return o.value
     }) - parseInt(abroad_data['China']['total'], 10)
@@ -484,6 +476,23 @@ export default {
       return o.value
     })
 
+    const total_all = total_abroad + total_native
+    var count = 0
+    for (var i in _native_data) {
+      _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
+      count++
+      if (count === 10) {
+        break
+      }
+    }
+    count = 0
+    for (var j in _abroad_data) {
+      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
+      count++
+      if (count === 10) {
+        break
+      }
+    }
     const _china = {
       name: '全国',
       type: 'map',
@@ -495,7 +504,7 @@ export default {
           borderColor: '#ccc'
         },
         emphasis: {
-          areaColor: '#eee'
+          areaColor: '#FFFF00'
         }
       },
       label: {
@@ -520,7 +529,7 @@ export default {
           borderColor: '#ccc'
         },
         emphasis: {
-          areaColor: '#eee'
+          areaColor: '#FFFF00'
         }
       },
       label: {
@@ -537,7 +546,7 @@ export default {
     var option = {
       total: [{
         name: '总分享数',
-        value: total_abroad + total_native
+        value: total_all
       },
         {
           name: '国内分享数',
@@ -558,7 +567,25 @@ export default {
         left: 'left'
       },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: function (params, ticket, callback) {
+          var value = params['value']
+          var percent = 0
+          var res = params['name'] + ' : '
+          if (isNaN(value)) {
+            value = '-'
+            res = res + value
+          }else {
+            res = res + value
+            if (params['seriesName'] === '全国') {
+              percent = _.round((parseInt(value, 10) / total_native * 100), 1)
+            }else {
+              percent = _.round((parseInt(value, 10) / total_all * 100), 1)
+            }
+            res = res + '<br/>' + '占比' + ' : ' + percent + '%'
+          }
+          return res
+        }
       },
       legend: {
         orient: 'horizontal',
@@ -576,17 +603,25 @@ export default {
       },
       toolbox: {
         show: true,
-        orient: 'vertical',
-        right: 'right',
-        bottom: 'bottom',
+        // orient: 'vertical',
+        x: 'right',
+        y: 'top',
         feature: {
           mark: { show: true },
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar'] },
           restore: { show: true },
           saveAsImage: { show: true }
         }
       },
+      // roamController: {
+      //   show: true,
+      //   x: 'right',
+      //   y: 'bottom',
+      //   mapTypeControl: {
+      //     'china': true,
+      //     'world': true
+      //   }
+      // },
       series: [_china, _world]
       // series: [_world]
     }
@@ -653,13 +688,6 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          // dataZoom: {
-          //   show: true,
-          //   title: {
-          //     dataZoom: '区域缩放',
-          //     dataZoomReset: '区域缩放后退'
-          //   }
-          // },
           // mark: {
           //   show: true,
           //   title: {
@@ -673,6 +701,7 @@ export default {
           //     type: 'dashed'
           //   }
           // },
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
           magicType: { show: true, type: ['line', 'bar'] },
           restore: { show: true },
@@ -748,6 +777,8 @@ export default {
       toolbox: {
         show: true,
         feature: {
+          // mark: {show: true, title: { mark: '辅助线开关', markUndo: '删除辅助线', markClear: '清空辅助线'}},
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
           magicType: { show: true, type: ['line', 'bar'] },
           restore: { show: true },

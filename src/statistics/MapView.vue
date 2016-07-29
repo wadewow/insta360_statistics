@@ -30,28 +30,32 @@
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
-            <th>国内</th>
+            <th>全国</th>
             <th>数量</th>
+            <th>占比</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in data['top']['native']">
             <td>{{ item.name }}</td>
-            <td>{{ item.value }}</td>
+            <td class="mui--text-center">{{ item.value }}</td>
+            <td class="mui--text-center">{{ item.percent }}%</td>
         </tr>
       </tbody>
     </table>
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
-            <th>国外</th>
+            <th>世界</th>
             <th>数量</th>
+            <th>占比</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in data['top']['abroad']">
             <td>{{ item.name }}</td>
-            <td>{{ item.value }}</td>
+            <td class="mui--text-center">{{ item.value }}</td>
+            <td class="mui--text-center">{{ item.percent }}%</td>
         </tr>
       </tbody>
     </table>
