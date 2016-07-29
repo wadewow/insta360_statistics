@@ -41,7 +41,7 @@
             <a href="#!/chart/nano_active">分享浏览次数走势(ToDo)</a>
           </li>
           <li>
-            <a href="#!/chart/nano_active">分享浏览地区分布(ToDo)</a>
+            <a href="#!/map/share_visitor">分享浏览地区分布</a>
           </li>
           <li>
             <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->

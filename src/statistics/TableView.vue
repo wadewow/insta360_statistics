@@ -1,6 +1,6 @@
 <template>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-8">
+    <div class="mui-col-md-7">
         <div class="period">
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(0)">今天</button>
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(1)">昨天</button>
@@ -27,7 +27,7 @@
           </select>
        </div>-->
     </div>
-    <div class="mui-col-md-3">
+    <div class="mui-col-md-4">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
         <input type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">

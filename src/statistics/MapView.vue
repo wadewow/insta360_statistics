@@ -1,6 +1,6 @@
 <template>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-8">
+    <div class="mui-col-md-6">
       <div>
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(0)">今天</button>
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(1)">昨天</button>
@@ -8,7 +8,7 @@
         <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
       </div>
     </div>
-    <div class="mui-col-md-3">
+    <div class="mui-col-md-5">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
         <input type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
@@ -113,11 +113,6 @@ export default {
       this.end = this.endTime
     },
     queryPeriod (val) {
-      const cname = this.$route.params.cname
-      const query = {
-        new_time: val
-      }
-      store.dispatch('CHART_UPDATE', cname, query)
       if (val === 30 || val === 7) {
         this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString()
         this.endTime = new Date().toLocaleDateString()
@@ -130,6 +125,12 @@ export default {
       }
       this.start = this.startTime
       this.end = this.endTime
+      const cname = this.$route.params.cname
+      const query = {
+        start_time: this.start,
+        end_time: this.end
+      }
+      store.dispatch('CHART_UPDATE', cname, query)
     }
   },
 

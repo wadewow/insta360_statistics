@@ -32,5 +32,9 @@ export default {
   location_share: {
     url: baseUrl + 'api/share/getlocationShareData',
     serialize: 'location_share'
+  },
+  share_visitor: {
+    url: baseUrl + 'share_vistor',
+    serialize: 'share_visitor'
   }
 }
