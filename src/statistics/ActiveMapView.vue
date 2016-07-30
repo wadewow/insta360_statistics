@@ -2,11 +2,11 @@
   <div class="mui-row pikaday">
     <div class="mui-col-md-6">
       <div>
-        <button class="mui-btn mui-btn--primary" @click="queryPeriod(0)">今天</button>
-        <button class="mui-btn mui-btn--primary" @click="queryPeriod(1)">昨天</button>
-        <button class="mui-btn mui-btn--primary" @click="queryPeriod(7)">最近7天</button>
-        <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
-        <button class="mui-btn mui-btn--primary" @click="queryPeriod(100)">历史总数</button>
+        <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(0)">今天</button>
+        <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(1)">昨天</button>
+        <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(7)">最近7天</button>
+        <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(30)">最近30天</button>
+        <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(100)">历史总数</button>
       </div>
     </div>
     <div class="mui-col-md-5">
@@ -28,8 +28,11 @@
   <div style="display:block;height:100px">
     <block :items="data"></block>
   </div>
+  <div class="mui-col-md-8">
     <chart class="chart" :name="name" :data="data"></chart>
-  <div>
+  </div>
+  <div class="mui-col-md-4">
+  <div class="right" style="min-width:350px">
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
@@ -58,6 +61,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
     </div>
 </template>
 
@@ -163,9 +167,7 @@ export default {
     }
   }
   .chart {
-    width: 68.5%;
-    display: inline;
-    float:left
+    width: 100%;
   }
   .table {
     display: inline;
