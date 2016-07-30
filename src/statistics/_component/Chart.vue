@@ -33,6 +33,6 @@ export default {
     padding: 1em 0;
     width: 100%;
     height: 50%;
-    min-height: 500px;
+    min-height: 650px;
   }
 </style>
