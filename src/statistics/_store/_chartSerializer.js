@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import dict_json from './dict.json'
+import dict_json from './dictionary.json'
 export default {
   nano_active: data => {
 

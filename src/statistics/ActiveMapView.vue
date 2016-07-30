@@ -10,6 +10,7 @@
       </div>
     </div>
     <div class="mui-col-md-5">
+      <div style="min-width:390px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
         <input type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
@@ -17,6 +18,7 @@
       <div class="mui-textfield right">
         <label for="start_time">From</label>
         <input type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
+      </div>
       </div>
     </div>
     <div class="mui-col-md-1">

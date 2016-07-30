@@ -1,6 +1,6 @@
 <template>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-7">
+    <div class="mui-col-md-5">
         <div class="period">
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(0)">今天</button>
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(1)">昨天</button>
@@ -8,27 +8,19 @@
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(30)">最近一个月</button>
             <button class="mui-btn mui-btn--primary" @click="queryPeriod(100)">历史总数</button>
         </div>
-        <div class="mui-radio" style="margin-left:20px">
+    </div>
+    <div class="mui-col-md-2">
+      <div class="" style="min-width:180px;line-height:50px;">
+        <div class="mui-radio">
             <input class="radio" type="radio" checked="checked" name="type" value="all" v-model='type' @click="queryType('all')">全部</input>
             <input class="radio" type="radio" name="type" value="video" v-model='type' @click="queryType('video')">视频</input>
             <input class="radio" type="radio" name="type" value="img" v-model='type' @click="queryType('img')">图片</input>
         </div>
-        <!--<div class="mui-radio">
-            <input type="radio" checked="checked" name="order" value="time_desc" v-model='order' @click="sort('time_desc')">时间降序</input>
-            <input type="radio" name="order" value="time_asc" v-model='order' @click="sort('time_asc')">时间升序</input>
-            <input type="radio" name="order" value="view_desc" v-model='order' @click="sort('view_desc')">浏览量降序</input>
-            <input type="radio" name="order" value="view_asc" v-model='order' @click="sort('view_asc')">浏览量升序</input>
-        </div>-->
-        <!--<div class="mui-select" style="display:inline-block; width:120px;margin-left:20px;margin-top:-10px">
-          <select v-model='order' v-on:change="sort(this)">
-            <option name="order" value="time_desc" v-on:click="sort('time_desc')">时间降序</option>
-            <option name="order" value="time_asc" v-on:click="sort('time_asc')">时间升序</option>
-            <option name="order" value="view_desc" v-on:click="sort('view_desc')">浏览量降序</option>
-            <option name="order" value="view_asc" v-on:click="sort('view_asc')">浏览量升序</option>
-          </select>
-       </div>-->
+      </div>
     </div>
+
     <div class="mui-col-md-4">
+      <div style="min-width:390px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
         <input type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
@@ -36,6 +28,7 @@
       <div class="mui-textfield right">
         <label for="start_time">From</label>
         <input type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
+      </div>
       </div>
     </div>
     <div class="mui-col-md-1">
@@ -228,6 +221,12 @@ export default {
           this.order = 'view_asc'
         }else {
           this.order = 'view_desc'
+        }
+      }else if (msg === 'week_prew') {
+        if (this.order === 'week_prew_desc') {
+          this.order = 'week_prew_asc'
+        }else {
+          this.order = 'week_prew_desc'
         }
       }
       this.page = 1
