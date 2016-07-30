@@ -32,14 +32,29 @@ const state = {
       yAxis: {},
       series: []
     }
+  },
+  map: {
+    list: ChartList,
+    name: 'pie',
+    data: {
+      tooltip: {},
+      xAxis: {
+      },
+      yAxis: {},
+      series: []
+    }
   }
 }
 
 // 定义一个方法通过接口处理数据并更新到store
-const apiQuery = (path, query) => {
+const apiQuery = (path, query, isMap) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
-    state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+    if (isMap) {
+      state.map.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+    } else {
+      state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+    }
   }, (res) => {
     // error callback
     console.log(res)
@@ -63,9 +78,12 @@ const mutations = {
     }
   },
   CHART_UPDATE (state, cname, query) {
-    state.chart.name = cname
-    if (cname === 'nano_active' || cname === 'nano_active_map') {
-      apiQuery(cname, query)
+    if (cname === 'nano_active') {
+      state.chart.name = cname
+      apiQuery(cname, query, false)
+    } else if (cname === 'nano_active_map') {
+      state.map.name = cname
+      apiQuery(cname, query, true)
     } else {
       state.chart.data = ChartData[cname]
     }

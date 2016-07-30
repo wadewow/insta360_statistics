@@ -12,13 +12,36 @@
       </li>
       <!--nano激活-->
       <li>
-        <strong @click="toggleCollapse">激活信息</strong>
+        <strong @click="toggleCollapse">Nano销售情况</strong>
         <ul>
           <li>
-            <a href="#!/chart/nano_active">时段查询</a>
+            <a href="#!/chart/nano_active">设备激活情况</a>
           </li>
           <li>
-            <a href="#!/chart/nano_active_map">区域查询</a>
+            <a href="#!/chart/nano_active">区域查询</a>
+          </li>
+          <li>
+            <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong @click="toggleCollapse">Nano内容分享</strong>
+        <ul>
+          <li>
+            <a href="#!/chart/nano_active">分享列表明细</a>
+          </li>
+          <li>
+            <a href="#!/chart/nano_active">分享次数走势</a>
+          </li>
+          <li>
+            <a href="#!/chart/nano_active">分享地区分布</a>
+          </li>
+          <li>
+            <a href="#!/chart/nano_active">分享浏览次数走势</a>
+          </li>
+          <li>
+            <a href="#!/chart/nano_active">分享浏览地区分布</a>
           </li>
           <li>
             <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->
