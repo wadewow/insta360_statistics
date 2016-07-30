@@ -17,7 +17,7 @@ const state = {
     list: [
       { 'id': 1, 'title': 'cjb', 'content': 'first' },
       { 'id': 2, 'title': 'sb', 'content': 'second' },
-      { 'id': 3, 'title': 'sb pm', 'content': 'third' }
+      { 'id': 3, 'title': 'ch', 'content': 'third' }
     ],
     post: {},
     data: null
@@ -33,28 +33,33 @@ const state = {
       series: []
     }
   },
-  map: {
-    list: ChartList,
-    name: 'pie',
+  table: {
+    name: 'table',
     data: {
-      tooltip: {},
-      xAxis: {
-      },
-      yAxis: {},
+      current_page: 1,
+      page_total: 0,
+      column: [],
       series: []
     }
   }
 }
 
 // 定义一个方法通过接口处理数据并更新到store
-const apiQuery = (path, query, isMap) => {
+const apiQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
-    if (isMap) {
-      state.map.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
-    } else {
-      state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
-    }
+    console.log(res)
+    state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body), query.location)
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
+const apiQueryTable = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    state.table.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
   }, (res) => {
     // error callback
     console.log(res)
@@ -78,14 +83,19 @@ const mutations = {
     }
   },
   CHART_UPDATE (state, cname, query) {
-    if (cname === 'nano_active') {
-      state.chart.name = cname
-      apiQuery(cname, query, false)
-    } else if (cname === 'nano_active_map') {
-      state.map.name = cname
-      apiQuery(cname, query, true)
+    state.chart.name = cname
+    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink' || cname === 'location_share' || cname === 'share_visitor' || cname === 'share_visitor_trend') {
+      apiQuery(cname, query)
     } else {
       state.chart.data = ChartData[cname]
+    }
+  },
+  TABLE_UPDATE (state, tname, query) {
+    state.table.name = tname
+    if (tname === 'share_list') {
+      apiQueryTable(tname, query)
+    } else {
+      state.table.data = ChartData[tname]
     }
   }
 }

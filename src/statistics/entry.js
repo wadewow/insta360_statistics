@@ -2,7 +2,11 @@ import Vue from 'vue'
 import App from './app'
 import PostsView from './PostsView'
 import ChartView from './ChartView'
+import ActiveMapView from './ActiveMapView'
+import MapView from './MapView'
+import TableView from './TableView'
 import PostView from './PostView'
+import LocationActiveDetail from './LocationActiveDetail'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import pikaday from '../_directives/pikaday'
@@ -26,6 +30,18 @@ router.map({
   },
   '/chart/:cname': {
     component: ChartView
+  },
+  '/active_map/:cname': {
+    component: ActiveMapView
+  },
+  '/map/:cname': {
+    component: MapView
+  },
+  '/table/:tname': {
+    component: TableView
+  },
+  '/location_active_detail/:cname/:city': {
+    component: LocationActiveDetail
   }
 })
 
@@ -34,7 +50,7 @@ router.beforeEach(function () {
 })
 
 router.redirect({
-  '*': '/posts/1'
+  '*': '/chart/nano_active'
 })
 
 router.start(App, '#app')

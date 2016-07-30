@@ -9,7 +9,7 @@
         <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(100)">历史总数</button>
       </div>
     </div>
-    <div class="mui-col-md-4">
+    <div class="mui-col-md-3">
       <div class="right" style="min-width:220px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -21,15 +21,16 @@
       </div>
       </div>
     </div>
-    <div class="mui-col-md-1">
+    <div class="mui-col-md-2">
+      <div class="" style="min-width:180px">
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
+      <button onclick="javascript:window.location.href='#!/active_map/nano_active_map'" class="mui-btn mui-btn--raised">返回</button>
+      </div>
     </div>
   </div>
   <block :items="data"></block>
   <chart :name="name" :data="data"></chart>
-  <input type='hidden' id="chartType" value="{{ data['series'][0]['type'] }}"/>
 </template>
-
 <script>
 import Chart from './_component/Chart'
 import Block from './_component/Block'
@@ -37,7 +38,7 @@ import store from './_store/store'
 import { getChartName, getChartData } from './_store/getters'
 
 export default {
-  name: 'ChartView',
+  name: 'LocationActiveDetail',
 
   components: {
     Chart,
@@ -58,15 +59,17 @@ export default {
       startTime: '',
       endTime: '',
       start: '',
-      end: ''
+      end: '',
+      city: ''
     }
   },
 
   created () {
-    this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
+    this.startTime = new Date(Date.parse(new Date()) - 29 * 24 * 3600 * 1000).toLocaleDateString()
     this.endTime = new Date().toLocaleDateString()
     this.start = this.startTime
     this.end = this.endTime
+    this.city = ''
   },
 
   methods: {
@@ -74,7 +77,8 @@ export default {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.startTime,
-        end_time: this.endTime
+        end_time: this.endTime,
+        location: this.city
       }
       store.dispatch('CHART_UPDATE', cname, query)
       this.start = this.startTime
@@ -86,12 +90,7 @@ export default {
         this.endTime = new Date().toLocaleDateString()
       } else if (val === 1) {
         this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString()
-        var chartType = document.getElementById('chartType').value
-        if (chartType === 'line') {
-          this.endTime = new Date().toLocaleDateString()
-        }else {
-          this.endTime = this.startTime
-        }
+        this.endTime = new Date().toLocaleDateString()
       } else if (val === 0) {
         this.startTime = new Date(Date.parse(new Date())).toLocaleDateString()
         this.endTime = this.startTime
@@ -104,7 +103,8 @@ export default {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.start,
-        end_time: this.end
+        end_time: this.end,
+        location: this.city
       }
       store.dispatch('CHART_UPDATE', cname, query)
     }
@@ -112,14 +112,16 @@ export default {
 
   route: {
     data ({ to }) {
-      this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
+      this.startTime = new Date(Date.parse(new Date()) - 29 * 24 * 3600 * 1000).toLocaleDateString()
       this.endTime = new Date().toLocaleDateString()
       this.start = this.startTime
       this.end = this.endTime
       const cname = to.params.cname
+      this.city = to.params.city
       const query = {
         start_time: this.start,
-        end_time: this.end
+        end_time: this.end,
+        location: this.city
       }
       store.dispatch('CHART_UPDATE', cname, query)
     }
