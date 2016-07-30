@@ -1,6 +1,6 @@
 <template>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-5">
+    <div class="mui-col-md-6">
         <div class="period">
             <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(0)">今天</button>
             <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(1)">昨天</button>
@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="mui-col-md-2">
-      <div class="" style="min-width:180px;line-height:50px;">
-        <div class="mui-radio">
+      <div class="right" style="min-width:170px;line-height:30px;">
+        <div class="mui-radio right">
             <input class="radio" type="radio" checked="checked" name="type" value="all" v-model='type' @click="queryType('all')">全部</input>
             <input class="radio" type="radio" name="type" value="video" v-model='type' @click="queryType('video')">视频</input>
             <input class="radio" type="radio" name="type" value="img" v-model='type' @click="queryType('img')">图片</input>
@@ -19,15 +19,15 @@
       </div>
     </div>
 
-    <div class="mui-col-md-4">
-      <div style="min-width:390px">
+    <div class="mui-col-md-3">
+      <div class="right" style="min-width:220px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
-        <input type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
+        <input style="width:93px" type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
       </div>
       <div class="mui-textfield right">
         <label for="start_time">From</label>
-        <input type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
+        <input style="width:93px" type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
       </div>
       </div>
     </div>

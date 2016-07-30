@@ -1,6 +1,6 @@
 <template>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-6">
+    <div class="mui-col-md-7">
       <div>
         <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(0)">今天</button>
         <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(1)">昨天</button>
@@ -9,15 +9,15 @@
         <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(100)">历史总数</button>
       </div>
     </div>
-    <div class="mui-col-md-5">
-      <div style="min-width:390px">
+    <div class="mui-col-md-4">
+      <div class="right" style="min-width:220px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
-        <input type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
+        <input style="width:93px" type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
       </div>
       <div class="mui-textfield right">
         <label for="start_time">From</label>
-        <input type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
+        <input style="width:93px" type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
       </div>
       </div>
     </div>
