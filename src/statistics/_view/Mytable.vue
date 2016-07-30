@@ -31,6 +31,7 @@
 export default {
   name: 'Mytable',
   props: {
+    name: String,
     data: Object
   },
 

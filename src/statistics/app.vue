@@ -21,6 +21,9 @@
             <a href="#!/active_map/nano_active_map">激活地区分布</a>
           </li>
           <li>
+            <a href="#!/rest_statistics/rest_statistics">其他数据</a>
+          </li>
+          <li>
             <!--<a href="#!/chart/nano_active?new_time=7">最近七天</a>-->
           </li>
         </ul>

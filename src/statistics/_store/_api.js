@@ -9,10 +9,10 @@ export default {
     url: baseUrl + 'location_active',
     serialize: 'nano_active_map'
   },
-  nano_active_area: {
-    url: baseUrl + 'location_active',
-    serialize: 'nano_active_area'
-  },
+  // nano_active_area: {
+  //   url: baseUrl + 'location_active',
+  //   serialize: 'nano_active_area'
+  // },
   location_active_detail: {
     url: baseUrl + 'location/active/detail',
     serialize: 'location_active_detail'
@@ -44,5 +44,9 @@ export default {
   share_visitor_trend: {
     url: baseUrl + 'api/share/share_vistor_trends',
     serialize: 'share_visitor_trend'
+  },
+  rest_statistics: {
+    url: baseUrl + 'api/active/queryNanoStatistics',
+    serialize: 'rest_statistics'
   }
 }

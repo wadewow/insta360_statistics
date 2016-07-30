@@ -37,7 +37,16 @@ const state = {
     name: 'table',
     data: {
       current_page: 1,
-      page_total: 0,
+      page_total: 1,
+      column: [],
+      series: []
+    }
+  },
+  table1: {
+    name: 'table',
+    data: {
+      current_page: 1,
+      page_total: 1,
       column: [],
       series: []
     }
@@ -48,7 +57,6 @@ const state = {
 const apiQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
-    console.log(res)
     state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body), query.location)
   }, (res) => {
     // error callback
@@ -60,6 +68,16 @@ const apiQueryTable = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
     state.table.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
+const apiQueryTable1 = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    state.table1.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
   }, (res) => {
     // error callback
     console.log(res)
@@ -93,8 +111,10 @@ const mutations = {
   TABLE_UPDATE (state, tname, query) {
     state.table.name = tname
     if (tname === 'share_list') {
+      apiQueryTable1(tname, query)
+    } else if (tname === 'rest_statistics') {
       apiQueryTable(tname, query)
-    } else {
+    }else {
       state.table.data = ChartData[tname]
     }
   }

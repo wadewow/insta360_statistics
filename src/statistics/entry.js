@@ -4,9 +4,11 @@ import PostsView from './PostsView'
 import ChartView from './ChartView'
 import ActiveMapView from './ActiveMapView'
 import MapView from './MapView'
+import AreaView from './AreaView'
 import TableView from './TableView'
 import PostView from './PostView'
 import LocationActiveDetail from './LocationActiveDetail'
+import RestStatisticsView from './RestStatisticsView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import pikaday from '../_directives/pikaday'
@@ -37,11 +39,17 @@ router.map({
   '/map/:cname': {
     component: MapView
   },
+  '/area/:cname': {
+    component: AreaView
+  },
   '/table/:tname': {
     component: TableView
   },
   '/location_active_detail/:cname/:city': {
     component: LocationActiveDetail
+  },
+  '/rest_statistics/:tname': {
+    component: RestStatisticsView
   }
 })
 

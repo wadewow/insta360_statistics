@@ -42,19 +42,6 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          // mark: {
-          //   show: true,
-          //   title: {
-          //     mark: '辅助线开关',
-          //     markUndo: '删除辅助线',
-          //     markClear: '清空辅助线'
-          //   },
-          //   lineStyle: {
-          //     width: 2,
-          //     color: '#1e90ff',
-          //     type: 'dashed'
-          //   }
-          // },
           dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
           magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
@@ -911,9 +898,9 @@ export default {
   share_list: data => {
     const page_total = data['page_total']
     const column = []
-    for (var item in data['data'][0]) {
-      column.push(item)
-    }
+    // for (var item in data['data'][0]) {
+    //   column.push(item)
+    // }
     for (var i in data['data']) {
       data['data'][i]['share_location'] = data['data'][i]['share_location'].replace(/\,/g, ' ')
       if (data['data'][i]['title'] === '') {
@@ -926,6 +913,22 @@ export default {
       page_total: page_total,
       column: column,
       series: data['data']
+    }
+  },
+  rest_statistics: data => {
+    const column = ['出厂序列号总数', '已激活序列号总数', '今日激活序列号数', '分享的视频总数', '分享的图片总数', '有分享行为的序列号数', '不重复的视频数', '不重复的图片数', 'KnowMore点击比例', 'KnowMore历史点击比例']
+    // for (var item in data) {
+    //   column.push(item)
+    // }
+    var temp = data['history_knowMore_nums']
+    data['history_knowMore_nums'] = data['knowMore_nums_scale']
+    data['knowMore_nums_scale'] = temp
+    return {
+      total: 1,
+      current_page: 1,
+      page_total: 1,
+      column: column,
+      series: { data }
     }
   },
   nano_store: data => {
@@ -1104,4 +1107,113 @@ export default {
       ]
     }
   }
+  // nano_active_area: data => {
+  //   const native_data = data['native']
+  //   const abroad_data = data['abroad']
+  //   const all_data = data['all']
+  //   var max = 500
+  //   if (!_.isEmpty(all_data['data'])) {
+  //     var m = all_data['data'][0]['total']
+  //     max = (parseInt(m / 100, 10) + 1) * 100
+  //   }
+  //   function getNativeData () {
+  //     const result = []
+  //     for (var index in native_data['data']) {
+  //       result.push(_.assign({'name': native_data['data'][index]['location'], 'value': native_data['data'][index]['total']}))
+  //     }
+  //     return result
+  //   }
+  //   function getAbroadData () {
+  //     const result = []
+  //     for (var index in abroad_data['data']) {
+  //       result.push(_.assign({'name': abroad_data['data'][index]['location'], 'value': abroad_data['data'][index]['total']}))
+  //     }
+  //     return result
+  //   }
+  //   const total_all = parseInt(data['all']['total'], 10)
+  //   const total_native = parseInt(data['native']['total'], 10)
+  //   const total_abroad = total_all - total_native
+  //   const _native_data = getNativeData()
+  //   const _abroad_data = getAbroadData()
+  //   const _native_top = []
+  //   const _abroad_top = []
+  //   var count = 0
+  //   for (var i in _native_data) {
+  //     _native_top.push(_native_data[i])
+  //     count++
+  //     if (count === 10) {
+  //       break
+  //     }
+  //   }
+  //   count = 0
+  //   for (var j in _abroad_data) {
+  //     _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value']}))
+  //     count++
+  //     if (count === 10) {
+  //       break
+  //     }
+  //   }
+  //   return {
+  //     total: [{
+  //       name: '总激活量',
+  //       value: _.sum(y_all),
+  //       comment: '(未加200)'
+  //     },
+  //     {
+  //       name: '国内激活量',
+  //       value: _.sum(y_native)
+  //     },
+  //     {
+  //       name: '国外激活量',
+  //       value: _.sum(y_abroad)
+  //     }
+  //     ],
+  //     title: {
+  //       text: '设备激活情况',
+  //       x: 'left'
+  //     },
+  //     tooltip: {
+  //       trigger: 'axis',
+  //       axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+  //         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+  //       }
+  //     },
+  //     toolbox: {
+  //       show: true,
+  //       feature: {
+  //         dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+  //         dataView: { show: true, readOnly: false },
+  //         magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+  //         restore: { show: true },
+  //         saveAsImage: { show: true }
+  //       }
+  //     },
+  //     legend: {
+  //       x: 'center',
+  //       data: ['国内激活数量', '国外激活数量', '全部激活数量']
+  //     },
+  //     xAxis: {
+  //       data: x // 横向则将data放到yAxis
+  //     },
+  //     yAxis: {},
+  //     series: [{
+  //       name: '全部激活数量',
+  //       type: 'line',
+  //       data: y_all,
+  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
+  //     },
+  //     {
+  //       name: '国内激活数量',
+  //       type: 'line',
+  //       data: y_native,
+  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
+  //     },
+  //     {
+  //       name: '国外激活数量',
+  //       type: 'line',
+  //       data: y_abroad,
+  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
+  //     }]
+  //   }
+  // }
 }

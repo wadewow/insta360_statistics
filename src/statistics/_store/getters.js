@@ -13,3 +13,5 @@ export const getChartName = state => state.chart.name
 export const getChartData = state => state.chart.data
 export const getTableName = state => state.table.name
 export const getTableData = state => state.table.data
+export const getTableName1 = state => state.table1.name
+export const getTableData1 = state => state.table1.data

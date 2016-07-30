@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="mui-row pikaday">
     <div class="mui-col-md-6">
         <div class="period">
@@ -47,12 +48,13 @@
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='queryPage'>GO</button>
   <span> 总计 </span><span>{{ data.total }}</span><span> 条</span>
   <input type="hidden" id="total_page" number value="{{ data.page_total }}"></input>
+  </div>
 </template>
 
 <script>
 import Mytable from './_view/Mytable'
 import store from './_store/store'
-import { getTableName, getTableData } from './_store/getters'
+import { getTableName1, getTableData1 } from './_store/getters'
 
 export default {
   name: 'TableView',
@@ -65,8 +67,8 @@ export default {
 
   vuex: {
     getters: {
-      name: getTableName,
-      data: getTableData
+      name: getTableName1,
+      data: getTableData1
     }
   },
 
@@ -194,6 +196,7 @@ export default {
 
   route: {
     data ({ to }) {
+      console.log(to.params.tname)
       const tname = to.params.tname
       const query = {
         start_time: this.start,
