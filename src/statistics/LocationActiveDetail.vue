@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="mui-row pikaday">
     <div class="mui-col-md-7">
       <div>
@@ -30,6 +31,7 @@
   </div>
   <block :items="data"></block>
   <chart :name="name" :data="data"></chart>
+  </div>
 </template>
 <script>
 import Chart from './_component/Chart'

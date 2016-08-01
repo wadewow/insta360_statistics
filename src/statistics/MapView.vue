@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="mui-row pikaday">
     <div class="mui-col-md-7">
       <div>
@@ -66,6 +67,7 @@
       </tbody>
     </table>
     </div>
+  </div>
   </div>
 </template>
 

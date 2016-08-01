@@ -51,7 +51,8 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['国内激活数量', '国外激活数量', '全部激活数量']
+        data: ['全部激活数量', '国内激活数量', '国外激活数量'],
+        selected: { '国内激活数量': false, '国外激活数量': false }
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
@@ -992,7 +993,8 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['全部', 'PC端', '手机端']
+        data: ['全部', 'PC端', '手机端'],
+        selected: { 'PC端': false, '手机端': false }
       },
       xAxis: {
         data: x, // 横向则将data放到yAxis
@@ -1072,7 +1074,8 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['全部', 'PC端', '手机端']
+        data: ['全部', 'PC端', '手机端'],
+        selected: { 'PC端': false, '手机端': false }
       },
       xAxis: {
         data: x, // 横向则将data放到yAxis

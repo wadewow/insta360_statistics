@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="mui-row pikaday">
     <div class="mui-col-md-7">
       <div>
@@ -28,6 +29,7 @@
   <block :items="data"></block>
   <chart :name="name" :data="data"></chart>
   <input type='hidden' id="chartType" value="{{ data['series'][0]['type'] }}"/>
+  </div>
 </template>
 
 <script>
