@@ -9,10 +9,10 @@ export default {
     url: baseUrl + 'location_active',
     serialize: 'nano_active_map'
   },
-  // nano_active_area: {
-  //   url: baseUrl + 'location_active',
-  //   serialize: 'nano_active_area'
-  // },
+  nano_active_area: {
+    url: baseUrl + 'api/active/active_area_trends',
+    serialize: 'nano_active_area'
+  },
   location_active_detail: {
     url: baseUrl + 'location/active/detail',
     serialize: 'location_active_detail'

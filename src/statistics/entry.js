@@ -39,7 +39,7 @@ router.map({
   '/map/:cname': {
     component: MapView
   },
-  '/area/:cname': {
+  '/area/:cname/:startTime/:endTime/:is_native': {
     component: AreaView
   },
   '/table/:tname': {

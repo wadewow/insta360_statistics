@@ -1109,114 +1109,76 @@ export default {
       }
       ]
     }
+  },
+
+  nano_active_area: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      console.log(y)
+      for (var j in y) {
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    return {
+      total: [{
+        name: '总激活量',
+        // value: _.sum(y_all),
+        comment: '(未加200)'
+      }],
+      title: {
+        text: '激活情况区域对比面积图',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+      // [{
+      //   name: '全部激活数量',
+      //   type: 'line',
+      //   data: y_all,
+      //   itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      // }]
+    }
   }
-  // nano_active_area: data => {
-  //   const native_data = data['native']
-  //   const abroad_data = data['abroad']
-  //   const all_data = data['all']
-  //   var max = 500
-  //   if (!_.isEmpty(all_data['data'])) {
-  //     var m = all_data['data'][0]['total']
-  //     max = (parseInt(m / 100, 10) + 1) * 100
-  //   }
-  //   function getNativeData () {
-  //     const result = []
-  //     for (var index in native_data['data']) {
-  //       result.push(_.assign({'name': native_data['data'][index]['location'], 'value': native_data['data'][index]['total']}))
-  //     }
-  //     return result
-  //   }
-  //   function getAbroadData () {
-  //     const result = []
-  //     for (var index in abroad_data['data']) {
-  //       result.push(_.assign({'name': abroad_data['data'][index]['location'], 'value': abroad_data['data'][index]['total']}))
-  //     }
-  //     return result
-  //   }
-  //   const total_all = parseInt(data['all']['total'], 10)
-  //   const total_native = parseInt(data['native']['total'], 10)
-  //   const total_abroad = total_all - total_native
-  //   const _native_data = getNativeData()
-  //   const _abroad_data = getAbroadData()
-  //   const _native_top = []
-  //   const _abroad_top = []
-  //   var count = 0
-  //   for (var i in _native_data) {
-  //     _native_top.push(_native_data[i])
-  //     count++
-  //     if (count === 10) {
-  //       break
-  //     }
-  //   }
-  //   count = 0
-  //   for (var j in _abroad_data) {
-  //     _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value']}))
-  //     count++
-  //     if (count === 10) {
-  //       break
-  //     }
-  //   }
-  //   return {
-  //     total: [{
-  //       name: '总激活量',
-  //       value: _.sum(y_all),
-  //       comment: '(未加200)'
-  //     },
-  //     {
-  //       name: '国内激活量',
-  //       value: _.sum(y_native)
-  //     },
-  //     {
-  //       name: '国外激活量',
-  //       value: _.sum(y_abroad)
-  //     }
-  //     ],
-  //     title: {
-  //       text: '设备激活情况',
-  //       x: 'left'
-  //     },
-  //     tooltip: {
-  //       trigger: 'axis',
-  //       axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-  //         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-  //       }
-  //     },
-  //     toolbox: {
-  //       show: true,
-  //       feature: {
-  //         dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
-  //         dataView: { show: true, readOnly: false },
-  //         magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-  //         restore: { show: true },
-  //         saveAsImage: { show: true }
-  //       }
-  //     },
-  //     legend: {
-  //       x: 'center',
-  //       data: ['国内激活数量', '国外激活数量', '全部激活数量']
-  //     },
-  //     xAxis: {
-  //       data: x // 横向则将data放到yAxis
-  //     },
-  //     yAxis: {},
-  //     series: [{
-  //       name: '全部激活数量',
-  //       type: 'line',
-  //       data: y_all,
-  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
-  //     },
-  //     {
-  //       name: '国内激活数量',
-  //       type: 'line',
-  //       data: y_native,
-  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
-  //     },
-  //     {
-  //       name: '国外激活数量',
-  //       type: 'line',
-  //       data: y_abroad,
-  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
-  //     }]
-  //   }
-  // }
 }

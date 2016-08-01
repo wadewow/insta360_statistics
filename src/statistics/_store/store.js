@@ -102,7 +102,7 @@ const mutations = {
   },
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
-    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink' || cname === 'location_share' || cname === 'share_visitor' || cname === 'share_visitor_trend') {
+    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink' || cname === 'location_share' || cname === 'share_visitor' || cname === 'share_visitor_trend' || cname === 'nano_active_area') {
       apiQuery(cname, query)
     } else {
       state.chart.data = ChartData[cname]
