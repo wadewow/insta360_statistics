@@ -13,7 +13,7 @@
       <!--nano激活-->
       <li>
         <strong @click="toggleCollapse">设备激活情况</strong>
-        <ul style="display:block">
+        <ul>
           <li>
             <a href="#!/chart/nano_active">激活数量走势</a>
           </li>
@@ -30,7 +30,7 @@
       </li>
       <li>
         <strong @click="toggleCollapse">Nano内容分享</strong>
-        <ul style="display:block">
+        <ul>
           <li>
             <a href="#!/table/share_list">分享列表明细</a>
           </li>
@@ -53,7 +53,7 @@
       </li>
       <li>
         <strong @click="toggleCollapse">Nano购买链接</strong>
-        <ul style="display:block">
+        <ul>
           <li>
             <a href="#!/chart/nano_store">店铺流量分布</a>
           </li>
@@ -135,7 +135,8 @@ export default {
       if (_el.getAttribute('show') === null) {
         _el.setAttribute('show', 'show')
       }
-      _el.style = _el.getAttribute('show') === 'show' ? 'display:block' : 'display:none'
+      _el.setAttribute('style', _el.getAttribute('show') === 'show' ? 'display:block' : 'display:none')
+      // _el.style = _el.getAttribute('show') === 'show' ? 'display:block' : 'display:none'
       _el.setAttribute('show', _el.getAttribute('show') === 'hide' ? 'show' : 'hide')
     },
 
