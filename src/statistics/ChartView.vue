@@ -11,14 +11,14 @@
       </div>
     </div>
     <div class="mui-col-md-4">
-      <div class="right" style="min-width:220px">
+      <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
-        <input style="width:93px" type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
+        <input style="width:100px" type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
       </div>
       <div class="mui-textfield right">
         <label for="start_time">From</label>
-        <input style="width:93px" type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
+        <input style="width:100px" type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
       </div>
       </div>
     </div>
