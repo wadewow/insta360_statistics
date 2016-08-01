@@ -130,12 +130,18 @@ export default {
     },
 
     toggleCollapse (ev) {
-      var _el = ev.srcElement.nextElementSibling
+      var src = ev.srcElement || ev.target
+      var _el = src.nextElementSibling || this.getNextSibling(src)
       if (_el.getAttribute('show') === null) {
         _el.setAttribute('show', 'show')
       }
       _el.style = _el.getAttribute('show') === 'show' ? 'display:block' : 'display:none'
       _el.setAttribute('show', _el.getAttribute('show') === 'hide' ? 'show' : 'hide')
+    },
+
+    getNextSibling (node) {
+      do { node = node.nextSibling } while (node && node.nodeType !== 1)
+      return node
     }
   }
 }
