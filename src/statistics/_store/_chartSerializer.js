@@ -1117,6 +1117,7 @@ export default {
     const y = []
 
     var count = 0
+    var _sum = 0
     for (var index in data) {
       x.push(index)
       if (count === 0) {
@@ -1126,8 +1127,8 @@ export default {
           y.push(_.assign({'name': i, 'data': temp}))
         }
       }
-      console.log(y)
       for (var j in y) {
+        _sum += data[index][y[j]['name']]
         y[j]['data'].push(data[index][y[j]['name']])
       }
       count++
@@ -1139,11 +1140,7 @@ export default {
     }
 
     return {
-      total: [{
-        name: '总激活量',
-        // value: _.sum(y_all),
-        comment: '(未加200)'
-      }],
+      total: [],
       title: {
         text: '激活情况区域对比面积图',
         x: 'left'

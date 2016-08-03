@@ -46,7 +46,7 @@
             <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
             <td class="mui--text-center">{{ item.value }}</td>
         </tr>
-        <tr><td colspan="2"><button onclick="javascript:window.location.href='#!/area/nano_active_area/2016-07-21/2016-07-30/1'" class="mui-btn mui-btn--primary mui-btn--small">区域对比</button></td></tr>
+        <tr><td colspan="2"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
       </tbody>
     </table>
     <table class="mui-table mui-table--bordered table">
@@ -61,7 +61,7 @@
             <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
             <td class="mui--text-center">{{ item.value }}</td>
         </tr>
-        <tr><td colspan="2"><button onclick="javascript:window.location.href='#!/area/nano_active_area/2016-07-21/2016-07-30/0'" class="mui-btn mui-btn--primary mui-btn--small">区域对比</button></td></tr>
+        <tr><td colspan="2"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
       </tbody>
     </table>
     </div>
@@ -100,7 +100,8 @@ export default {
       end: ''
     }
   },
-
+  computed: {
+  },
   created () {
     this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
     this.endTime = new Date().toLocaleDateString()
@@ -109,6 +110,11 @@ export default {
   },
 
   methods: {
+    href (v) {
+      var start = this.start.replace(/\//g, '-')
+      var end = this.end.replace(/\//g, '-')
+      return '#!/area/nano_active_area/' + start + '/' + end + '/' + v
+    },
     queryDate () {
       const cname = this.$route.params.cname
       const query = {

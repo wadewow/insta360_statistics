@@ -10,7 +10,7 @@
         <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(100)">历史总数</button>
       </div>
     </div>
-    <div class="mui-col-md-4">
+    <div class="mui-col-md-3">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -22,8 +22,11 @@
       </div>
       </div>
     </div>
-    <div class="mui-col-md-1">
+    <div class="mui-col-md-2">
+      <div class="" style="min-width:180px">
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
+      <button onclick="javascript:window.location.href='#!/active_map/nano_active_map'" class="mui-btn mui-btn--raised">返回</button>
+      </div>
     </div>
   </div>
   <block :items="data"></block>
@@ -60,15 +63,17 @@ export default {
       startTime: '',
       endTime: '',
       start: '',
-      end: ''
+      end: '',
+      is_native: 0
     }
   },
 
   created () {
-    this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
-    this.endTime = new Date().toLocaleDateString()
-    this.start = this.startTime
-    this.end = this.endTime
+    // this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
+    // this.endTime = new Date().toLocaleDateString()
+    // this.start = this.startTime
+    // this.end = this.endTime
+    // this.is_native = 0
   },
 
   methods: {
@@ -76,7 +81,8 @@ export default {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.startTime,
-        end_time: this.endTime
+        end_time: this.endTime,
+        is_native: this.is_native
       }
       store.dispatch('CHART_UPDATE', cname, query)
       this.start = this.startTime
@@ -106,7 +112,8 @@ export default {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.start,
-        end_time: this.end
+        end_time: this.end,
+        is_native: this.is_native
       }
       store.dispatch('CHART_UPDATE', cname, query)
     }
@@ -114,15 +121,16 @@ export default {
 
   route: {
     data ({ to }) {
-      this.startTime = to.params.startTime
-      this.endTime = to.params.endTime
+      this.startTime = to.params.startTime || new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
+      this.endTime = to.params.endTime || new Date().toLocaleDateString()
       this.start = this.startTime
       this.end = this.endTime
+      this.is_native = to.params.is_native
       const cname = to.params.cname
       const query = {
         start_time: this.start,
         end_time: this.end,
-        is_native: to.params.is_native
+        is_native: this.is_native
       }
       store.dispatch('CHART_UPDATE', cname, query)
     }
