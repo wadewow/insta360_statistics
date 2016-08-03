@@ -25,7 +25,7 @@
     <div class="mui-col-md-2">
       <div class="" style="min-width:180px">
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
-      <button onclick="javascript:window.location.href='#!/active_map/nano_active_map'" class="mui-btn mui-btn--raised">返回</button>
+      <a href="#!/active_map/nano_active_map" class="mui-btn mui-btn--raised">返回</a>
       </div>
     </div>
   </div>

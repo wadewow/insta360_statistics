@@ -25,7 +25,7 @@
     <div class="mui-col-md-2">
       <div class="" style="min-width:180px">
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
-      <button onclick="javascript:window.location.href='#!/active_map/nano_active_map'" class="mui-btn mui-btn--raised">返回</button>
+      <a :href="back('0')" class="mui-btn mui-btn--raised">返回</a>
       </div>
     </div>
   </div>
@@ -77,6 +77,18 @@ export default {
   },
 
   methods: {
+    back (v) {
+      const cname = this.$route.params.cname
+      var s = 'active_map/nano_active_map'
+      if (cname === 'nano_active_area') {
+        s = 'active_map/nano_active_map'
+      } else if (cname === 'share_area') {
+        s = 'map/location_share'
+      } else if (cname === 'visit_area') {
+        s = 'map/share_visitor'
+      }
+      return '#!/' + s
+    },
     queryDate () {
       const cname = this.$route.params.cname
       const query = {

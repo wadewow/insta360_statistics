@@ -33,7 +33,7 @@
   <chart class="chart" :name="name" :data="data"></chart>
   </div>
   <div class="mui-col-md-4">
-  <div class="right" style="min-width:370px">
+  <div class="right" style="min-width:390px">
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>
@@ -48,6 +48,7 @@
             <td class="mui--text-center">{{ item.value }}</td>
             <td class="mui--text-center">{{ item.percent }}%</td>
         </tr>
+        <tr><td colspan="2"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
       </tbody>
     </table>
     <table class="mui-table mui-table--bordered table">
@@ -64,6 +65,7 @@
             <td class="mui--text-center">{{ item.value }}</td>
             <td class="mui--text-center">{{ item.percent }}%</td>
         </tr>
+        <tr><td colspan="2"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
       </tbody>
     </table>
     </div>
@@ -111,6 +113,18 @@ export default {
   },
 
   methods: {
+    href (v) {
+      var start = this.start.replace(/\//g, '-')
+      var end = this.end.replace(/\//g, '-')
+      var cname = this.$route.params.cname
+      var s = 'share_area'
+      if (cname === 'location_share') {
+        s = 'share_area'
+      } else if (cname === 'share_visitor') {
+        s = 'visit_area'
+      }
+      return '#!/area/' + s + '/' + start + '/' + end + '/' + v
+    },
     queryDate () {
       const cname = this.$route.params.cname
       const query = {

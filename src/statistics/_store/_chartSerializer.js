@@ -1170,12 +1170,128 @@ export default {
       },
       yAxis: {},
       series: _series
-      // [{
-      //   name: '全部激活数量',
-      //   type: 'line',
-      //   data: y_all,
-      //   itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      // }]
+    }
+  },
+  share_area: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    var _sum = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        _sum += data[index][y[j]['name']]
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    return {
+      total: [],
+      title: {
+        text: '分享情况区域对比面积图',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+  visit_area: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    var _sum = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        _sum += data[index][y[j]['name']]
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    return {
+      total: [],
+      title: {
+        text: '浏览情况区域对比面积图',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
     }
   }
 }

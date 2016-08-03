@@ -37,6 +37,10 @@ export default {
     url: baseUrl + 'api/share/getlocationShareData',
     serialize: 'location_share'
   },
+  share_area: {
+    url: baseUrl + 'api/share/share_nums_area_trends',
+    serialize: 'share_area'
+  },
   share_visitor: {
     url: baseUrl + 'share_vistor',
     serialize: 'share_visitor'
@@ -44,6 +48,10 @@ export default {
   share_visitor_trend: {
     url: baseUrl + 'api/share/share_vistor_trends',
     serialize: 'share_visitor_trend'
+  },
+  visit_area: {
+    url: baseUrl + 'api/share/share_vistor_area_trends',
+    serialize: 'visit_area'
   },
   rest_statistics: {
     url: baseUrl + 'api/active/queryNanoStatistics',
