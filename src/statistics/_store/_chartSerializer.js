@@ -145,20 +145,31 @@ export default {
     const x = []
     const y_video = []
     const y_image = []
+    var is_all = false
     for (var index in data) {
+      if (index === '06-01') {
+        is_all = true
+      }
       x.push(index)
       y_video.push(parseInt(data[index]['视频'], 10))
       y_image.push(parseInt(data[index]['图片'], 10))
     }
+    const total_imgage = _.sum(y_image)
+    const total_video = _.sum(y_video)
 
+    if (is_all) {
+      x.shift()
+      y_image.shift()
+      y_video.shift()
+    }
     return {
       total: [{
         name: '图片浏览量',
-        value: _.sum(y_image)
+        value: total_imgage
       },
       {
         name: '视频浏览量',
-        value: _.sum(y_video)
+        value: total_video
       }
       ],
       title: {
