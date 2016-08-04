@@ -1,7 +1,40 @@
 <template>
-  <div>
+  <!--<div>
     <simpletable :name="name" :data="data"></simpletable>
-  </div>
+  </div>-->
+    <div>
+    <table style="width:50%" class="mui-table mui-table--bordered">
+      <thead>
+        <tr>
+          <th colspan="2">历史总数据</th>
+        </tr>
+        <!--<tr>
+          <th v-for="column in data['column']">{{ column }}</th>
+        </tr>-->
+      </thead>
+      <tbody>
+        <tr v-for="item in data['series'][0]">
+          <td>{{ item.name }}</td>
+          <td>{{ item.value }}</td>
+        </tr>
+    </tbody>
+    </table>
+    <br/>
+    <table style="width:50%" class="mui-table mui-table--bordered">
+      <thead>
+        <tr>
+          <th v-for="column in data['column']">{{ column }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data['series'][1]">
+          <td>{{ item.name }}</td>
+          <td>{{ item.value }}</td>
+          <td>{{ item.comment }}</td>
+        </tr>
+    </tbody>
+    </table>
+    </div>
 </template>
 
 <script>
@@ -40,7 +73,6 @@ export default {
 
   route: {
     data ({ to }) {
-      console.log('rest' + to.params.tname)
       const tname = to.params.tname
       const query = {
       }

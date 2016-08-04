@@ -7,9 +7,9 @@
         <th style="width:16%;min-width:80px;font-weight:500;min-width:80px">地理位置</th>
         <th style="width:30%;min-width:100px;font-weight:500">标题</th>
         <th style="width:16%;font-weight:500">序列号</th>
-        <th class="sort" style="width:8%;min-width:75px" id="week_prew" @click="sort('week_prew')" value="0">周浏览</th>
-        <th class="sort" style="width:8%;min-width:75px" id="view" @click="sort('view')" value="0">总浏览</th>
-        <th class="sort" style="width:16%;min-width:55px" id="time" @click="sort('time')" value="1">时间 ↓</th>
+        <th class="sort" style="width:8%;min-width:75px" id="week_prew" @click="sort('week_prew')" value="0">{{ week_prew }}</th>
+        <th class="sort" style="width:8%;min-width:75px" id="view" @click="sort('view')" value="0">{{ view }}</th>
+        <th class="sort" style="width:16%;min-width:55px" id="time" @click="sort('time')" value="1">{{ time }}</th>
       </tr>
     </thead>
     <tbody>
@@ -34,33 +34,43 @@ export default {
     name: String,
     data: Object
   },
-
+  data () {
+    return {
+      week_prew: '周浏览',
+      view: '总浏览',
+      time: '时间 ↓'
+    }
+  },
   methods: {
     sort (v) {
-      var element = document.getElementById(v)
-      var val = element.innerText
-      var s = ''
+      var val = ''
+      if (v === 'time') {
+        val = this.time
+      }else if (v === 'view') {
+        val = this.view
+      }else if (v === 'week_prew') {
+        val = this.week_prew
+      }
+      this.time = '时间'
+      this.view = '总浏览'
+      this.week_prew = '周浏览'
       if (val.charAt(val.length - 1) === '↓') {
         if (v === 'time') {
-          s = '时间 ↑'
+          this.time = '时间 ↑'
         }else if (v === 'view') {
-          s = '总浏览 ↑'
+          this.view = '总浏览 ↑'
         }else if (v === 'week_prew') {
-          s = '周浏览 ↑'
+          this.week_prew = '周浏览 ↑'
         }
       }else {
         if (v === 'time') {
-          s = '时间 ↓'
+          this.time = '时间 ↓'
         }else if (v === 'view') {
-          s = '总浏览 ↓'
+          this.view = '总浏览 ↓'
         }else if (v === 'week_prew') {
-          s = '周浏览 ↓'
+          this.week_prew = '周浏览 ↓'
         }
       }
-      document.getElementById('week_prew').innerText = '周浏览'
-      document.getElementById('view').innerText = '总浏览'
-      document.getElementById('time').innerText = '时间'
-      element.innerText = s
       this.$dispatch('sort', v)
     }
   },

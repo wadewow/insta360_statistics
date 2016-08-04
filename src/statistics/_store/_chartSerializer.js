@@ -145,11 +145,7 @@ export default {
     const x = []
     const y_video = []
     const y_image = []
-    var is_all = false
     for (var index in data) {
-      if (index === '06-01') {
-        is_all = true
-      }
       x.push(index)
       y_video.push(parseInt(data[index]['视频'], 10))
       y_image.push(parseInt(data[index]['图片'], 10))
@@ -157,11 +153,6 @@ export default {
     const total_imgage = _.sum(y_image)
     const total_video = _.sum(y_video)
 
-    if (is_all) {
-      x.shift()
-      y_image.shift()
-      y_video.shift()
-    }
     return {
       total: [{
         name: '图片浏览量',
@@ -928,19 +919,33 @@ export default {
     }
   },
   rest_statistics: data => {
-    const column = ['出厂序列号总数', '已激活序列号总数', '今日激活序列号数', '分享的视频总数', '分享的图片总数', '有分享行为的序列号数', '不重复的视频数', '不重复的图片数', 'KnowMore点击比例', 'KnowMore历史点击比例']
-    // for (var item in data) {
-    //   column.push(item)
-    // }
-    var temp = data['history_knowMore_nums']
-    data['history_knowMore_nums'] = data['knowMore_nums_scale']
-    data['knowMore_nums_scale'] = temp
+    const column1 = ['出厂序列号总数', '已激活序列号总数', '今日激活序列号数', '分享的视频总数', '分享的图片总数', '有分享行为的序列号数', '不重复的视频数', '不重复的图片数']
+    const column2 = ['上线~2016.7.25 18:00', '2016.7.27 17:47 ~2016.7.29 12:17', '2016.7.29 12:17 ~ ']
+    const column3 = ['第一次上线', '从默认陀螺仪改成默认拖拽', '回滚为默认陀螺仪']
+    const column = ['Knowmore 点击比例', '数据', '分享内容页版本']
+    const data1 = []
+    var count = 0
+    for (var item1 in data['nano_statistics']) {
+      data1.push(_.assign({'name': column1[count], 'value': data['nano_statistics'][item1]}))
+      count++
+    }
+    count = 0
+    const data2 = []
+    for (var item2 in data['know_more']) {
+      data2.push(_.assign({'name': column2[count], 'value': data['know_more'][item2], 'comment': column3[count]}))
+      count++
+    }
+
+    const data_total = []
+    data_total.push(data1)
+    data_total.push(data2)
+
     return {
       total: 1,
       current_page: 1,
       page_total: 1,
       column: column,
-      series: { data }
+      series: data_total
     }
   },
   nano_store: data => {

@@ -43,7 +43,7 @@
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='nextPage'>下页</button>
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='lastPage'>尾页</button>
   <span>跳转到第</span>
-  <input id="skip" class="skip" type="text" v-on:keyup.enter="queryPage"></input>
+  <input id="skip" class="skip" type="text" v-model="skip" v-on:keyup.enter="queryPage"></input>
   <span>页</span>
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='queryPage'>GO</button>
   <span> 总计 </span><span>{{ data.total }}</span><span> 条</span>
@@ -81,7 +81,8 @@ export default {
       order: 'time_desc',
       pageSize: 15,
       start: '',
-      end: ''
+      end: '',
+      skip: ''
     }
   },
 
@@ -130,11 +131,10 @@ export default {
       this.page = 1
     },
     queryPage () {
-      var element = document.getElementById('skip')
       var total = document.getElementById('total_page').value
-      var val = element.value
+      var val = this.skip
       var re = /^[0-9]*[1-9][0-9]*$/
-      element.value = ''
+      this.skip = ''
       if ((!re.test(val)) || parseInt(val, 10) > parseInt(total, 10)) {
         return false
       }
@@ -196,7 +196,6 @@ export default {
 
   route: {
     data ({ to }) {
-      console.log(to.params.tname)
       const tname = to.params.tname
       const query = {
         start_time: this.start,
