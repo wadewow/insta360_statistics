@@ -67,8 +67,8 @@ export default {
   },
 
   created () {
-    this.startTime = new Date(Date.parse(new Date()) - 29 * 24 * 3600 * 1000).toLocaleDateString()
-    this.endTime = new Date().toLocaleDateString()
+    this.startTime = new Date(Date.parse(new Date()) - 29 * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+    this.endTime = new Date().toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
     this.start = this.startTime
     this.end = this.endTime
     this.city = ''
@@ -88,17 +88,17 @@ export default {
     },
     queryPeriod (val) {
       if (val === 30 || val === 7) {
-        this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString()
-        this.endTime = new Date().toLocaleDateString()
+        this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+        this.endTime = new Date().toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
       } else if (val === 1) {
-        this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString()
-        this.endTime = new Date().toLocaleDateString()
+        this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+        this.endTime = new Date().toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
       } else if (val === 0) {
-        this.startTime = new Date(Date.parse(new Date())).toLocaleDateString()
+        this.startTime = new Date(Date.parse(new Date())).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
         this.endTime = this.startTime
       } else if (val === 100) {
         this.startTime = '2016-06-01'
-        this.endTime = new Date(Date.parse(new Date())).toLocaleDateString()
+        this.endTime = new Date(Date.parse(new Date())).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
       }
       this.start = this.startTime
       this.end = this.endTime
@@ -114,8 +114,8 @@ export default {
 
   route: {
     data ({ to }) {
-      this.startTime = new Date(Date.parse(new Date()) - 29 * 24 * 3600 * 1000).toLocaleDateString()
-      this.endTime = new Date().toLocaleDateString()
+      this.startTime = new Date(Date.parse(new Date()) - 29 * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+      this.endTime = new Date().toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
       this.start = this.startTime
       this.end = this.endTime
       const cname = to.params.cname
