@@ -156,7 +156,7 @@ export default {
       } else if (val === 1) {
         this.comment = '6月21日 18:00 开始统计'
       } else if (val === 2) {
-        this.comment = '7月29日 开始统计'
+        this.comment = '7月12日 开始统计'
       }
       // this.comment = dict_comment[val]
     }
