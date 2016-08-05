@@ -5,11 +5,13 @@
 //   return state.count
 // }
 import dict_name from './dict_name.json'
+import dict_comment from './dict_comment.json'
 export const getPostsPage = state => state.posts.page
 export const getPostsList = state => state.posts.list
 export const getPostsItem = state => state.posts.post
 export const getChartList = state => state.chart.list
 export const getChartName = state => dict_name[state.chart.name]
+export const getChartComment = state => dict_comment[state.chart.name]
 export const getChartData = state => state.chart.data
 export const getTableName = state => state.table.name
 export const getTableData = state => state.table.data

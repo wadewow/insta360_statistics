@@ -15,10 +15,10 @@
         <strong @click="toggleCollapse">设备激活情况</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/chart/nano_active" @click="setComment(0)">激活数量走势</a>
+            <a href="#!/chart/nano_active">激活数量走势</a>
           </li>
           <li>
-            <a href="#!/active_map/nano_active_map" @click="setComment(0)">激活地区分布</a>
+            <a href="#!/active_map/nano_active_map">激活地区分布</a>
           </li>
         </ul>
       </li>
@@ -26,19 +26,19 @@
         <strong @click="toggleCollapse">Nano内容分享</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/table/share_list" @click="setComment(1)">分享列表明细</a>
+            <a href="#!/table/share_list">分享列表明细</a>
           </li>
           <li>
-            <a href="#!/chart/month_share_trends" @click="setComment(1)">分享数量走势</a>
+            <a href="#!/chart/month_share_trends">分享数量走势</a>
           </li>
           <li>
-            <a href="#!/map/location_share" @click="setComment(1)">分享地区分布</a>
+            <a href="#!/map/location_share">分享地区分布</a>
           </li>
           <li>
-            <a href="#!/chart/share_visitor_trend" @click="setComment(1)">浏览次数走势</a>
+            <a href="#!/chart/share_visitor_trend">浏览次数走势</a>
           </li>
           <li>
-            <a href="#!/map/share_visitor" @click="setComment(1)">浏览地区分布</a>
+            <a href="#!/map/share_visitor">浏览地区分布</a>
           </li>
         </ul>
       </li>
@@ -46,13 +46,13 @@
         <strong @click="toggleCollapse">Nano购买链接</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/chart/nano_store" @click="setComment(2)">店铺流量分布</a>
+            <a href="#!/chart/nano_store">店铺流量分布</a>
           </li>
           <li>
-            <a href="#!/chart/buylink_store_trends" @click="setComment(2)">店铺流量走势</a>
+            <a href="#!/chart/buylink_store_trends">店铺流量走势</a>
           </li>
           <li>
-            <a href="#!/chart/click_buylink" @click="setComment(2)">链接点击地区分布</a>
+            <a href="#!/chart/click_buylink">链接点击地区分布</a>
           </li>
         </ul>
       </li>
@@ -60,7 +60,7 @@
         <strong @click="toggleCollapse">历史总数</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/rest_statistics/rest_statistics" @click="setComment(1)">历史总数据</a>
+            <a href="#!/rest_statistics/rest_statistics">历史总数据</a>
           </li>
         </ul>
       </li>
@@ -102,7 +102,7 @@
 
 <script>
 import store from './_store/store'
-import { getChartList, getChartName } from './_store/getters'
+import { getChartList, getChartName, getChartComment } from './_store/getters'
 // import dict_comment from './_store/dict_comment.json'
 export default {
 
@@ -113,7 +113,8 @@ export default {
     },
     getters: {
       name: getChartName,
-      list: getChartList
+      list: getChartList,
+      comment: getChartComment
     }
   },
 
@@ -121,8 +122,8 @@ export default {
     return {
       sidedrawerActive: true,
       sidedrawerStatus: 'active',
-      year: new Date().getFullYear(),
-      comment: ' '
+      year: new Date().getFullYear()
+      // comment: ' '
     }
   },
   methods: {
@@ -148,18 +149,18 @@ export default {
     getNextSibling (node) {
       do { node = node.nextSibling } while (node && node.nodeType !== 1)
       return node
-    },
-
-    setComment (val) {
-      if (val === 0) {
-        this.comment = '6月7日 开始统计'
-      } else if (val === 1) {
-        this.comment = '6月21日 18:00 开始统计'
-      } else if (val === 2) {
-        this.comment = '7月12日 开始统计'
-      }
-      // this.comment = dict_comment[val]
     }
+
+    // setComment (val) {
+    //   // if (val === 0) {
+    //   //   this.comment = '6月7日 开始统计'
+    //   // } else if (val === 1) {
+    //   //   this.comment = '6月21日 18:00 开始统计'
+    //   // } else if (val === 2) {
+    //   //   this.comment = '7月12日 开始统计'
+    //   // }
+    //   // // this.comment = dict_comment[val]
+    // }
 
   }
 }
