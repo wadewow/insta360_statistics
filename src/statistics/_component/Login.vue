@@ -35,8 +35,10 @@ export default {
   methods: {
     submit (ev) {
       ev.preventDefault()
-      var isLogin = store.state.isLogin
-      if (isLogin) {
+      if (store.state.isLogin) {
+        var lifeTime = new Date()
+        lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
+        document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
         router.go('/chart/nano_active')
       } else {
         this.tip = '账号或密码错误！'

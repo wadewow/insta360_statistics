@@ -121,11 +121,10 @@ const mutations = {
     }
   },
   VALIDATE (state, username, password) {
-    if (username === 'insta360_admin' && password === '123') {
+    if (username === 'insta360_admin' && password === '50lan123') {
       state.isLogin = true
-      var lifeTime = new Date()
-      lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
-      document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
+    } else {
+      state.isLogin = false
     }
   }
 }
