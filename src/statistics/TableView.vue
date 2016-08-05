@@ -88,7 +88,7 @@ export default {
   },
 
   created () {
-    this.startTime = moment().subtract(6, 'days').format('YYYY-MM-DD')
+    this.startTime = moment().subtract(29, 'days').format('YYYY-MM-DD')
     this.endTime = moment().format('YYYY-MM-DD')
     this.start = this.startTime
     this.end = this.endTime

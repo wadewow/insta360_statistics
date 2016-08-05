@@ -134,7 +134,7 @@ export default {
 
   route: {
     data ({ to }) {
-      this.startTime = to.params.startTime || moment().subtract(6, 'days').format('YYYY-MM-DD')
+      this.startTime = to.params.startTime || moment().subtract(29, 'days').format('YYYY-MM-DD')
       this.endTime = to.params.endTime || moment().format('YYYY-MM-DD')
       this.start = this.startTime
       this.end = this.endTime
