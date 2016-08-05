@@ -81,7 +81,8 @@
         <a class="sidedrawer-toggle mui--visible-xs-inline-block mui--visible-sm-inline-block" @click="toggleSidedrawer">☰</a>
         <a class="sidedrawer-toggle mui--hidden-xs mui--hidden-sm" @click="toggleSidedrawer">☰</a>
         <span class="mui--text-title mui--visible-xs-inline-block mui--visible-sm-inline-block">Statistics</span>
-        <span class="mui--text-title" id="name"> {{ name }}</span>
+        <span class="mui--text-title" id="name"> {{ name }} </span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <span id="comment"> {{ comment }}</span>
       </div>
     </div>
