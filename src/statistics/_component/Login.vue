@@ -35,13 +35,15 @@ export default {
   methods: {
     submit (ev) {
       ev.preventDefault()
+      var lifeTime = new Date()
       if (store.state.isLogin) {
-        var lifeTime = new Date()
         lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
         document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
         router.go('/chart/nano_active')
       } else {
         this.tip = '账号或密码错误！'
+        lifeTime.setTime(lifeTime.getTime() - 1)
+        document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
       }
     },
     changePwd (ev) {
