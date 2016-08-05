@@ -10,7 +10,7 @@
         <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(100)">历史总数</button>
       </div>
     </div>
-    <div class="mui-col-md-4">
+    <div class="mui-col-md-3">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -22,54 +22,16 @@
       </div>
       </div>
     </div>
-    <div class="mui-col-md-1">
+    <div class="mui-col-md-2">
+      <div class="" style="min-width:180px">
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
+      <a :href="back('0')" class="mui-btn mui-btn--raised">返回</a>
+      </div>
     </div>
   </div>
-  <div style="display:block;height:100px">
-    <block :items="data"></block>
-  </div>
-  <div class="mui-col-md-8">
-  <chart class="chart" :name="name" :data="data"></chart>
-  </div>
-  <div class="mui-col-md-4">
-  <div class="right" style="min-width:390px">
-    <table class="mui-table mui-table--bordered table">
-      <thead>
-        <tr>
-            <th>全国</th>
-            <th>数量</th>
-            <th>占比</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in data['top']['native']">
-            <td>{{ item.name }}</td>
-            <td class="mui--text-center">{{ item.value }}</td>
-            <td class="mui--text-center">{{ item.percent }}%</td>
-        </tr>
-        <tr><td colspan="2"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
-      </tbody>
-    </table>
-    <table class="mui-table mui-table--bordered table">
-      <thead>
-        <tr>
-            <th>世界</th>
-            <th>数量</th>
-            <th>占比</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in data['top']['abroad']">
-            <td>{{ item.name }}</td>
-            <td class="mui--text-center">{{ item.value }}</td>
-            <td class="mui--text-center">{{ item.percent }}%</td>
-        </tr>
-        <tr><td colspan="2"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
+  <block :items="data"></block>
+  <chart :name="name" :data="data"></chart>
+  <input type='hidden' id="chartType" value="{{ data['series'][0]['type'] }}"/>
   </div>
 </template>
 
@@ -102,35 +64,38 @@ export default {
       startTime: '',
       endTime: '',
       start: '',
-      end: ''
+      end: '',
+      is_native: 0
     }
   },
 
   created () {
-    this.startTime = moment().subtract(6, 'days').format('YYYY-MM-DD')
-    this.endTime = moment().format('YYYY-MM-DD')
-    this.start = this.startTime
-    this.end = this.endTime
+    // this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+    // this.endTime = new Date().toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+    // this.start = this.startTime
+    // this.end = this.endTime
+    // this.is_native = 0
   },
 
   methods: {
-    href (v) {
-      var start = this.start.replace(/\//g, '-')
-      var end = this.end.replace(/\//g, '-')
-      var cname = this.$route.params.cname
-      var s = 'share_area'
-      if (cname === 'location_share') {
-        s = 'share_area'
-      } else if (cname === 'share_visitor') {
-        s = 'visit_area'
+    back (v) {
+      const cname = this.$route.params.cname
+      var s = 'active_map/nano_active_map'
+      if (cname === 'nano_active_area') {
+        s = 'active_map/nano_active_map'
+      } else if (cname === 'share_area') {
+        s = 'map/location_share'
+      } else if (cname === 'visit_area') {
+        s = 'map/share_visitor'
       }
-      return '#!/area/' + s + '/' + start + '/' + end + '/' + v
+      return '#!/' + s
     },
     queryDate () {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.startTime,
-        end_time: this.endTime
+        end_time: this.endTime,
+        is_native: this.is_native
       }
       store.dispatch('CHART_UPDATE', cname, query)
       this.start = this.startTime
@@ -142,7 +107,12 @@ export default {
         this.endTime = moment().format('YYYY-MM-DD')
       } else if (val === 1) {
         this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
-        this.endTime = this.startTime
+        var chartType = document.getElementById('chartType').value
+        if (chartType === 'line') {
+          this.endTime = moment().format('YYYY-MM-DD')
+        }else {
+          this.endTime = this.startTime
+        }
       } else if (val === 0) {
         this.startTime = moment().format('YYYY-MM-DD')
         this.endTime = this.startTime
@@ -155,7 +125,8 @@ export default {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.start,
-        end_time: this.end
+        end_time: this.end,
+        is_native: this.is_native
       }
       store.dispatch('CHART_UPDATE', cname, query)
     }
@@ -163,14 +134,18 @@ export default {
 
   route: {
     data ({ to }) {
+      this.startTime = to.params.startTime || moment().subtract(6, 'days').format('YYYY-MM-DD')
+      this.endTime = to.params.endTime || moment().format('YYYY-MM-DD')
+      this.start = this.startTime
+      this.end = this.endTime
+      this.is_native = to.params.is_native
       const cname = to.params.cname
       const query = {
         start_time: this.start,
-        end_time: this.end
+        end_time: this.end,
+        is_native: this.is_native
       }
       store.dispatch('CHART_UPDATE', cname, query)
-      this.startTime = this.start
-      this.endTime = this.end
     }
   }
 
@@ -186,12 +161,5 @@ export default {
     .mui-textfield {
       margin-left: 16px;
     }
-  }
-  .chart {
-    width: 100%;
-  }
-  .table {
-    margin-left: 10px;
-    margin-top: -20px;
   }
 </style>

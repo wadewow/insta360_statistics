@@ -30,7 +30,7 @@ export default {
       }
       ],
       title: {
-        text: '设备激活情况',
+        text: '激活数量走势',
         x: 'left'
       },
       tooltip: {
@@ -42,19 +42,6 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          // mark: {
-          //   show: true,
-          //   title: {
-          //     mark: '辅助线开关',
-          //     markUndo: '删除辅助线',
-          //     markClear: '清空辅助线'
-          //   },
-          //   lineStyle: {
-          //     width: 2,
-          //     color: '#1e90ff',
-          //     type: 'dashed'
-          //   }
-          // },
           dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
           magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
@@ -64,7 +51,8 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['国内激活数量', '国外激活数量', '全部激活数量']
+        data: ['全部激活数量', '国内激活数量', '国外激活数量'],
+        selected: { '国内激活数量': false, '国外激活数量': false }
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
@@ -111,7 +99,7 @@ export default {
       }
       ],
       title: {
-        text: '分享内容数统计',
+        text: '分享数量走势',
         x: 'left'
       },
       tooltip: {
@@ -162,19 +150,21 @@ export default {
       y_video.push(parseInt(data[index]['视频'], 10))
       y_image.push(parseInt(data[index]['图片'], 10))
     }
+    const total_imgage = _.sum(y_image)
+    const total_video = _.sum(y_video)
 
     return {
       total: [{
         name: '图片浏览量',
-        value: _.sum(y_image)
+        value: total_imgage
       },
       {
         name: '视频浏览量',
-        value: _.sum(y_video)
+        value: total_video
       }
       ],
       title: {
-        text: '分享内容浏览量统计',
+        text: '浏览次数走势',
         x: 'left'
       },
       tooltip: {
@@ -410,7 +400,7 @@ export default {
         abroad: _abroad_top
       },
       title: {
-        text: '区域激活情况',
+        text: '激活地区分布',
         // subtext: '',
         left: 'left'
       },
@@ -911,13 +901,13 @@ export default {
   share_list: data => {
     const page_total = data['page_total']
     const column = []
-    for (var item in data['data'][0]) {
-      column.push(item)
-    }
+    // for (var item in data['data'][0]) {
+    //   column.push(item)
+    // }
     for (var i in data['data']) {
       data['data'][i]['share_location'] = data['data'][i]['share_location'].replace(/\,/g, ' ')
       if (data['data'][i]['title'] === '') {
-        data['data'][i]['title'] = '-'
+        data['data'][i]['title'] = '来自Insta360 Nano用户分享的全景时刻'
       }
     }
     return {
@@ -926,6 +916,36 @@ export default {
       page_total: page_total,
       column: column,
       series: data['data']
+    }
+  },
+  rest_statistics: data => {
+    const column1 = ['出厂序列号总数', '已激活序列号总数', '今日激活序列号数', '分享的视频总数', '分享的图片总数', '有分享行为的序列号数', '不重复的视频数', '不重复的图片数']
+    const column2 = ['上线~2016.7.25 18:00', '2016.7.27 17:47 ~2016.7.29 12:17', '2016.7.29 12:17 ~ ']
+    const column3 = ['第一次上线', '从默认陀螺仪改成默认拖拽', '回滚为默认陀螺仪']
+    const column = ['Knowmore 点击比例', '数据', '分享内容页版本']
+    const data1 = []
+    var count = 0
+    for (var item1 in data['nano_statistics']) {
+      data1.push(_.assign({'name': column1[count], 'value': data['nano_statistics'][item1]}))
+      count++
+    }
+    count = 0
+    const data2 = []
+    for (var item2 in data['know_more']) {
+      data2.push(_.assign({'name': column2[count], 'value': data['know_more'][item2], 'comment': column3[count]}))
+      count++
+    }
+
+    const data_total = []
+    data_total.push(data1)
+    data_total.push(data2)
+
+    return {
+      total: 1,
+      current_page: 1,
+      page_total: 1,
+      column: column,
+      series: data_total
     }
   },
   nano_store: data => {
@@ -989,7 +1009,8 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['全部', 'PC端', '手机端']
+        data: ['全部', 'PC端', '手机端'],
+        selected: { 'PC端': false, '手机端': false }
       },
       xAxis: {
         data: x, // 横向则将data放到yAxis
@@ -1069,7 +1090,8 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['全部', 'PC端', '手机端']
+        data: ['全部', 'PC端', '手机端'],
+        selected: { 'PC端': false, '手机端': false }
       },
       xAxis: {
         data: x, // 横向则将data放到yAxis
@@ -1102,6 +1124,266 @@ export default {
         itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }
       ]
+    }
+  },
+
+  nano_active_area: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    var _sum = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        _sum += data[index][y[j]['name']]
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    return {
+      total: [],
+      title: {
+        text: '激活情况区域对比面积图',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+  share_area: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    var _sum = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        _sum += data[index][y[j]['name']]
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    return {
+      total: [],
+      title: {
+        text: '分享情况区域对比面积图',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+  visit_area: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    var _sum = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        _sum += data[index][y[j]['name']]
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    return {
+      total: [],
+      title: {
+        text: '浏览情况区域对比面积图',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+  buylink_store_trends: data => {
+
+    const x = []
+    const y_pc = []
+    const y_mobile = []
+    const y_all = []
+    for (var index in data) {
+      x.push(index)
+      y_pc.push(data[index]['pc'])
+      y_mobile.push(data[index]['mobile'])
+      y_all.push(data[index]['all'])
+    }
+
+    return {
+      total: [{
+        name: '全部流量',
+        value: _.sum(y_all)
+      },
+      {
+        name: 'PC端流量',
+        value: _.sum(y_pc)
+      },
+      {
+        name: '手机端流量',
+        value: _.sum(y_mobile)
+      }
+      ],
+      title: {
+        text: '店铺流量走势',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['全部流量', 'PC端流量', '手机端流量'],
+        selected: { 'PC端流量': false, '手机端流量': false }
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [{
+        name: '全部流量',
+        type: 'line',
+        data: y_all,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      },
+      {
+        name: 'PC端流量',
+        type: 'line',
+        data: y_pc,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      },
+      {
+        name: '手机端流量',
+        type: 'line',
+        data: y_mobile,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      }]
     }
   }
 }

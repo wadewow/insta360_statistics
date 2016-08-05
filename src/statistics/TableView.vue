@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="mui-row pikaday">
     <div class="mui-col-md-6">
         <div class="period">
@@ -20,14 +21,14 @@
     </div>
 
     <div class="mui-col-md-3">
-      <div class="right" style="min-width:220px">
+      <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
-        <input style="width:93px" type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
+        <input style="width:100px" type="text" id="end_time" placeholder="End Time" v-pikaday="endTime">
       </div>
       <div class="mui-textfield right">
         <label for="start_time">From</label>
-        <input style="width:93px" type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
+        <input style="width:100px" type="text" id="start_time" placeholder="Start Time" v-pikaday="startTime">
       </div>
       </div>
     </div>
@@ -42,17 +43,19 @@
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='nextPage'>下页</button>
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='lastPage'>尾页</button>
   <span>跳转到第</span>
-  <input id="skip" class="skip" type="text" v-on:keyup.enter="queryPage"></input>
+  <input id="skip" class="skip" type="text" v-model="skip" v-on:keyup.enter="queryPage"></input>
   <span>页</span>
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='queryPage'>GO</button>
   <span> 总计 </span><span>{{ data.total }}</span><span> 条</span>
   <input type="hidden" id="total_page" number value="{{ data.page_total }}"></input>
+  </div>
 </template>
 
 <script>
 import Mytable from './_view/Mytable'
 import store from './_store/store'
-import { getTableName, getTableData } from './_store/getters'
+import moment from 'moment'
+import { getTableName1, getTableData1 } from './_store/getters'
 
 export default {
   name: 'TableView',
@@ -65,8 +68,8 @@ export default {
 
   vuex: {
     getters: {
-      name: getTableName,
-      data: getTableData
+      name: getTableName1,
+      data: getTableData1
     }
   },
 
@@ -79,13 +82,14 @@ export default {
       order: 'time_desc',
       pageSize: 15,
       start: '',
-      end: ''
+      end: '',
+      skip: ''
     }
   },
 
   created () {
-    this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString()
-    this.endTime = new Date().toLocaleDateString()
+    this.startTime = moment().subtract(6, 'days').format('YYYY-MM-DD')
+    this.endTime = moment().format('YYYY-MM-DD')
     this.start = this.startTime
     this.end = this.endTime
     this.type = 'all'
@@ -111,28 +115,27 @@ export default {
       }
       store.dispatch('TABLE_UPDATE', tname, query)
       if (val === 30 || val === 7) {
-        this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString()
-        this.endTime = new Date().toLocaleDateString()
+        this.startTime = moment().subtract((val - 1), 'days').format('YYYY-MM-DD')
+        this.endTime = moment().format('YYYY-MM-DD')
       } else if (val === 1) {
-        this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString()
+        this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
         this.endTime = this.startTime
       } else if (val === 0) {
-        this.startTime = new Date(Date.parse(new Date())).toLocaleDateString()
+        this.startTime = moment().format('YYYY-MM-DD')
         this.endTime = this.startTime
       } else if (val === 100) {
         this.startTime = '2016-06-01'
-        this.endTime = new Date(Date.parse(new Date())).toLocaleDateString()
+        this.endTime = moment().format('YYYY-MM-DD')
       }
       this.start = this.startTime
       this.end = this.endTime
       this.page = 1
     },
     queryPage () {
-      var element = document.getElementById('skip')
       var total = document.getElementById('total_page').value
-      var val = element.value
+      var val = this.skip
       var re = /^[0-9]*[1-9][0-9]*$/
-      element.value = ''
+      this.skip = ''
       if ((!re.test(val)) || parseInt(val, 10) > parseInt(total, 10)) {
         return false
       }

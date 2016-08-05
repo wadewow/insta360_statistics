@@ -37,7 +37,16 @@ const state = {
     name: 'table',
     data: {
       current_page: 1,
-      page_total: 0,
+      page_total: 1,
+      column: [],
+      series: []
+    }
+  },
+  table1: {
+    name: 'table',
+    data: {
+      current_page: 1,
+      page_total: 1,
       column: [],
       series: []
     }
@@ -48,8 +57,8 @@ const state = {
 const apiQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
-    console.log(res)
     state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body), query.location)
+    // console.log(state.chart.data)
   }, (res) => {
     // error callback
     console.log(res)
@@ -60,6 +69,16 @@ const apiQueryTable = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
     state.table.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
+const apiQueryTable1 = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    state.table1.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
   }, (res) => {
     // error callback
     console.log(res)
@@ -84,7 +103,7 @@ const mutations = {
   },
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
-    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink' || cname === 'location_share' || cname === 'share_visitor' || cname === 'share_visitor_trend') {
+    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink' || cname === 'location_share' || cname === 'share_visitor' || cname === 'share_visitor_trend' || cname === 'nano_active_area' || cname === 'share_area' || cname === 'visit_area' || cname === 'buylink_store_trends') {
       apiQuery(cname, query)
     } else {
       state.chart.data = ChartData[cname]
@@ -92,9 +111,12 @@ const mutations = {
   },
   TABLE_UPDATE (state, tname, query) {
     state.table.name = tname
+    state.chart.name = tname
     if (tname === 'share_list') {
+      apiQueryTable1(tname, query)
+    } else if (tname === 'rest_statistics') {
       apiQueryTable(tname, query)
-    } else {
+    }else {
       state.table.data = ChartData[tname]
     }
   }
