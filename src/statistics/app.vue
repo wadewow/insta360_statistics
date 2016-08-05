@@ -15,10 +15,10 @@
         <strong @click="toggleCollapse">设备激活情况</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/chart/nano_active" @click="setComment(0, $event)">激活数量走势</a>
+            <a href="#!/chart/nano_active" @click="setComment(0)">激活数量走势</a>
           </li>
           <li>
-            <a href="#!/active_map/nano_active_map" @click="setComment(0, $event)">激活地区分布</a>
+            <a href="#!/active_map/nano_active_map" @click="setComment(0)">激活地区分布</a>
           </li>
         </ul>
       </li>
@@ -26,19 +26,19 @@
         <strong @click="toggleCollapse">Nano内容分享</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/table/share_list" @click="setComment(1, $event)">分享列表明细</a>
+            <a href="#!/table/share_list" @click="setComment(1)">分享列表明细</a>
           </li>
           <li>
-            <a href="#!/chart/month_share_trends" @click="setComment(1, $event)">分享数量走势</a>
+            <a href="#!/chart/month_share_trends" @click="setComment(1)">分享数量走势</a>
           </li>
           <li>
-            <a href="#!/map/location_share" @click="setComment(1, $event)">分享地区分布</a>
+            <a href="#!/map/location_share" @click="setComment(1)">分享地区分布</a>
           </li>
           <li>
-            <a href="#!/chart/share_visitor_trend" @click="setComment(1, $event)">浏览次数走势</a>
+            <a href="#!/chart/share_visitor_trend" @click="setComment(1)">浏览次数走势</a>
           </li>
           <li>
-            <a href="#!/map/share_visitor" @click="setComment(1, $event)">浏览地区分布</a>
+            <a href="#!/map/share_visitor" @click="setComment(1)">浏览地区分布</a>
           </li>
         </ul>
       </li>
@@ -46,10 +46,13 @@
         <strong @click="toggleCollapse">Nano购买链接</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/chart/nano_store" @click="setComment(2, $event)">店铺流量分布</a>
+            <a href="#!/chart/nano_store" @click="setComment(2)">店铺流量分布</a>
           </li>
           <li>
-            <a href="#!/chart/click_buylink" @click="setComment(2, $event)">链接点击地区分布</a>
+            <a href="#!/chart/buylink_store_trends" @click="setComment(2)">店铺流量走势</a>
+          </li>
+          <li>
+            <a href="#!/chart/click_buylink" @click="setComment(2)">链接点击地区分布</a>
           </li>
         </ul>
       </li>
@@ -57,7 +60,7 @@
         <strong @click="toggleCollapse">历史总数</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/rest_statistics/rest_statistics" @click="setComment(1, $event)">历史总数据</a>
+            <a href="#!/rest_statistics/rest_statistics" @click="setComment(1)">历史总数据</a>
           </li>
         </ul>
       </li>
@@ -78,7 +81,7 @@
         <a class="sidedrawer-toggle mui--visible-xs-inline-block mui--visible-sm-inline-block" @click="toggleSidedrawer">☰</a>
         <a class="sidedrawer-toggle mui--hidden-xs mui--hidden-sm" @click="toggleSidedrawer">☰</a>
         <span class="mui--text-title mui--visible-xs-inline-block mui--visible-sm-inline-block">Statistics</span>
-        <span class="mui--text-title" id="tittle"> {{ tittle }}</span>
+        <span class="mui--text-title" id="name"> {{ name }}</span>
         <span id="comment"> {{ comment }}</span>
       </div>
     </div>
@@ -99,9 +102,8 @@
 
 <script>
 import store from './_store/store'
-
-import { getChartList } from './_store/getters'
-
+import { getChartList, getChartName } from './_store/getters'
+// import dict_comment from './_store/dict_comment.json'
 export default {
 
   store: store,
@@ -110,6 +112,7 @@ export default {
     actions: {
     },
     getters: {
+      name: getChartName,
       list: getChartList
     }
   },
@@ -119,8 +122,7 @@ export default {
       sidedrawerActive: true,
       sidedrawerStatus: 'active',
       year: new Date().getFullYear(),
-      comment: ' ',
-      tittle: ' '
+      comment: ' '
     }
   },
   methods: {
@@ -148,7 +150,7 @@ export default {
       return node
     },
 
-    setComment (val, ev) {
+    setComment (val) {
       if (val === 0) {
         this.comment = '6月7日 开始统计'
       } else if (val === 1) {
@@ -156,8 +158,7 @@ export default {
       } else if (val === 2) {
         this.comment = '7月29日 开始统计'
       }
-      var src = ev.srcElement || ev.target
-      this.tittle = src.innerText
+      // this.comment = dict_comment[val]
     }
 
   }

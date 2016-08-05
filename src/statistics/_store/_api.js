@@ -56,5 +56,9 @@ export default {
   rest_statistics: {
     url: baseUrl + 'api/active/queryNanoStatistics',
     serialize: 'rest_statistics'
+  },
+  buylink_store_trends: {
+    url: baseUrl + 'api/buylink/buylink_store_trends',
+    serialize: 'buylink_store_trends'
   }
 }

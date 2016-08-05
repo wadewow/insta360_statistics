@@ -30,7 +30,7 @@ export default {
       }
       ],
       title: {
-        text: '设备激活情况',
+        text: '激活数量走势',
         x: 'left'
       },
       tooltip: {
@@ -99,7 +99,7 @@ export default {
       }
       ],
       title: {
-        text: '分享内容数统计',
+        text: '分享数量走势',
         x: 'left'
       },
       tooltip: {
@@ -164,7 +164,7 @@ export default {
       }
       ],
       title: {
-        text: '分享内容浏览量统计',
+        text: '浏览次数走势',
         x: 'left'
       },
       tooltip: {
@@ -400,7 +400,7 @@ export default {
         abroad: _abroad_top
       },
       title: {
-        text: '区域激活情况',
+        text: '激活地区分布',
         // subtext: '',
         left: 'left'
       },
@@ -907,7 +907,7 @@ export default {
     for (var i in data['data']) {
       data['data'][i]['share_location'] = data['data'][i]['share_location'].replace(/\,/g, ' ')
       if (data['data'][i]['title'] === '') {
-        data['data'][i]['title'] = '-'
+        data['data'][i]['title'] = '来自Insta360 Nano用户分享的全景时刻'
       }
     }
     return {
@@ -1308,6 +1308,82 @@ export default {
       },
       yAxis: {},
       series: _series
+    }
+  },
+  buylink_store_trends: data => {
+
+    const x = []
+    const y_pc = []
+    const y_mobile = []
+    const y_all = []
+    for (var index in data) {
+      x.push(index)
+      y_pc.push(data[index]['pc'])
+      y_mobile.push(data[index]['mobile'])
+      y_all.push(data[index]['all'])
+    }
+
+    return {
+      total: [{
+        name: '全部流量',
+        value: _.sum(y_all)
+      },
+      {
+        name: 'PC端流量',
+        value: _.sum(y_pc)
+      },
+      {
+        name: '手机端流量',
+        value: _.sum(y_mobile)
+      }
+      ],
+      title: {
+        text: '店铺流量走势',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['全部流量', 'PC端流量', '手机端流量'],
+        selected: { 'PC端流量': false, '手机端流量': false }
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [{
+        name: '全部流量',
+        type: 'line',
+        data: y_all,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      },
+      {
+        name: 'PC端流量',
+        type: 'line',
+        data: y_pc,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      },
+      {
+        name: '手机端流量',
+        type: 'line',
+        data: y_mobile,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      }]
     }
   }
 }

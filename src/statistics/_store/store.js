@@ -103,7 +103,7 @@ const mutations = {
   },
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
-    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink' || cname === 'location_share' || cname === 'share_visitor' || cname === 'share_visitor_trend' || cname === 'nano_active_area' || cname === 'share_area' || cname === 'visit_area') {
+    if (cname === 'nano_active' || cname === 'nano_active_map' || cname === 'location_active_detail' || cname === 'month_share_trends' || cname === 'nano_store' || cname === 'click_buylink' || cname === 'location_share' || cname === 'share_visitor' || cname === 'share_visitor_trend' || cname === 'nano_active_area' || cname === 'share_area' || cname === 'visit_area' || cname === 'buylink_store_trends') {
       apiQuery(cname, query)
     } else {
       state.chart.data = ChartData[cname]
@@ -111,6 +111,7 @@ const mutations = {
   },
   TABLE_UPDATE (state, tname, query) {
     state.table.name = tname
+    state.chart.name = tname
     if (tname === 'share_list') {
       apiQueryTable1(tname, query)
     } else if (tname === 'rest_statistics') {
