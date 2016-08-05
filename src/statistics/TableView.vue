@@ -54,6 +54,7 @@
 <script>
 import Mytable from './_view/Mytable'
 import store from './_store/store'
+import moment from 'moment'
 import { getTableName1, getTableData1 } from './_store/getters'
 
 export default {
@@ -87,8 +88,8 @@ export default {
   },
 
   created () {
-    this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
-    this.endTime = new Date().toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+    this.startTime = moment().subtract(6, 'days').format('YYYY-MM-DD')
+    this.endTime = moment().format('YYYY-MM-DD')
     this.start = this.startTime
     this.end = this.endTime
     this.type = 'all'
@@ -114,17 +115,17 @@ export default {
       }
       store.dispatch('TABLE_UPDATE', tname, query)
       if (val === 30 || val === 7) {
-        this.startTime = new Date(Date.parse(new Date()) - (val - 1) * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
-        this.endTime = new Date().toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+        this.startTime = moment().subtract((val - 1), 'days').format('YYYY-MM-DD')
+        this.endTime = moment().format('YYYY-MM-DD')
       } else if (val === 1) {
-        this.startTime = new Date(Date.parse(new Date()) - 1 * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+        this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
         this.endTime = this.startTime
       } else if (val === 0) {
-        this.startTime = new Date(Date.parse(new Date())).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+        this.startTime = moment().format('YYYY-MM-DD')
         this.endTime = this.startTime
       } else if (val === 100) {
         this.startTime = '2016-06-01'
-        this.endTime = new Date(Date.parse(new Date())).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
+        this.endTime = moment().format('YYYY-MM-DD')
       }
       this.start = this.startTime
       this.end = this.endTime
