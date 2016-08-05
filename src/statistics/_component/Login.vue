@@ -9,7 +9,7 @@
       <input type="password" @input="changePwd" id="password" v-model="password" name="password" placeholder="Password">
     </div>
     <button type="submit" @click="submit" class="mui-btn mui-btn--raised">登录</button>
-    <span style="color:red">{{ tip }}</span>
+    <span style="color:red;margin-left:10px"> {{ tip }}</span>
   </form>
 </div>
 </template>
