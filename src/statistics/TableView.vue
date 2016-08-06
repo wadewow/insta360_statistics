@@ -3,11 +3,11 @@
   <div class="mui-row pikaday">
     <div class="mui-col-md-6">
         <div class="period">
-            <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(0)">今天</button>
-            <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(1)">昨天</button>
-            <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(7)">最近7天</button>
-            <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(30)">最近30天</button>
-            <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(100)">历史总数</button>
+        <button id="0" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(0)">今天</button>
+        <button id="1" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(1)">昨天</button>
+        <button id="7" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(7)">最近7天</button>
+        <button id="30" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(30)" style="background: #EE7700">最近30天</button>
+        <button id="100" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(100)">历史总数</button>
         </div>
     </div>
     <div class="mui-col-md-2" style="min-width:170px">
@@ -100,12 +100,24 @@ export default {
 
   methods: {
     queryDate () {
+      if (this.startTime === moment().subtract(29, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(30)
+      } else if (this.startTime === moment().subtract(6, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(7)
+      } else if (this.startTime === moment().subtract(1, 'days').format('YYYY-MM-DD') && this.endTime === moment().subtract(1, 'days').format('YYYY-MM-DD')) {
+        this.changeColor(1)
+      } else if (this.startTime === moment().format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(0)
+      } else {
+        this.changeColor(-1)
+      }
       this.start = this.startTime
       this.end = this.endTime
       this.page = 1
       this.query()
     },
     queryPeriod (val) {
+      this.changeColor(val)
       const tname = this.$route.params.tname
       const query = {
         new_time: val,
@@ -192,11 +204,29 @@ export default {
     keepSame () {
       this.startTime = this.start
       this.endTime = this.end
+    },
+    changeColor (val) {
+      var s = document.getElementsByClassName('period')
+      for (var i = 0; i < s.length; i++) {
+        s[i].setAttribute('style', '')
+      }
+      var el = document.getElementById(val)
+      if (el) {
+        el.setAttribute('style', 'background:#EE7700')
+      }
     }
   },
 
   route: {
     data ({ to }) {
+      this.startTime = moment().subtract(29, 'days').format('YYYY-MM-DD')
+      this.endTime = moment().format('YYYY-MM-DD')
+      this.start = this.startTime
+      this.end = this.endTime
+      this.pagesize = 15
+      this.order = 'time_desc'
+      this.type = 'all'
+      this.page = 1
       const tname = to.params.tname
       const query = {
         start_time: this.start,
@@ -208,6 +238,7 @@ export default {
       }
       store.dispatch('TABLE_UPDATE', tname, query)
       this.keepSame()
+      this.changeColor(30)
     }
   },
 
