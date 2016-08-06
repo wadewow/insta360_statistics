@@ -32,8 +32,8 @@
   <div class="mui-col-md-8">
     <chart class="chart" :name="name" :data="data"></chart>
   </div>
-  <div class="mui-col-md-4">
-  <div class="right" style="min-width:350px">
+  <div class="mui-col-md-4" style="min-width:370px">
+  <div class="right" style="min-width:370px">
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>

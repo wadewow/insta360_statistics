@@ -62,6 +62,9 @@
           <li>
             <a href="#!/rest_statistics/rest_statistics">历史总数据</a>
           </li>
+          <li>
+            <a href="#!/knowmore/knowmore">Knowmore点击比例</a>
+          </li>
         </ul>
       </li>
       <!--示例内容-->

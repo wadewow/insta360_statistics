@@ -10,7 +10,7 @@
             <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(100)">历史总数</button>
         </div>
     </div>
-    <div class="mui-col-md-2">
+    <div class="mui-col-md-2" style="min-width:170px">
       <div class="right" style="min-width:170px;line-height:30px;">
         <div class="mui-radio right">
             <input class="radio" type="radio" checked="checked" name="type" value="all" v-model='type' @click="queryType('all')">全部</input>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="mui-col-md-3">
+    <div class="mui-col-md-3" style="min-width:235px">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>

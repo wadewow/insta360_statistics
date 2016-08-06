@@ -33,7 +33,7 @@
   <chart class="chart" :name="name" :data="data"></chart>
   </div>
   <div class="mui-col-md-4">
-  <div class="right" style="min-width:390px">
+  <div class="right" style="min-width:410px">
     <table class="mui-table mui-table--bordered table">
       <thead>
         <tr>

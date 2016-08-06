@@ -9,6 +9,7 @@ import TableView from './TableView'
 import PostView from './PostView'
 import LocationActiveDetail from './LocationActiveDetail'
 import RestStatisticsView from './RestStatisticsView'
+import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
@@ -51,6 +52,9 @@ router.map({
   },
   '/rest_statistics/:tname': {
     component: RestStatisticsView
+  },
+  '/knowmore/:tname': {
+    component: KnowmoreView
   },
   '/login': {
     component: LoginView

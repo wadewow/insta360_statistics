@@ -3,7 +3,7 @@
     <simpletable :name="name" :data="data"></simpletable>
   </div>-->
     <div>
-    <table style="width:50%" class="mui-table mui-table--bordered">
+    <table style="width:300px" class="mui-table mui-table--bordered">
       <thead>
         <tr>
           <th colspan="2">历史总数据</th>
@@ -19,8 +19,8 @@
         </tr>
     </tbody>
     </table>
-    <br/>
-    <table style="width:50%" class="mui-table mui-table--bordered">
+    <!--<br/>
+    <table style="width:600px" class="mui-table mui-table--bordered">
       <thead>
         <tr>
           <th v-for="column in data['column']">{{ column }}</th>
@@ -33,7 +33,7 @@
           <td>{{ item.comment }}</td>
         </tr>
     </tbody>
-    </table>
+    </table>-->
     </div>
 </template>
 

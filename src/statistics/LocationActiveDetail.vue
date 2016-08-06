@@ -10,7 +10,7 @@
         <button class="mui-btn mui-btn--primary mui-btn--small" @click="queryPeriod(100)">历史总数</button>
       </div>
     </div>
-    <div class="mui-col-md-3">
+    <div class="mui-col-md-3" style="min-width:235px">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -22,7 +22,7 @@
       </div>
       </div>
     </div>
-    <div class="mui-col-md-2">
+    <div class="mui-col-md-2" style="min-width:180px">
       <div class="" style="min-width:180px">
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
       <a href="#!/active_map/nano_active_map" class="mui-btn mui-btn--raised">返回</a>

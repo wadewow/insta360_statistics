@@ -60,5 +60,9 @@ export default {
   buylink_store_trends: {
     url: baseUrl + 'api/buylink/buylink_store_trends',
     serialize: 'buylink_store_trends'
+  },
+  knowmore: {
+    url: baseUrl + 'api/knowmore/click_know_more_statistics',
+    serialize: 'knowmore'
   }
 }
