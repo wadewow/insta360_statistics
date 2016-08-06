@@ -9,9 +9,9 @@ import ChartSerializer from './_chartSerializer'
 // 告诉 vue “使用” vuex
 Vue.use(Vuex)
 Vue.use(VueResource)
-
 // 创建一个对象来保存应用启动时的初始状态
 const state = {
+  isLogin: false,
   posts: {
     page: 1,
     list: [
@@ -118,6 +118,13 @@ const mutations = {
       apiQueryTable(tname, query)
     }else {
       state.table.data = ChartData[tname]
+    }
+  },
+  VALIDATE (state, username, password) {
+    if (username === 'insta360_admin' && password === '50lan123') {
+      state.isLogin = true
+    } else {
+      state.isLogin = false
     }
   }
 }

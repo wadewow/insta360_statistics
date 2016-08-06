@@ -9,10 +9,11 @@ import TableView from './TableView'
 import PostView from './PostView'
 import LocationActiveDetail from './LocationActiveDetail'
 import RestStatisticsView from './RestStatisticsView'
+import LoginView from './LoginView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import pikaday from '../_directives/pikaday'
-
+// import store from './_store/store'
 import 'muicss/lib/css/mui.min.css'
 
 // install router
@@ -50,11 +51,21 @@ router.map({
   },
   '/rest_statistics/:tname': {
     component: RestStatisticsView
+  },
+  '/login': {
+    component: LoginView
   }
 })
 
 router.beforeEach(function () {
-  window.scrollTo(0, 0)
+  // window.scrollTo(0, 0)
+  // var isLogin = store.state.isLogin
+  // if (!isLogin) {
+  //   router.go('/login')
+  // }
+  if (document.cookie.indexOf('isLogin=true') < 0) {
+    router.go('/login')
+  }
 })
 
 router.redirect({
