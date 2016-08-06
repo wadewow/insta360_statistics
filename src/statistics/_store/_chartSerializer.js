@@ -518,14 +518,14 @@ export default {
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
-    const total_abroad = _.sumBy(_abroad_data, function (o) {
-      return o.value
-    }) - parseInt(abroad_data['China']['total'], 10)
     const total_native = _.sumBy(_native_data, function (o) {
       return o.value
     })
+    const total_all = _.sumBy(_abroad_data, function (o) {
+      return o.value
+    })
 
-    const total_all = total_abroad + total_native
+    const total_abroad = total_all - total_native
     var count = 0
     for (var i in _native_data) {
       _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
@@ -739,14 +739,14 @@ export default {
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
-    const total_abroad = _.sumBy(_abroad_data, function (o) {
-      return o.value
-    }) - parseInt(abroad_data['China'], 10)
     const total_native = _.sumBy(_native_data, function (o) {
       return o.value
     })
+    const total_all = _.sumBy(_abroad_data, function (o) {
+      return o.value
+    })
 
-    const total_all = total_abroad + total_native
+    const total_abroad = total_all - total_native
     var count = 0
     for (var i in _native_data) {
       _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
