@@ -50,6 +50,15 @@ const state = {
       column: [],
       series: []
     }
+  },
+  table2: {
+    name: 'table',
+    data: {
+      current_page: 1,
+      page_total: 1,
+      column: [],
+      series: []
+    }
   }
 }
 
@@ -79,6 +88,16 @@ const apiQueryTable1 = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
     state.table1.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
+const apiQueryTable2 = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    state.table2.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
   }, (res) => {
     // error callback
     console.log(res)
@@ -116,6 +135,8 @@ const mutations = {
       apiQueryTable1(tname, query)
     } else if (tname === 'rest_statistics') {
       apiQueryTable(tname, query)
+    } else if (tname === 'knowmore') {
+      apiQueryTable2(tname, query)
     }else {
       state.table.data = ChartData[tname]
     }

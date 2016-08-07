@@ -17,3 +17,5 @@ export const getTableName = state => state.table.name
 export const getTableData = state => state.table.data
 export const getTableName1 = state => state.table1.name
 export const getTableData1 = state => state.table1.data
+export const getTableName2 = state => state.table2.name
+export const getTableData2 = state => state.table2.data

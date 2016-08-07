@@ -518,14 +518,14 @@ export default {
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
-    const total_abroad = _.sumBy(_abroad_data, function (o) {
-      return o.value
-    }) - parseInt(abroad_data['China']['total'], 10)
     const total_native = _.sumBy(_native_data, function (o) {
       return o.value
     })
+    const total_all = _.sumBy(_abroad_data, function (o) {
+      return o.value
+    })
 
-    const total_all = total_abroad + total_native
+    const total_abroad = total_all - total_native
     var count = 0
     for (var i in _native_data) {
       _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
@@ -739,14 +739,14 @@ export default {
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
-    const total_abroad = _.sumBy(_abroad_data, function (o) {
-      return o.value
-    }) - parseInt(abroad_data['China'], 10)
     const total_native = _.sumBy(_native_data, function (o) {
       return o.value
     })
+    const total_all = _.sumBy(_abroad_data, function (o) {
+      return o.value
+    })
 
-    const total_all = total_abroad + total_native
+    const total_abroad = total_all - total_native
     var count = 0
     for (var i in _native_data) {
       _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
@@ -919,32 +919,57 @@ export default {
     }
   },
   rest_statistics: data => {
-    const column1 = ['出厂序列号总数', '已激活序列号总数', '今日激活序列号数', '分享的视频总数', '分享的图片总数', '有分享行为的序列号数', '不重复的视频数', '不重复的图片数']
-    const column2 = ['上线~2016.7.25 18:00', '2016.7.27 17:47 ~ 2016.7.29 12:17', '2016.7.29 12:17 至今', '今天']
-    const column3 = ['第一次上线', '从默认陀螺仪改成默认拖拽', '回滚为默认陀螺仪', '点击knowmore新增用户/总点击数']
-    const column = ['Knowmore 点击比例', '数据', '分享内容页版本']
+    const column1 = ['出厂序列号总数', '已激活序列号总数', '分享的视频总数', '分享的图片总数', '有分享行为的序列号数', '不重复的视频数', '不重复的图片数']
+    // const column2 = ['上线~2016.7.25 18:00', '2016.7.27 17:47 ~ 2016.7.29 12:17', '2016.7.29 12:17 至今', '今天']
+    // const column3 = ['第一次上线', '从默认陀螺仪改成默认拖拽', '回滚为默认陀螺仪', '点击knowmore新增用户/总点击数']
+    // const column = ['Knowmore 点击比例', '数据', '分享内容页版本']
     const data1 = []
     var count = 0
     for (var item1 in data['nano_statistics']) {
-      data1.push(_.assign({'name': column1[count], 'value': data['nano_statistics'][item1]}))
-      count++
+      if (item1 !== 'today_active_nums') {
+        data1.push(_.assign({'name': column1[count], 'value': data['nano_statistics'][item1]}))
+        count++
+      }
     }
-    count = 0
-    const data2 = []
-    for (var item2 in data['know_more']) {
-      data2.push(_.assign({'name': column2[count], 'value': data['know_more'][item2], 'comment': column3[count]}))
-      count++
-    }
+    // count = 0
+    // const data2 = []
+    // for (var item2 in data['know_more']) {
+    //   data2.push(_.assign({'name': column2[count], 'value': data['know_more'][item2], 'comment': column3[count]}))
+    //   count++
+    // }
 
     const data_total = []
     data_total.push(data1)
-    data_total.push(data2)
+    // data_total.push(data2)
 
     return {
       total: 1,
       current_page: 1,
       page_total: 1,
-      column: column,
+      // column: column,
+      series: data_total
+    }
+  },
+  knowmore: data => {
+    const tip1 = ['上线~2016.7.25 18:00', '2016.7.27 17:47 ~ 2016.7.29 12:17', '2016.7.29 12:17 至今']
+    const tip2 = ['第一次上线', '从默认陀螺仪改成默认拖拽', '回滚为默认陀螺仪']
+    const column1 = ['Knowmore 点击比例', '数据', '分享内容页版本']
+    const column2 = ['日期', '点击knowmore新增用户/总点击数']
+    var count = 0
+
+    const data1 = []
+    for (var item1 in data['know_more']) {
+      data1.push(_.assign({'name': tip1[count], 'value': data['know_more'][item1], 'comment': tip2[count]}))
+      count++
+    }
+    const data_total = []
+    data_total.push(data1)
+    data_total.push(data['data']['info'])
+    return {
+      total: data['data']['total'],
+      current_page: data['data']['current_page'],
+      page_total: data['data']['page_total'],
+      column: [column1, column2],
       series: data_total
     }
   },

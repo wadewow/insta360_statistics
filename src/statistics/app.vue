@@ -15,10 +15,10 @@
         <strong @click="toggleCollapse">设备激活情况</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/chart/nano_active">激活数量走势</a>
+            <a href="#!/chart/nano_active" @click="click">激活数量走势</a>
           </li>
           <li>
-            <a href="#!/active_map/nano_active_map">激活地区分布</a>
+            <a href="#!/active_map/nano_active_map" @click="click">激活地区分布</a>
           </li>
         </ul>
       </li>
@@ -26,19 +26,19 @@
         <strong @click="toggleCollapse">Nano内容分享</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/table/share_list">分享列表明细</a>
+            <a href="#!/table/share_list" @click="click">分享列表明细</a>
           </li>
           <li>
-            <a href="#!/chart/month_share_trends">分享数量走势</a>
+            <a href="#!/chart/month_share_trends" @click="click">分享数量走势</a>
           </li>
           <li>
-            <a href="#!/map/location_share">分享地区分布</a>
+            <a href="#!/map/location_share" @click="click">分享地区分布</a>
           </li>
           <li>
-            <a href="#!/chart/share_visitor_trend">浏览次数走势</a>
+            <a href="#!/chart/share_visitor_trend" @click="click">浏览次数走势</a>
           </li>
           <li>
-            <a href="#!/map/share_visitor">浏览地区分布</a>
+            <a href="#!/map/share_visitor" @click="click">浏览地区分布</a>
           </li>
         </ul>
       </li>
@@ -46,13 +46,13 @@
         <strong @click="toggleCollapse">Nano购买链接</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/chart/nano_store">店铺流量分布</a>
+            <a href="#!/chart/nano_store" @click="click">店铺流量分布</a>
           </li>
           <li>
-            <a href="#!/chart/buylink_store_trends">店铺流量走势</a>
+            <a href="#!/chart/buylink_store_trends" @click="click">店铺流量走势</a>
           </li>
           <li>
-            <a href="#!/chart/click_buylink">链接点击地区分布</a>
+            <a href="#!/chart/click_buylink" @click="click">链接点击地区分布</a>
           </li>
         </ul>
       </li>
@@ -60,7 +60,10 @@
         <strong @click="toggleCollapse">历史总数</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/rest_statistics/rest_statistics">历史总数据</a>
+            <a href="#!/rest_statistics/rest_statistics" @click="click">历史总数据</a>
+          </li>
+          <li>
+            <a href="#!/knowmore/knowmore" @click="click">Knowmore点击比例</a>
           </li>
         </ul>
       </li>
@@ -149,7 +152,7 @@ export default {
     getNextSibling (node) {
       do { node = node.nextSibling } while (node && node.nodeType !== 1)
       return node
-    }
+    },
 
     // setComment (val) {
     //   // if (val === 0) {
@@ -161,7 +164,15 @@ export default {
     //   // }
     //   // // this.comment = dict_comment[val]
     // }
-
+    click (ev) {
+      var s = document.getElementsByClassName('selected')
+      for (var i = 0; i < s.length; i++) {
+        s[i].setAttribute('class', '')
+      }
+      var src = ev.srcElement || ev.target
+      var li = src.parentNode
+      li.setAttribute('class', 'selected')
+    }
   }
 }
 </script>
@@ -319,6 +330,9 @@ export default {
               }
             }
           }
+          .selected {
+            background-color: #E0E0E0;
+          }
         }
       }
       > li:first-child {
@@ -341,7 +355,6 @@ export default {
   /**
   * Footer CSS
   */
-  
   #footer {
     background-color: #0288D1;
     color: #fff;
