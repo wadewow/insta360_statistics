@@ -3,11 +3,11 @@
   <div class="mui-row pikaday">
     <div class="mui-col-md-6">
         <div class="period">
-        <button id="0" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(0)">今天</button>
-        <button id="1" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(1)">昨天</button>
-        <button id="7" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(7)">最近7天</button>
-        <button id="30" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(30)" style="background: #EE7700">最近30天</button>
-        <button id="100" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(100)">历史总数</button>
+        <a id="0" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button1 }}" @click="queryPeriod(0)">今天</a>
+        <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button2 }}" @click="queryPeriod(1)">昨天</a>
+        <a id="7" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button3 }}" @click="queryPeriod(7)">最近7天</a>
+        <a id="30" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button4 }}" @click="queryPeriod(30)">最近30天</a>
+        <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button5 }}" @click="queryPeriod(100)">历史总数</a>
         </div>
     </div>
     <div class="mui-col-md-2" style="min-width:170px">
@@ -55,7 +55,7 @@
 import Mytable from './_view/Mytable'
 import store from './_store/store'
 import moment from 'moment'
-import { getTableName1, getTableData1 } from './_store/getters'
+import { getTableName1, getTableData1, getButtonState } from './_store/getters'
 
 export default {
   name: 'TableView',
@@ -69,7 +69,8 @@ export default {
   vuex: {
     getters: {
       name: getTableName1,
-      data: getTableData1
+      data: getTableData1,
+      buttonState: getButtonState
     }
   },
 
@@ -88,8 +89,8 @@ export default {
   },
 
   created () {
-    this.startTime = moment().subtract(29, 'days').format('YYYY-MM-DD')
-    this.endTime = moment().format('YYYY-MM-DD')
+    this.startTime = store.state.startTime
+    this.endTime = store.state.endTime
     this.start = this.startTime
     this.end = this.endTime
     this.type = 'all'
@@ -98,34 +99,23 @@ export default {
     this.pageSize = 15
   },
 
+  ready () {
+    this.updateColor()
+  },
+
   methods: {
     queryDate () {
-      if (this.startTime === moment().subtract(29, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
-        this.changeColor(30)
-      } else if (this.startTime === moment().subtract(6, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
-        this.changeColor(7)
-      } else if (this.startTime === moment().subtract(1, 'days').format('YYYY-MM-DD') && this.endTime === moment().subtract(1, 'days').format('YYYY-MM-DD')) {
-        this.changeColor(1)
-      } else if (this.startTime === moment().format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
-        this.changeColor(0)
-      } else {
-        this.changeColor(-1)
-      }
+      this.updateColor()
       this.start = this.startTime
       this.end = this.endTime
       this.page = 1
+      this.keepSame()
+      store.state.startTime = this.start
+      store.state.endTime = this.end
       this.query()
     },
     queryPeriod (val) {
       this.changeColor(val)
-      const tname = this.$route.params.tname
-      const query = {
-        new_time: val,
-        query_type: this.type,
-        query_order: this.order,
-        page_size: this.pageSize
-      }
-      store.dispatch('TABLE_UPDATE', tname, query)
       if (val === 30 || val === 7) {
         this.startTime = moment().subtract((val - 1), 'days').format('YYYY-MM-DD')
         this.endTime = moment().format('YYYY-MM-DD')
@@ -142,6 +132,16 @@ export default {
       this.start = this.startTime
       this.end = this.endTime
       this.page = 1
+      store.state.startTime = this.start
+      store.state.endTime = this.end
+      const tname = this.$route.params.tname
+      const query = {
+        new_time: val,
+        query_type: this.type,
+        query_order: this.order,
+        page_size: this.pageSize
+      }
+      store.dispatch('TABLE_UPDATE', tname, query)
     },
     queryPage () {
       var total = document.getElementById('total_page').value
@@ -206,21 +206,44 @@ export default {
       this.endTime = this.end
     },
     changeColor (val) {
-      var s = document.getElementsByClassName('period')
-      for (var i = 0; i < s.length; i++) {
-        s[i].setAttribute('style', '')
+      store.state.button.button1 = ''
+      store.state.button.button2 = ''
+      store.state.button.button3 = ''
+      store.state.button.button4 = ''
+      store.state.button.button5 = ''
+      if (val === 0) {
+        store.state.button.button1 = 'active'
+      } else if (val === 1) {
+        store.state.button.button2 = 'active'
+      } else if (val === 7) {
+        store.state.button.button3 = 'active'
+      } else if (val === 30) {
+        store.state.button.button4 = 'active'
+      } else if (val === 100) {
+        store.state.button.button5 = 'active'
       }
-      var el = document.getElementById(val)
-      if (el) {
-        el.setAttribute('style', 'background:#EE7700')
+    },
+    updateColor () {
+      if (this.startTime === moment().subtract(29, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(30)
+      } else if (this.startTime === moment().subtract(6, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(7)
+      } else if (this.startTime === moment().subtract(1, 'days').format('YYYY-MM-DD') && this.endTime === moment().subtract(1, 'days').format('YYYY-MM-DD')) {
+        this.changeColor(1)
+      } else if (this.startTime === moment().format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(0)
+      } else if (this.startTime === '2016-06-01' && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(100)
+      } else {
+        this.changeColor(-1)
       }
     }
   },
 
   route: {
     data ({ to }) {
-      this.startTime = moment().subtract(29, 'days').format('YYYY-MM-DD')
-      this.endTime = moment().format('YYYY-MM-DD')
+      this.startTime = store.state.startTime
+      this.endTime = store.state.endTime
       this.start = this.startTime
       this.end = this.endTime
       this.pagesize = 15
@@ -238,7 +261,7 @@ export default {
       }
       store.dispatch('TABLE_UPDATE', tname, query)
       this.keepSame()
-      this.changeColor(30)
+      this.updateColor()
     }
   },
 
@@ -279,9 +302,9 @@ export default {
     .mui-textfield {
       margin-left: 16px;
     }
-    .period {
+    /*.period {
       display:inline;
-    }
+    }*/
     .mui-radio {
       display:inline;
       .radio {
