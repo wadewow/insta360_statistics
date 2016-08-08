@@ -52,7 +52,7 @@ export default {
       legend: {
         x: 'center',
         data: ['全部激活数量', '国内激活数量', '国外激活数量'],
-        selected: { '国内激活数量': false, '国外激活数量': false }
+        selected: { '全部激活数量': false }
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
@@ -68,12 +68,14 @@ export default {
         name: '国内激活数量',
         type: 'line',
         data: y_native,
+        stack: 'all',
         itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: '国外激活数量',
         type: 'line',
         data: y_abroad,
+        stack: 'all',
         itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }]
     }
@@ -130,12 +132,14 @@ export default {
       series: [{
         name: '图片数量',
         type: 'line',
+        stack: 'all',
         data: y_image,
         itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: '视频数量',
         type: 'line',
+        stack: 'all',
         data: y_video,
         itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }]
@@ -196,12 +200,14 @@ export default {
         name: '图片浏览量',
         type: 'line',
         data: y_image,
+        stack: 'all',
         itemStyle: {normal: {areaStyle: {type: 'default'}}}
       },
       {
         name: '视频浏览量',
         type: 'line',
         data: y_video,
+        stack: 'all',
         itemStyle: {normal: {areaStyle: {type: 'default'}}}
       }]
     }
