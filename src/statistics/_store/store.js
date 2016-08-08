@@ -14,7 +14,7 @@ const state = {
   startTime: moment().subtract(29, 'days').format('YYYY-MM-DD'),
   endTime: moment().format('YYYY-MM-DD'),
   button: {
-    button1: 'active',
+    button1: '',
     button2: '',
     button3: '',
     button4: '',

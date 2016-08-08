@@ -76,9 +76,6 @@ export default {
     this.start = this.startTime
     this.end = this.endTime
     // this.is_native = 0
-  },
-
-  ready () {
     this.updateColor()
   },
 

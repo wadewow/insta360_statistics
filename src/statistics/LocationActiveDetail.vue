@@ -74,9 +74,6 @@ export default {
     this.start = this.startTime
     this.end = this.endTime
     this.city = ''
-  },
-
-  ready () {
     this.updateColor()
   },
 

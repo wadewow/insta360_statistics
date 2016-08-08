@@ -97,9 +97,6 @@ export default {
     this.page = 1
     this.order = 'time_desc'
     this.pageSize = 15
-  },
-
-  ready () {
     this.updateColor()
   },
 
