@@ -58,7 +58,7 @@ export default {
     serialize: 'rest_statistics'
   },
   buylink_store_trends: {
-    url: baseUrl + 'api/buylink/buylink_store_trends',
+    url: baseUrl + 'api/buylink/buylink_detail_trends',
     serialize: 'buylink_store_trends'
   },
   knowmore: {
