@@ -1235,7 +1235,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '激活情况区域对比面积图',
+        text: '激活Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
@@ -1296,7 +1296,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '分享情况区域对比面积图',
+        text: '分享Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
@@ -1357,7 +1357,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '浏览情况区域对比面积图',
+        text: '浏览Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
