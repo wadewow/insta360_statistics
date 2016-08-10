@@ -5,12 +5,21 @@ import Api from './_api'
 import ChartList from './_chartList'
 import ChartData from './_chartData'
 import ChartSerializer from './_chartSerializer'
-
+import moment from 'moment'
 // 告诉 vue “使用” vuex
 Vue.use(Vuex)
 Vue.use(VueResource)
 // 创建一个对象来保存应用启动时的初始状态
 const state = {
+  startTime: moment().subtract(29, 'days').format('YYYY-MM-DD'),
+  endTime: moment().format('YYYY-MM-DD'),
+  button: {
+    button1: '',
+    button2: '',
+    button3: '',
+    button4: '',
+    button5: ''
+  },
   isLogin: false,
   posts: {
     page: 1,

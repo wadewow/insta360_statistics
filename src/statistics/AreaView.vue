@@ -3,11 +3,11 @@
   <div class="mui-row pikaday">
     <div class="mui-col-md-7">
       <div>
-        <button id="0" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(0)">今天</button>
-        <button id="1" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(1)">昨天</button>
-        <button id="7" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(7)">最近7天</button>
-        <button id="30" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(30)" style="background: #EE7700">最近30天</button>
-        <button id="100" class="mui-btn mui-btn--primary mui-btn--small period" @click="queryPeriod(100)">历史总数</button>
+        <a id="0" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button1 }}" @click="queryPeriod(0)">今天</a>
+        <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button2 }}" @click="queryPeriod(1)">昨天</a>
+        <a id="7" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button3 }}" @click="queryPeriod(7)">最近7天</a>
+        <a id="30" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button4 }}" @click="queryPeriod(30)">最近30天</a>
+        <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button5 }}" @click="queryPeriod(100)">历史总数</a>
       </div>
     </div>
     <div class="mui-col-md-3" style="min-width:235px">
@@ -40,7 +40,7 @@ import Chart from './_component/Chart'
 import Block from './_component/Block'
 import store from './_store/store'
 import moment from 'moment'
-import { getChartName, getChartData } from './_store/getters'
+import { getChartName, getChartData, getButtonState } from './_store/getters'
 
 export default {
   name: 'ChartView',
@@ -55,7 +55,8 @@ export default {
   vuex: {
     getters: {
       name: getChartName,
-      data: getChartData
+      data: getChartData,
+      buttonState: getButtonState
     }
   },
 
@@ -70,11 +71,12 @@ export default {
   },
 
   created () {
-    // this.startTime = new Date(Date.parse(new Date()) - 6 * 24 * 3600 * 1000).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
-    // this.endTime = new Date().toLocaleDateString().replace(/[年月]/g, '-').replace(/[日]/g, '').replace(/[\u200e]/g, '')
-    // this.start = this.startTime
-    // this.end = this.endTime
+    this.startTime = store.state.startTime
+    this.endTime = store.state.endTime
+    this.start = this.startTime
+    this.end = this.endTime
     // this.is_native = 0
+    this.updateColor()
   },
 
   methods: {
@@ -91,17 +93,11 @@ export default {
       return '#!/' + s
     },
     queryDate () {
-      if (this.startTime === moment().subtract(29, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
-        this.changeColor(30)
-      } else if (this.startTime === moment().subtract(6, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
-        this.changeColor(7)
-      } else if (this.startTime === moment().subtract(1, 'days').format('YYYY-MM-DD') && this.endTime === moment().subtract(1, 'days').format('YYYY-MM-DD')) {
-        this.changeColor(1)
-      } else if (this.startTime === moment().format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
-        this.changeColor(0)
-      } else {
-        this.changeColor(-1)
-      }
+      this.updateColor()
+      this.start = this.startTime
+      this.end = this.endTime
+      store.state.startTime = this.start
+      store.state.endTime = this.end
       const cname = this.$route.params.cname
       const query = {
         start_time: this.startTime,
@@ -109,8 +105,6 @@ export default {
         is_native: this.is_native
       }
       store.dispatch('CHART_UPDATE', cname, query)
-      this.start = this.startTime
-      this.end = this.endTime
     },
     queryPeriod (val) {
       this.changeColor(val)
@@ -119,12 +113,8 @@ export default {
         this.endTime = moment().format('YYYY-MM-DD')
       } else if (val === 1) {
         this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
-        var chartType = document.getElementById('chartType').value
-        if (chartType === 'line') {
-          this.endTime = moment().format('YYYY-MM-DD')
-        }else {
-          this.endTime = this.startTime
-        }
+        this.endTime = moment().format('YYYY-MM-DD')
+        this.endTime = this.startTime
       } else if (val === 0) {
         this.startTime = moment().format('YYYY-MM-DD')
         this.endTime = this.startTime
@@ -134,6 +124,8 @@ export default {
       }
       this.start = this.startTime
       this.end = this.endTime
+      store.state.startTime = this.start
+      store.state.endTime = this.end
       const cname = this.$route.params.cname
       const query = {
         start_time: this.start,
@@ -143,21 +135,44 @@ export default {
       store.dispatch('CHART_UPDATE', cname, query)
     },
     changeColor (val) {
-      var s = document.getElementsByClassName('period')
-      for (var i = 0; i < s.length; i++) {
-        s[i].setAttribute('style', '')
+      store.state.button.button1 = ''
+      store.state.button.button2 = ''
+      store.state.button.button3 = ''
+      store.state.button.button4 = ''
+      store.state.button.button5 = ''
+      if (val === 0) {
+        store.state.button.button1 = 'active'
+      } else if (val === 1) {
+        store.state.button.button2 = 'active'
+      } else if (val === 7) {
+        store.state.button.button3 = 'active'
+      } else if (val === 30) {
+        store.state.button.button4 = 'active'
+      } else if (val === 100) {
+        store.state.button.button5 = 'active'
       }
-      var el = document.getElementById(val)
-      if (el) {
-        el.setAttribute('style', 'background:#EE7700')
+    },
+    updateColor () {
+      if (this.startTime === moment().subtract(29, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(30)
+      } else if (this.startTime === moment().subtract(6, 'days').format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(7)
+      } else if (this.startTime === moment().subtract(1, 'days').format('YYYY-MM-DD') && this.endTime === moment().subtract(1, 'days').format('YYYY-MM-DD')) {
+        this.changeColor(1)
+      } else if (this.startTime === moment().format('YYYY-MM-DD') && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(0)
+      } else if (this.startTime === '2016-06-01' && this.endTime === moment().format('YYYY-MM-DD')) {
+        this.changeColor(100)
+      } else {
+        this.changeColor(-1)
       }
     }
   },
 
   route: {
     data ({ to }) {
-      this.startTime = to.params.startTime || moment().subtract(29, 'days').format('YYYY-MM-DD')
-      this.endTime = to.params.endTime || moment().format('YYYY-MM-DD')
+      this.startTime = store.state.startTime
+      this.endTime = store.state.endTime
       this.start = this.startTime
       this.end = this.endTime
       this.is_native = to.params.is_native
@@ -168,7 +183,7 @@ export default {
         is_native: this.is_native
       }
       store.dispatch('CHART_UPDATE', cname, query)
-      this.changeColor(30)
+      this.updateColor()
     }
   }
 

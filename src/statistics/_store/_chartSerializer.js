@@ -37,47 +37,59 @@ export default {
         trigger: 'axis',
         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
           type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        },
+        formatter: function (params, ticket, callback) {
+          var sum = 0
+          var res = params[0].name
+          console.log(params)
+          for (var i = 0, l = params.length; i < l; i++) {
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+            sum += parseInt(params[i].value, 10)
+          }
+          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部激活量' + ' : ' + sum
+          return res
         }
       },
       toolbox: {
         show: true,
         feature: {
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
       legend: {
         x: 'center',
-        data: ['全部激活数量', '国内激活数量', '国外激活数量'],
-        selected: { '全部激活数量': false }
+        data: ['国内激活数量', '国外激活数量']
+        // selected: { '全部激活数量': false }
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
       },
       yAxis: {},
-      series: [{
-        name: '全部激活数量',
-        type: 'line',
-        data: y_all,
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      },
-      {
-        name: '国内激活数量',
-        type: 'line',
-        data: y_native,
-        stack: 'all',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      },
-      {
-        name: '国外激活数量',
-        type: 'line',
-        data: y_abroad,
-        stack: 'all',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      }]
+      series: [
+        // {
+        //   name: '全部激活数量',
+        //   type: 'line',
+        //   data: y_all,
+        //   itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        // },
+        {
+          name: '国内激活数量',
+          type: 'line',
+          data: y_native,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '国外激活数量',
+          type: 'line',
+          data: y_abroad,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        }]
     }
   },
   month_share_trends: data => {
@@ -108,16 +120,27 @@ export default {
         trigger: 'axis',
         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
           type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        },
+        formatter: function (params, ticket, callback) {
+          var sum = 0
+          var res = params[0].name
+          console.log(params)
+          for (var i = 0, l = params.length; i < l; i++) {
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+            sum += parseInt(params[i].value, 10)
+          }
+          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部数量' + ' : ' + sum
+          return res
         }
       },
       toolbox: {
         show: true,
         feature: {
           mark: { show: true },
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -175,16 +198,27 @@ export default {
         trigger: 'axis',
         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
           type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        },
+        formatter: function (params, ticket, callback) {
+          var sum = 0
+          var res = params[0].name
+          console.log(params)
+          for (var i = 0, l = params.length; i < l; i++) {
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+            sum += parseInt(params[i].value, 10)
+          }
+          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '总浏览量' + ' : ' + sum
+          return res
         }
       },
       toolbox: {
         show: true,
         feature: {
           mark: { show: true },
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -242,10 +276,10 @@ export default {
         show: true,
         feature: {
           mark: { show: true },
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -329,7 +363,7 @@ export default {
     }
     count = 0
     for (var j in _abroad_data) {
-      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value']}))
+      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value']}))
       count++
       if (count === 10) {
         break
@@ -453,7 +487,6 @@ export default {
         feature: {
           mark: { show: true },
           dataView: { show: true, readOnly: false },
-          restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -542,7 +575,7 @@ export default {
     }
     count = 0
     for (var j in _abroad_data) {
-      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
+      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
       count++
       if (count === 10) {
         break
@@ -664,7 +697,6 @@ export default {
         feature: {
           mark: { show: true },
           dataView: { show: true, readOnly: false },
-          restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -763,7 +795,7 @@ export default {
     }
     count = 0
     for (var j in _abroad_data) {
-      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
+      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
       count++
       if (count === 10) {
         break
@@ -885,7 +917,6 @@ export default {
         feature: {
           mark: { show: true },
           dataView: { show: true, readOnly: false },
-          restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -964,13 +995,28 @@ export default {
     var count = 0
 
     const data1 = []
+    const data2 = []
     for (var item1 in data['know_more']) {
-      data1.push(_.assign({'name': tip1[count], 'value': data['know_more'][item1], 'comment': tip2[count]}))
+      var array1 = data['know_more'][item1].split('/')
+      var percent1 = 0
+      if (array1.length > 1 && array1[1] !== 0) {
+        percent1 = _.round(((parseFloat(array1[0]) / parseFloat(array1[1])) * 100), 1)
+      }
+      data1.push(_.assign({'name': tip1[count], 'value': data['know_more'][item1] + ' (' + percent1 + '%)', 'comment': tip2[count]}))
       count++
+    }
+
+    for (var item2 in data['data']['info']) {
+      var array2 = data['data']['info'][item2].scale.split('/')
+      var percent2 = 0
+      if (array2.length > 1 && array2[1] !== 0) {
+        percent2 = _.round(((parseFloat(array2[0]) / parseFloat(array2[1])) * 100), 1)
+      }
+      data2.push(_.assign({'time': data['data']['info'][item2].time, 'scale': data['data']['info'][item2].scale + ' (' + percent2 + '%)'}))
     }
     const data_total = []
     data_total.push(data1)
-    data_total.push(data['data']['info'])
+    data_total.push(data2)
     return {
       total: data['data']['total'],
       current_page: data['data']['current_page'],
@@ -1031,10 +1077,10 @@ export default {
           //     type: 'dashed'
           //   }
           // },
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -1112,10 +1158,10 @@ export default {
         show: true,
         feature: {
           // mark: {show: true, title: { mark: '辅助线开关', markUndo: '删除辅助线', markClear: '清空辅助线'}},
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -1189,7 +1235,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '激活情况区域对比面积图',
+        text: '激活Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
@@ -1201,10 +1247,10 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -1250,7 +1296,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '分享情况区域对比面积图',
+        text: '分享Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
@@ -1262,10 +1308,10 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -1311,7 +1357,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '浏览情况区域对比面积图',
+        text: '浏览Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
@@ -1323,10 +1369,10 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
           saveAsImage: { show: true }
         }
       },
@@ -1344,77 +1390,162 @@ export default {
   buylink_store_trends: data => {
 
     const x = []
-    const y_pc = []
-    const y_mobile = []
-    const y_all = []
+    const area = []
+    const y = []
+
+    var count = 0
+    var _sum = 0
     for (var index in data) {
       x.push(index)
-      y_pc.push(data[index]['pc'])
-      y_mobile.push(data[index]['mobile'])
-      y_all.push(data[index]['all'])
-    }
-
-    return {
-      total: [{
-        name: '全部流量',
-        value: _.sum(y_all)
-      },
-      {
-        name: 'PC端流量',
-        value: _.sum(y_pc)
-      },
-      {
-        name: '手机端流量',
-        value: _.sum(y_mobile)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
       }
-      ],
+      for (var j in y) {
+        _sum += data[index][y[j]['name']]
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+    return {
+      total: [],
       title: {
         text: '店铺流量走势',
-        x: 'left'
+        x: 'left',
+        y: 30
       },
       tooltip: {
         trigger: 'axis',
         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
           type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        },
+        formatter: function (params, ticket, callback) {
+          var sum = 0
+          var res = params[0].name
+          console.log(params)
+          for (var i = 0, l = params.length; i < l; i++) {
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+            sum += parseInt(params[i].value, 10)
+          }
+          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部' + ' : ' + sum
+          return res
         }
       },
       toolbox: {
         show: true,
         feature: {
-          dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'], title: {stack: '切换为面积图'}},
-          restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
           saveAsImage: { show: true }
-        }
+        },
+        y: 30
       },
       legend: {
         x: 'center',
-        data: ['全部流量', 'PC端流量', '手机端流量'],
-        selected: { 'PC端流量': false, '手机端流量': false }
+        data: area,
+        itemWidth: 5,
+        top: -3,
+        itemGap: 3,
+        itemHeight: 10
+        // selected: { 'PC端流量': false, '手机端流量': false }
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
       },
       yAxis: {},
-      series: [{
-        name: '全部流量',
-        type: 'line',
-        data: y_all,
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      },
-      {
-        name: 'PC端流量',
-        type: 'line',
-        data: y_pc,
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      },
-      {
-        name: '手机端流量',
-        type: 'line',
-        data: y_mobile,
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      }]
+      series: _series
     }
   }
+  // buylink_store_trends: data => {
+
+  //   const x = []
+  //   const y_pc = []
+  //   const y_mobile = []
+  //   const y_all = []
+  //   for (var index in data) {
+  //     x.push(index)
+  //     y_pc.push(data[index]['pc'])
+  //     y_mobile.push(data[index]['mobile'])
+  //     y_all.push(data[index]['all'])
+  //   }
+
+  //   return {
+  //     total: [{
+  //       name: '全部流量',
+  //       value: _.sum(y_all)
+  //     },
+  //     {
+  //       name: 'PC端流量',
+  //       value: _.sum(y_pc)
+  //     },
+  //     {
+  //       name: '手机端流量',
+  //       value: _.sum(y_mobile)
+  //     }
+  //     ],
+  //     title: {
+  //       text: '店铺流量走势',
+  //       x: 'left'
+  //     },
+  //     tooltip: {
+  //       trigger: 'axis',
+  //       axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+  //         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+  //       },
+  //       formatter: function (params, ticket, callback) {
+  //         var sum = 0
+  //         var res = params[0].name
+  //         console.log(params)
+  //         for (var i = 0, l = params.length; i < l; i++) {
+  //           res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+  //           sum += parseInt(params[i].value, 10)
+  //         }
+  //         res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部流量' + ' : ' + sum
+  //         return res
+  //       }
+  //     },
+  //     toolbox: {
+  //       show: true,
+  //       feature: {
+  //         // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+  //         dataView: { show: true, readOnly: false },
+  //         magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+  //         // restore: { show: true },
+  //         saveAsImage: { show: true }
+  //       }
+  //     },
+  //     legend: {
+  //       x: 'center',
+  //       data: ['PC端流量', '手机端流量']
+  //       // selected: { 'PC端流量': false, '手机端流量': false }
+  //     },
+  //     xAxis: {
+  //       data: x // 横向则将data放到yAxis
+  //     },
+  //     yAxis: {},
+  //     series: [{
+  //       name: 'PC端流量',
+  //       type: 'line',
+  //       data: y_pc,
+  //       stack: 'all',
+  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
+  //     },
+  //     {
+  //       name: '手机端流量',
+  //       type: 'line',
+  //       data: y_mobile,
+  //       stack: 'all',
+  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
+  //     }]
+  //   }
+  // }
 }
