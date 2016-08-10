@@ -113,7 +113,7 @@ export default {
       }
       ],
       title: {
-        text: '分享数量走势',
+        text: '内容数量走势',
         x: 'left'
       },
       tooltip: {
@@ -191,7 +191,7 @@ export default {
       }
       ],
       title: {
-        text: '浏览次数走势',
+        text: '浏览量走势',
         x: 'left'
       },
       tooltip: {
@@ -650,7 +650,7 @@ export default {
         abroad: _abroad_top
       },
       title: {
-        text: '分享地区分布',
+        text: '内容地区分布',
         // subtext: '',
         left: 'left'
       },
@@ -870,7 +870,7 @@ export default {
         abroad: _abroad_top
       },
       title: {
-        text: '浏览地区分布',
+        text: '访客地区分布',
         // subtext: '',
         left: 'left'
       },
@@ -1296,7 +1296,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '分享Top10区域对比面积图',
+        text: '内容Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
@@ -1357,7 +1357,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '浏览Top10区域对比面积图',
+        text: '访客Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
