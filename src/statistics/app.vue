@@ -106,7 +106,6 @@
 <script>
 import store from './_store/store'
 import { getChartList, getChartName, getChartComment } from './_store/getters'
-// import dict_comment from './_store/dict_comment.json'
 export default {
 
   store: store,
