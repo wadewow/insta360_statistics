@@ -1396,17 +1396,19 @@ export default {
     var count = 0
     var _sum = 0
     for (var index in data) {
-      x.push(index)
       if (count === 0) {
         for (var i in data[index]) {
-          area.push(i)
+          area.push(data[index][i])
           var temp = []
-          y.push(_.assign({'name': i, 'data': temp}))
+          y.push(_.assign({'name': data[index][i], 'data': temp}))
         }
-      }
-      for (var j in y) {
-        _sum += data[index][y[j]['name']]
-        y[j]['data'].push(data[index][y[j]['name']])
+      }else {
+        x.push(index)
+        for (var j in y) {
+          var num = data[index][y[j]['name']] === undefined ? 0 : data[index][y[j]['name']]
+          y[j]['data'].push(num)
+          _sum += num
+        }
       }
       count++
     }
@@ -1415,7 +1417,10 @@ export default {
       _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
     }
     return {
-      total: [],
+      total: [{
+        name: '全部流量',
+        value: _sum
+      }],
       title: {
         text: '店铺流量走势',
         x: 'left',
