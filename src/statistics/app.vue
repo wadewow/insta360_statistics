@@ -26,19 +26,19 @@
         <strong @click="toggleCollapse">Nano内容分享</strong>
         <ul style="display:block">
           <li>
-            <a href="#!/table/share_list" @click="click">分享列表明细</a>
+            <a href="#!/table/share_list" @click="click">分享内容列表</a>
           </li>
           <li>
-            <a href="#!/chart/month_share_trends" @click="click">分享数量走势</a>
+            <a href="#!/chart/month_share_trends" @click="click">内容数量走势</a>
           </li>
           <li>
-            <a href="#!/map/location_share" @click="click">分享地区分布</a>
+            <a href="#!/map/location_share" @click="click">内容地区分布</a>
           </li>
           <li>
-            <a href="#!/chart/share_visitor_trend" @click="click">浏览次数走势</a>
+            <a href="#!/chart/share_visitor_trend" @click="click">浏览量走势</a>
           </li>
           <li>
-            <a href="#!/map/share_visitor" @click="click">浏览地区分布</a>
+            <a href="#!/map/share_visitor" @click="click">访客地区分布</a>
           </li>
         </ul>
       </li>
@@ -52,7 +52,7 @@
             <a href="#!/chart/buylink_store_trends" @click="click">店铺流量走势</a>
           </li>
           <li>
-            <a href="#!/chart/click_buylink" @click="click">链接点击地区分布</a>
+            <a href="#!/chart/click_buylink" @click="click">点击购买按钮者地区分布</a>
           </li>
         </ul>
       </li>
@@ -106,7 +106,6 @@
 <script>
 import store from './_store/store'
 import { getChartList, getChartName, getChartComment } from './_store/getters'
-// import dict_comment from './_store/dict_comment.json'
 export default {
 
   store: store,
@@ -317,7 +316,7 @@ export default {
               background-color: #E0E0E0;
             }
             > a {
-              padding-left: 40px;
+              padding-left: 25px;
               display: block;
               width: 100%;
               height: 32px;
@@ -341,7 +340,7 @@ export default {
     }
     strong {
       display: block;
-      padding: 15px 22px;
+      padding: 15px 15px;
       cursor: pointer;
       &:hover {
         background-color: #E0E0E0;

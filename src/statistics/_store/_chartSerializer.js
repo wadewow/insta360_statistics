@@ -113,7 +113,7 @@ export default {
       }
       ],
       title: {
-        text: '分享数量走势',
+        text: '内容数量走势',
         x: 'left'
       },
       tooltip: {
@@ -191,7 +191,7 @@ export default {
       }
       ],
       title: {
-        text: '浏览次数走势',
+        text: '浏览量走势',
         x: 'left'
       },
       tooltip: {
@@ -202,7 +202,6 @@ export default {
         formatter: function (params, ticket, callback) {
           var sum = 0
           var res = params[0].name
-          console.log(params)
           for (var i = 0, l = params.length; i < l; i++) {
             res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
             sum += parseInt(params[i].value, 10)
@@ -353,21 +352,11 @@ export default {
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
-    var count = 0
     for (var i in _native_data) {
       _native_top.push(_native_data[i])
-      count++
-      if (count === 10) {
-        break
-      }
     }
-    count = 0
     for (var j in _abroad_data) {
       _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value']}))
-      count++
-      if (count === 10) {
-        break
-      }
     }
 
     const _china = {
@@ -565,21 +554,12 @@ export default {
     })
 
     const total_abroad = total_all - total_native
-    var count = 0
     for (var i in _native_data) {
       _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
-      count++
-      if (count === 10) {
-        break
-      }
     }
-    count = 0
+
     for (var j in _abroad_data) {
       _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
-      count++
-      if (count === 10) {
-        break
-      }
     }
     const _china = {
       name: '全国',
@@ -650,7 +630,7 @@ export default {
         abroad: _abroad_top
       },
       title: {
-        text: '分享地区分布',
+        text: '内容地区分布',
         // subtext: '',
         left: 'left'
       },
@@ -785,21 +765,11 @@ export default {
     })
 
     const total_abroad = total_all - total_native
-    var count = 0
     for (var i in _native_data) {
       _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
-      count++
-      if (count === 10) {
-        break
-      }
     }
-    count = 0
     for (var j in _abroad_data) {
       _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
-      count++
-      if (count === 10) {
-        break
-      }
     }
     const _china = {
       name: '全国',
@@ -870,7 +840,7 @@ export default {
         abroad: _abroad_top
       },
       title: {
-        text: '浏览地区分布',
+        text: '访客地区分布',
         // subtext: '',
         left: 'left'
       },
@@ -988,8 +958,8 @@ export default {
     }
   },
   knowmore: data => {
-    const tip1 = ['上线~2016.7.25 18:00', '2016.7.27 17:47 ~ 2016.7.29 12:17', '2016.7.29 12:17 至今']
-    const tip2 = ['第一次上线', '从默认陀螺仪改成默认拖拽', '回滚为默认陀螺仪']
+    const tip1 = ['上线 ~ 2016.7.25 18:00', '2016.7.27 17:47 ~ 2016.7.29 12:17', '2016.7.29 12:17 ~ 2016.8.13 18:40', '2016.8.13 18:40 至今']
+    const tip2 = ['第一次上线', '从默认陀螺仪改成默认拖拽', '回滚为默认陀螺仪', '优化了页面加载速度']
     const column1 = ['Knowmore 点击比例', '数据', '分享内容页版本']
     const column2 = ['日期', '点击knowmore新增用户/总点击数']
     var count = 0
@@ -1296,7 +1266,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '分享Top10区域对比面积图',
+        text: '内容Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {
@@ -1357,7 +1327,7 @@ export default {
     return {
       total: [],
       title: {
-        text: '浏览Top10区域对比面积图',
+        text: '访客Top10区域对比面积图',
         x: 'left'
       },
       tooltip: {

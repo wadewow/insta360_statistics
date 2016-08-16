@@ -7,7 +7,7 @@
         <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button2 }}" @click="queryPeriod(1)">昨天</a>
         <a id="7" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button3 }}" @click="queryPeriod(7)">最近7天</a>
         <a id="30" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button4 }}" @click="queryPeriod(30)">最近30天</a>
-        <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button5 }}" @click="queryPeriod(100)">历史总数</a>
+        <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button5 }}" @click="queryPeriod(100)">全部</a>
       </div>
     </div>
     <div class="mui-col-md-4">
@@ -34,8 +34,30 @@
   </div>
   <div class="mui-col-md-4" style="min-width:370px">
   <div class="right" style="min-width:370px">
+    <div class="div1 show">
     <table class="mui-table mui-table--bordered table">
       <thead>
+        <tr><td colspan="2"  class="mui--text-center"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
+        <tr>
+            <th>全国</th>
+            <th>激活数量</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data['top']['native']">
+          <template v-if="$index < 10">
+            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
+            <td class="mui--text-center">{{ item.value }}</td>
+          </template>
+        </tr>
+        <tr><td colspan="2" class="mui--text-center"><a @click="spread('1')" class="mui-btn mui-btn--primary mui-btn--small">展开</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="div1 hidden">
+    <table class="mui-table mui-table--bordered table">
+      <thead>
+        <tr><td colspan="2" class="mui--text-center"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
         <tr>
             <th>全国</th>
             <th>激活数量</th>
@@ -46,11 +68,34 @@
             <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
             <td class="mui--text-center">{{ item.value }}</td>
         </tr>
-        <tr><td colspan="2"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
+        <tr><td colspan="2" class="mui--text-center"><a @click="spread('1')" class="mui-btn mui-btn--primary mui-btn--small">收起</a></td></tr>
       </tbody>
     </table>
+    </div>
+    <div class="div0 show">
     <table class="mui-table mui-table--bordered table">
       <thead>
+        <tr><td colspan="2" class="mui--text-center"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
+        <tr>
+            <th>世界</th>
+            <th>激活数量</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data['top']['abroad']">
+          <template v-if="$index < 10">
+            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
+            <td class="mui--text-center">{{ item.value }}</td>
+          </template>
+        </tr>
+        <tr><td colspan="2" class="mui--text-center"><a @click="spread('0')" class="mui-btn mui-btn--primary mui-btn--small">展开</a></td></tr>
+        </tbody>
+            </table>
+    </div>
+   <div class="div0 hidden">
+    <table class="mui-table mui-table--bordered table">
+      <thead>
+        <tr><td colspan="2" class="mui--text-center"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
         <tr>
             <th>世界</th>
             <th>激活数量</th>
@@ -61,9 +106,10 @@
             <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
             <td class="mui--text-center">{{ item.value }}</td>
         </tr>
-        <tr><td colspan="2"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
+        <tr><td colspan="2" class="mui--text-center"><a @click="spread('0')" class="mui-btn mui-btn--primary mui-btn--small">收起</a></td></tr>
       </tbody>
     </table>
+    </div>
     </div>
     </div>
     </div>
@@ -117,6 +163,19 @@ export default {
       var start = this.start.replace(/\//g, '-')
       var end = this.end.replace(/\//g, '-')
       return '#!/area/nano_active_area/' + start + '/' + end + '/' + v
+    },
+    spread (v) {
+      var div = 'div' + v
+      var elements = document.getElementsByClassName(div)
+      for (var i = 0; i < elements.length; i++) {
+        var show = elements[i].getAttribute('class')
+        if (show === div + ' show') {
+          elements[i].setAttribute('class', div + ' hidden')
+        } else if (show === div + ' hidden') {
+          elements[i].setAttribute('class', div + ' show')
+        }
+      }
+
     },
     queryDate () {
       this.updateColor()
@@ -228,5 +287,11 @@ export default {
     display: inline;
     margin-left: 10px;
     margin-top: -20px;
+  }
+  .hidden {
+    display:none
+  }
+  .show{
+    display:inline
   }
 </style>
