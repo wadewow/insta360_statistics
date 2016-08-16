@@ -37,7 +37,7 @@
     <div class="div1 show">
     <table class="mui-table mui-table--bordered table">
       <thead>
-        <tr><td colspan="2"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
+        <tr><td colspan="3" class="mui--text-center"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
         <tr>
             <th>全国</th>
             <th>数量</th>
@@ -52,14 +52,14 @@
             <td class="mui--text-center">{{ item.percent }}%</td>
           </template>
         </tr>
-        <tr><td colspan="2"><a @click="spread('1')" class="mui-btn mui-btn--primary mui-btn--small">展开</a></td></tr>
+        <tr><td colspan="3" class="mui--text-center"><a @click="spread('1')" class="mui-btn mui-btn--primary mui-btn--small">展开</a></td></tr>
       </tbody>
     </table>
     </div>
     <div class="div1 hidden">
     <table class="mui-table mui-table--bordered table">
       <thead>
-        <tr><td colspan="2"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
+        <tr><td colspan="3" class="mui--text-center"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
         <tr>
             <th>全国</th>
             <th>数量</th>
@@ -72,14 +72,14 @@
             <td class="mui--text-center">{{ item.value }}</td>
             <td class="mui--text-center">{{ item.percent }}%</td>
         </tr>
-        <tr><td colspan="2"><a @click="spread('1')" class="mui-btn mui-btn--primary mui-btn--small">收起</a></td></tr>
+        <tr><td colspan="3" class="mui--text-center"><a @click="spread('1')" class="mui-btn mui-btn--primary mui-btn--small">收起</a></td></tr>
       </tbody>
     </table>
     </div>
     <div class="div0 show">
     <table class="mui-table mui-table--bordered table">
       <thead>
-        <tr><td colspan="2"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
+        <tr><td colspan="3" class="mui--text-center"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
         <tr>
             <th>世界</th>
             <th>数量</th>
@@ -94,14 +94,14 @@
             <td class="mui--text-center">{{ item.percent }}%</td>
           </template>
         </tr>
-        <tr><td colspan="2"><a @click="spread('0')" class="mui-btn mui-btn--primary mui-btn--small">展开</a></td></tr>
+        <tr><td colspan="3" class="mui--text-center"><a @click="spread('0')" class="mui-btn mui-btn--primary mui-btn--small">展开</a></td></tr>
       </tbody>
     </table>
     </div>
     <div class="div0 hidden">
     <table class="mui-table mui-table--bordered table">
       <thead>
-        <tr><td colspan="2"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
+        <tr><td colspan="3" class="mui--text-center"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
         <tr>
             <th>世界</th>
             <th>数量</th>
@@ -114,7 +114,7 @@
             <td class="mui--text-center">{{ item.value }}</td>
             <td class="mui--text-center">{{ item.percent }}%</td>
         </tr>
-        <tr><td colspan="2"><a @click="spread('0')" class="mui-btn mui-btn--primary mui-btn--small">收起</a></td></tr>
+        <tr><td colspan="3" class="mui--text-center"><a @click="spread('0')" class="mui-btn mui-btn--primary mui-btn--small">收起</a></td></tr>
       </tbody>
     </table>
     </div>
