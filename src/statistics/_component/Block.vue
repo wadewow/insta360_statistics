@@ -1,9 +1,10 @@
 <template>
   <div>
     <div id="block" class="mui-panel mui--text-center" v-for="item in items['total']">
-        <span>{{ item.name }}</span><br/>
-        <span>{{ item.value }}</span><br/>
-        <span>{{ item.comment }}</span>
+        <template v-for="i in item"><span>{{ i }}</span><br/></template>
+        <!--<span>{{ item.value }}</span><br/>
+        <span>{{ item.comment }}</span>-->
+
     </div>
   </div>
 </template>
@@ -23,7 +24,7 @@ export default {
     float:left;
     margin-left:50px;
     width:120px;
-    height:80px;
+    height:100px;
     background:#FFD180
   }
 </style>

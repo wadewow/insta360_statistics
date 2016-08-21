@@ -1,7 +1,7 @@
 <template>
   <div>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-7">
+    <div class="mui-col-md-5">
       <div>
         <a id="0" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button1 }}" @click="queryPeriod(0)">今天</a>
         <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button2 }}" @click="queryPeriod(1)">昨天</a>
@@ -10,7 +10,17 @@
         <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button5 }}" @click="queryPeriod(100)">全部</a>
       </div>
     </div>
-    <div class="mui-col-md-3" style="min-width:235px">
+    <div class="mui-col-md-3">
+    <div class="" style="display:block;height:50px;padding-top:10px">
+    <div class="mui-radio">
+        <label><input type="radio" name="source" value="taobao" v-model='source' checked @click="querySource('taobao')">淘宝</label>
+    </div>
+    <div class="mui-radio">
+        <label><input type="radio" name="source" v-model='source' value="jd" @click="querySource('jd')">京东</label>
+   </div>
+   </div>
+    </div>
+    <div class="mui-col-md-3">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -22,11 +32,8 @@
       </div>
       </div>
     </div>
-    <div class="mui-col-md-2" style="min-width:180px">
-      <div class="" style="min-width:180px">
+    <div class="mui-col-md-1">
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
-      <a :href="back('0')" class="mui-btn mui-btn--raised">返回</a>
-      </div>
     </div>
   </div>
   <block :items="data"></block>
@@ -65,7 +72,7 @@ export default {
       endTime: '',
       start: '',
       end: '',
-      is_native: 0
+      source: 'taobao'
     }
   },
 
@@ -74,25 +81,11 @@ export default {
     this.endTime = store.state.endTime
     this.start = this.startTime
     this.end = this.endTime
-    // this.is_native = 0
     this.updateColor()
+    this.source = 'taobao'
   },
 
   methods: {
-    back (v) {
-      const cname = this.$route.params.cname
-      var s = 'active_map/nano_active_map'
-      if (cname === 'nano_active_area') {
-        s = 'active_map/nano_active_map'
-      } else if (cname === 'share_area') {
-        s = 'map/location_share'
-      } else if (cname === 'visit_area') {
-        s = 'map/share_visitor'
-      } else if (cname === 'user_area') {
-        s = 'map/user_distribution'
-      }
-      return '#!/' + s
-    },
     queryDate () {
       this.updateColor()
       this.start = this.startTime
@@ -103,7 +96,17 @@ export default {
       const query = {
         start_time: this.startTime,
         end_time: this.endTime,
-        is_native: this.is_native
+        source: this.source
+      }
+      store.dispatch('CHART_UPDATE', cname, query)
+    },
+    querySource (val) {
+      this.source = val
+      const cname = this.$route.params.cname
+      const query = {
+        start_time: this.startTime,
+        end_time: this.endTime,
+        source: this.source
       }
       store.dispatch('CHART_UPDATE', cname, query)
     },
@@ -131,7 +134,7 @@ export default {
       const query = {
         start_time: this.start,
         end_time: this.end,
-        is_native: this.is_native
+        source: this.source
       }
       store.dispatch('CHART_UPDATE', cname, query)
     },
@@ -176,12 +179,11 @@ export default {
       this.endTime = store.state.endTime
       this.start = this.startTime
       this.end = this.endTime
-      this.is_native = to.params.is_native
       const cname = to.params.cname
       const query = {
         start_time: this.start,
         end_time: this.end,
-        is_native: this.is_native
+        source: this.source
       }
       store.dispatch('CHART_UPDATE', cname, query)
       this.updateColor()
@@ -199,6 +201,12 @@ export default {
     padding: 1em;
     .mui-textfield {
       margin-left: 16px;
+    }
+    .active {
+      background: #EE7700
+    }
+    .active:hover {
+      background: #EE7700
     }
   }
 </style>

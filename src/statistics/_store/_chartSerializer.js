@@ -1,3 +1,4 @@
+import moment from 'moment'
 import _ from 'lodash'
 import dict_json from './dictionary.json'
 export default {
@@ -15,6 +16,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [{
         name: '总激活量',
         value: _.sum(y_all),
@@ -41,7 +46,6 @@ export default {
         formatter: function (params, ticket, callback) {
           var sum = 0
           var res = params[0].name
-          console.log(params)
           for (var i = 0, l = params.length; i < l; i++) {
             res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
             sum += parseInt(params[i].value, 10)
@@ -103,6 +107,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [{
         name: '累计图片数量',
         value: _.sum(y_image)
@@ -124,7 +132,6 @@ export default {
         formatter: function (params, ticket, callback) {
           var sum = 0
           var res = params[0].name
-          console.log(params)
           for (var i = 0, l = params.length; i < l; i++) {
             res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
             sum += parseInt(params[i].value, 10)
@@ -181,6 +188,10 @@ export default {
     const total_video = _.sum(y_video)
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [{
         name: '图片浏览量',
         value: total_imgage
@@ -257,6 +268,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [{
         name: '激活量',
         value: total
@@ -445,9 +460,9 @@ export default {
           }else {
             res = res + value
             if (params['seriesName'] === '全国') {
-              percent = _.round((parseInt(value, 10) / total_native * 100), 1)
+              percent = _.round(isNaN(parseInt(value, 10) / total_native * 100) ? 0 : (parseInt(value, 10) / total_native * 100), 1)
             }else {
-              percent = _.round((parseInt(value, 10) / total_all * 100), 1)
+              percent = _.round(isNaN(parseInt(value, 10) / total_all * 100) ? 0 : (parseInt(value, 10) / total_all * 100), 1)
             }
             res = res + '<br/>' + '占比' + ' : ' + percent + '%'
           }
@@ -555,11 +570,11 @@ export default {
 
     const total_abroad = total_all - total_native
     for (var i in _native_data) {
-      _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
+      _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round(isNaN(parseInt(_native_data[i]['value'], 10) / total_native * 100) ? 0 : (parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
     }
 
     for (var j in _abroad_data) {
-      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
+      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round(isNaN(parseInt(_abroad_data[j]['value'], 10) / total_all * 100) ? 0 : (parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
     }
     const _china = {
       name: '全国',
@@ -646,9 +661,9 @@ export default {
           }else {
             res = res + value
             if (params['seriesName'] === '全国') {
-              percent = _.round((parseInt(value, 10) / total_native * 100), 1)
+              percent = _.round(isNaN(parseInt(value, 10) / total_native * 100) ? 0 : (parseInt(value, 10) / total_native * 100), 1)
             }else {
-              percent = _.round((parseInt(value, 10) / total_all * 100), 1)
+              percent = _.round(isNaN(parseInt(value, 10) / total_all * 100) ? 0 : (parseInt(value, 10) / total_all * 100), 1)
             }
             res = res + '<br/>' + '占比' + ' : ' + percent + '%'
           }
@@ -766,10 +781,10 @@ export default {
 
     const total_abroad = total_all - total_native
     for (var i in _native_data) {
-      _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round((parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
+      _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round(isNaN(parseInt(_native_data[i]['value'], 10) / total_native * 100) ? 0 : (parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
     }
     for (var j in _abroad_data) {
-      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round((parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
+      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round(isNaN(parseInt(_abroad_data[j]['value'], 10) / total_all * 100) ? 0 : (parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
     }
     const _china = {
       name: '全国',
@@ -856,9 +871,9 @@ export default {
           }else {
             res = res + value
             if (params['seriesName'] === '全国') {
-              percent = _.round((parseInt(value, 10) / total_native * 100), 1)
+              percent = _.round(isNaN(parseInt(value, 10) / total_native * 100) ? 0 : (parseInt(value, 10) / total_native * 100), 1)
             }else {
-              percent = _.round((parseInt(value, 10) / total_all * 100), 1)
+              percent = _.round(isNaN(parseInt(value, 10) / total_all * 100) ? 0 : (parseInt(value, 10) / total_all * 100), 1)
             }
             res = res + '<br/>' + '占比' + ' : ' + percent + '%'
           }
@@ -959,7 +974,7 @@ export default {
   },
   knowmore: data => {
     const tip1 = ['上线 ~ 2016.7.25 18:00', '2016.7.27 17:47 ~ 2016.7.29 12:17', '2016.7.29 12:17 ~ 2016.8.13 18:40', '2016.8.13 18:40 至今']
-    const tip2 = ['第一次上线', '从默认陀螺仪改成默认拖拽', '回滚为默认陀螺仪', '优化了页面加载速度']
+    const tip2 = ['第一次上线', '从默认拖拽改成陀螺仪', '回滚为默认拖拽', '优化了页面加载速度']
     const column1 = ['Knowmore 点击比例', '数据', '分享内容页版本']
     const column2 = ['日期', '点击knowmore新增用户/总点击数']
     var count = 0
@@ -970,7 +985,7 @@ export default {
       var array1 = data['know_more'][item1].split('/')
       var percent1 = 0
       if (array1.length > 1 && array1[1] !== 0) {
-        percent1 = _.round(((parseFloat(array1[0]) / parseFloat(array1[1])) * 100), 1)
+        percent1 = _.round(isNaN((parseFloat(array1[0]) / parseFloat(array1[1])) * 100) ? 0 : ((parseFloat(array1[0]) / parseFloat(array1[1])) * 100), 1)
       }
       data1.push(_.assign({'name': tip1[count], 'value': data['know_more'][item1] + ' (' + percent1 + '%)', 'comment': tip2[count]}))
       count++
@@ -980,7 +995,7 @@ export default {
       var array2 = data['data']['info'][item2].scale.split('/')
       var percent2 = 0
       if (array2.length > 1 && array2[1] !== 0) {
-        percent2 = _.round(((parseFloat(array2[0]) / parseFloat(array2[1])) * 100), 1)
+        percent2 = _.round(isNaN((parseFloat(array2[0]) / parseFloat(array2[1])) * 100) ? 0 : ((parseFloat(array2[0]) / parseFloat(array2[1])) * 100), 1)
       }
       data2.push(_.assign({'time': data['data']['info'][item2].time, 'scale': data['data']['info'][item2].scale + ' (' + percent2 + '%)'}))
     }
@@ -1009,6 +1024,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [{
         name: '全部流量',
         value: _.sum(y_all)
@@ -1102,6 +1121,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [{
         name: '全部点击数',
         value: _.sum(y_all)
@@ -1180,7 +1203,7 @@ export default {
     const y = []
 
     var count = 0
-    var _sum = 0
+    // var _sum = 0
     for (var index in data) {
       x.push(index)
       if (count === 0) {
@@ -1191,7 +1214,7 @@ export default {
         }
       }
       for (var j in y) {
-        _sum += data[index][y[j]['name']]
+        // _sum += data[index][y[j]['name']]
         y[j]['data'].push(data[index][y[j]['name']])
       }
       count++
@@ -1203,6 +1226,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [],
       title: {
         text: '激活Top10区域对比面积图',
@@ -1241,7 +1268,7 @@ export default {
     const y = []
 
     var count = 0
-    var _sum = 0
+    // var _sum = 0
     for (var index in data) {
       x.push(index)
       if (count === 0) {
@@ -1252,7 +1279,7 @@ export default {
         }
       }
       for (var j in y) {
-        _sum += data[index][y[j]['name']]
+        // _sum += data[index][y[j]['name']]
         y[j]['data'].push(data[index][y[j]['name']])
       }
       count++
@@ -1264,6 +1291,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [],
       title: {
         text: '内容Top10区域对比面积图',
@@ -1302,7 +1333,7 @@ export default {
     const y = []
 
     var count = 0
-    var _sum = 0
+    // var _sum = 0
     for (var index in data) {
       x.push(index)
       if (count === 0) {
@@ -1313,7 +1344,7 @@ export default {
         }
       }
       for (var j in y) {
-        _sum += data[index][y[j]['name']]
+        // _sum += data[index][y[j]['name']]
         y[j]['data'].push(data[index][y[j]['name']])
       }
       count++
@@ -1325,6 +1356,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [],
       title: {
         text: '访客Top10区域对比面积图',
@@ -1387,6 +1422,10 @@ export default {
       _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
     }
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [{
         name: '全部流量',
         value: _sum
@@ -1404,7 +1443,6 @@ export default {
         formatter: function (params, ticket, callback) {
           var sum = 0
           var res = params[0].name
-          console.log(params)
           for (var i = 0, l = params.length; i < l; i++) {
             res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
             sum += parseInt(params[i].value, 10)
@@ -1439,7 +1477,7 @@ export default {
       yAxis: {},
       series: _series
     }
-  }
+  },
   // buylink_store_trends: data => {
 
   //   const x = []
@@ -1479,7 +1517,6 @@ export default {
   //       formatter: function (params, ticket, callback) {
   //         var sum = 0
   //         var res = params[0].name
-  //         console.log(params)
   //         for (var i = 0, l = params.length; i < l; i++) {
   //           res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
   //           sum += parseInt(params[i].value, 10)
@@ -1523,4 +1560,786 @@ export default {
   //     }]
   //   }
   // }
+  use_condition: data => {
+    const x = []
+    const y_active = []
+    const y_new = []
+    const y_duration = []
+    for (var index in data) {
+      x.push(data[index]['date'])
+      y_active.push(data[index]['active_user'])
+      y_new.push(data[index]['new_user'])
+      y_duration.push(data[index]['duration'])
+    }
+    var avgDuration = _.round(_.mean(y_duration), 0)
+    var duration = moment.duration(avgDuration, 'seconds')
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: [{
+        name: '新增用户',
+        value: _.sum(y_new)
+      },
+      {
+        name: '活跃用户',
+        value: _.sum(y_active)
+      },
+      {
+        name: '平均使用时长',
+        value: duration.hours() + 'h ' + duration.minutes() + 'm ' + duration.seconds() + 's'
+      }
+      ],
+      title: {
+        text: '用户概况',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          // magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['新增用户', '活跃用户', '平均使用时长(s)'],
+        selectedMode: 'single'
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [
+        {
+          name: '新增用户',
+          type: 'line',
+          data: y_new,
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '活跃用户',
+          type: 'line',
+          data: y_active,
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '平均使用时长(s)',
+          type: 'line',
+          data: y_duration,
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        }]
+    }
+  },
+  user_distribution: data => {
+    const native_data = data['native']
+    const abroad_data = data['abroad']
+    var m = 499
+    var k = 0
+    for (var n in abroad_data) {
+      m = abroad_data[n]['total']
+      if (k === 1) {
+        break
+      }
+      k++
+    }
+    for (var o in native_data) {
+      var temp = native_data[o]['total']
+      if (temp > m) {
+        m = temp
+      }
+      break
+    }
+    var max = (parseInt(m / 100, 10) + 1) * 100
+    function getNativeData () {
+      const result = []
+      for (var index in native_data) {
+        result.push(_.assign({'name': native_data[index]['location'], 'value': native_data[index]['total']}))
+      }
+      return result
+    }
+    const itemStyle = {
+      normal: {
+        color: '#32cd32',
+        label: {
+          show: true
+          // textStyle: {
+          //   color: '#fff',
+          //   fontSize: 15
+          // }
+        }
+      },
+      emphasis: {               // 也是选中样式
+        // borderWidth: 5,
+        // borderColor: 'yellow',
+        color: '#ccc',
+        label: {
+          // show: false,
+          textStyle: {
+            // color: '#eee'
+          }
+        }
+      }
+    }
+    function getAbroadData () {
+      const result = []
+      for (var index in abroad_data) {
+        result.push(_.assign({'name': abroad_data[index]['location'], 'value': abroad_data[index]['total'], 'itemStyle': itemStyle}))
+      }
+      return result
+    }
+
+    const _native_data = getNativeData()
+    const _abroad_data = getAbroadData()
+    const _native_top = []
+    const _abroad_top = []
+    const total_native = _.sumBy(_native_data, function (o) {
+      return o.value
+    })
+    const total_all = _.sumBy(_abroad_data, function (o) {
+      return o.value
+    })
+    const total_abroad = total_all - total_native
+    for (var i in _native_data) {
+      _native_top.push(_.assign({'name': _native_data[i]['name'], 'value': _native_data[i]['value'], 'percent': _.round(isNaN(parseInt(_native_data[i]['value'], 10) / total_native * 100) ? 0 : (parseInt(_native_data[i]['value'], 10) / total_native * 100), 1)}))
+    }
+
+    for (var j in _abroad_data) {
+      _abroad_top.push(_.assign({'name': dict_json[_abroad_data[j]['name']] !== undefined ? dict_json[_abroad_data[j]['name']] : _abroad_data[j]['name'], 'value': _abroad_data[j]['value'], 'percent': _.round(isNaN(parseInt(_abroad_data[j]['value'], 10) / total_all * 100) ? 0 : (parseInt(_abroad_data[j]['value'], 10) / total_all * 100), 1)}))
+    }
+    const _china = {
+      name: '全国',
+      type: 'map',
+      mapType: 'china',
+      roam: true,
+      itemStyle: {
+        normal: {
+          areaColor: '#fff',
+          borderColor: '#ccc'
+        },
+        emphasis: {
+          areaColor: '#FFFF00'
+        }
+      },
+      label: {
+        normal: {
+          show: true
+        },
+        emphasis: {
+          show: true
+        }
+      },
+      data: _native_data
+    }
+
+    const _world = {
+      name: '世界',
+      type: 'map',
+      mapType: 'world',
+      roam: true,
+      itemStyle: {
+        normal: {
+          areaColor: '#fff',
+          borderColor: '#ccc'
+        },
+        emphasis: {
+          areaColor: '#FFFF00'
+        }
+      },
+      label: {
+        normal: {
+          show: false
+        },
+        emphasis: {
+          show: true
+        }
+      },
+      data: _abroad_data
+    }
+
+    var option = {
+      total: [{
+        name: '新增用户',
+        value: total_all
+      },
+        {
+          name: '国内新增用户',
+          value: total_native
+        },
+        {
+          name: '国外新增用户',
+          value: total_abroad
+        }
+      ],
+      top: {
+        native: _native_top,
+        abroad: _abroad_top
+      },
+      title: {
+        text: 'APP用户区域分布',
+        // subtext: '',
+        left: 'left'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: function (params, ticket, callback) {
+          var value = params['value']
+          var percent = 0
+          var res = params['name'] + ' : '
+          if (isNaN(value)) {
+            value = '-'
+            res = res + value
+          }else {
+            res = res + value
+            if (params['seriesName'] === '全国') {
+              percent = _.round(isNaN(parseInt(value, 10) / total_native * 100) ? 0 : (parseInt(value, 10) / total_native * 100), 1)
+            }else {
+              percent = _.round(isNaN(parseInt(value, 10) / total_all * 100) ? 0 : (parseInt(value, 10) / total_all * 100), 1)
+            }
+            res = res + '<br/>' + '占比' + ' : ' + percent + '%'
+          }
+          return res
+        }
+      },
+      legend: {
+        orient: 'horizontal',
+        left: 'center',
+        selectedMode: 'single',
+        data: ['全国', '世界']
+      },
+      dataRange: {
+        min: 0,
+        max: max,
+        left: 'left',
+        top: 'bottom',
+        text: ['高', '低'],           // 文本，默认为数值文本
+        calculable: true
+      },
+      toolbox: {
+        show: true,
+        // orient: 'vertical',
+        x: 'right',
+        y: 'top',
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          saveAsImage: { show: true }
+        }
+      },
+      // roamController: {
+      //   show: true,
+      //   x: 'right',
+      //   y: 'bottom',
+      //   mapTypeControl: {
+      //     'china': true,
+      //     'world': true
+      //   }
+      // },
+      series: [_china, _world]
+      // series: [_world]
+    }
+
+    return option
+  },
+  market_environment: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    // var _sum = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        // _sum += data[index][y[j]['name']]
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    const select = {}
+    for (var a in area) {
+      var name = area[a]
+      select[name] = false
+    }
+    select['insta360'] = true
+
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: [],
+      title: {
+        text: '百度指数',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area,
+        selected: select
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+  user_area: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    return {
+      total: [],
+      title: {
+        text: '新增用户Top10区域对比面积图',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+  error_condition: data => {
+    const x = []
+    const y_total = []
+    for (var index in data) {
+      x.push(data[index]['date'])
+      y_total.push(data[index]['total_error'])
+    }
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: [{
+        name: '错误数',
+        value: _.sum(y_total)
+      }
+      ],
+      title: {
+        text: '错误异常',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          // magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['错误数']
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [
+        {
+          name: '错误数',
+          type: 'line',
+          data: y_total,
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        }]
+    }
+  },
+  competitor_data: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: [],
+      title: {
+        text: '竞品数据',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+  sales_status: data => {
+    const locations = data['locations']
+    var last_inventory_first = 0
+    var last_inventory_lower = 0
+    var last_reject = 0
+    last_inventory_first = data['last']['inventory_first']
+    last_inventory_lower = data['last']['inventory_lower']
+    last_reject = data['last']['reject']
+    const x = []
+    const y_pick_up = []
+    const y_inventory_lower = []
+    const y_inventory_first = []
+    const y_sales_offline = []
+    const y_sales_online = []
+    const y_reject = []
+    const y_sales = []
+    const y_inventory = []
+    data = data['data']
+    for (var index in data) {
+      x.push(index)
+      y_pick_up.push(data[index]['pick_up'])
+      y_inventory_lower.push(data[index]['inventory_lower'])
+      y_inventory_first.push(data[index]['inventory_first'])
+      y_sales_offline.push(data[index]['sales_offline'])
+      y_sales_online.push(data[index]['sales_online'])
+      y_reject.push(data[index]['reject'])
+      y_sales.push(data[index]['sales_offline'] + data[index]['sales_online'])
+      y_inventory.push(data[index]['inventory_lower'] + data[index]['inventory_first'])
+    }
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      locations: locations,
+      total: [{
+        name: '期初库存：' + (last_inventory_first + last_inventory_lower + last_reject),
+        value: '一级：' + last_inventory_first,
+        comment: '下级：' + last_inventory_lower,
+        comment1: '退货：' + last_reject
+      },
+      {
+        name: '本期提货',
+        value: _.sum(y_pick_up)
+      },
+      {
+        name: '本期销售：' + _.sum(y_sales),
+        value: '线上：' + _.sum(y_sales_online),
+        comment: '线下：' + _.sum(y_sales_offline)
+      },
+      {
+        name: '本期库存：' + (_.sum(y_inventory) + _.sum(y_reject)),
+        value: '一级：' + _.sum(y_inventory_first),
+        comment: '下级：' + _.sum(last_inventory_lower),
+        comment1: '退货：' + _.sum(y_reject)
+      }
+      ],
+      title: {
+        text: '国内销售情况',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['提货', '销售', '库存', '退货']
+        // selected: { '全部激活数量': false }
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [
+        {
+          name: '提货',
+          type: 'line',
+          data: y_pick_up,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '销售',
+          type: 'line',
+          data: y_sales,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '库存',
+          type: 'line',
+          data: y_inventory,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '退货',
+          type: 'line',
+          data: y_reject,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        }]
+    }
+  },
+  electronic_sales: data => {
+    const locations = data['locations']
+    const x = []
+    const y_buyer = []
+    const y_visitor = []
+    const y_number = []
+    const y_payment = []
+    const y_view = []
+    data = data['data']
+    for (var index in data) {
+      x.push(index)
+      y_buyer.push(data[index]['buyer'])
+      y_visitor.push(data[index]['visitor'])
+      y_payment.push(data[index]['payment'])
+      y_view.push(data[index]['view'])
+      y_number.push(data[index]['number'])
+    }
+    const sum_buyer = _.sum(y_buyer)
+    const sum_visitor = _.sum(y_visitor)
+    var conversion = 0
+    if (sum_visitor !== 0) {
+      conversion = _.round(sum_buyer / sum_visitor * 100, 1)
+    }
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      locations: locations,
+      total: [{
+        // ////////////////////////////////
+        name: '支付件数',
+        value: _.sum(y_number)
+      },
+      {
+        name: '支付买家数',
+        value: sum_buyer
+      },
+      {
+        name: '支付金额',
+        value: _.sum(y_payment)
+      },
+      {
+        name: '浏览量',
+        value: _.sum(y_view)
+      },
+      {
+        name: '访客数',
+        value: sum_visitor
+      },
+      {
+        name: '转化率',
+        value: conversion + '%'
+      }
+      ],
+      title: {
+        text: '自有电商渠道',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['支付件数', '支付买家数', '浏览量', '访客数']
+        // selected: { '全部激活数量': false }
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [
+        {
+          name: '支付件数',
+          type: 'line',
+          data: y_number,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '支付买家数',
+          type: 'line',
+          data: y_buyer,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        // {
+        //   name: '支付金额',
+        //   type: 'line',
+        //   data: y_payment,
+        //   stack: 'all',
+        //   itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        // },
+        {
+          name: '浏览量',
+          type: 'line',
+          data: y_view,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '访客数',
+          type: 'line',
+          data: y_visitor,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        }]
+    }
+  },
+  login: data => {
+    return data['result']
+  }
 }

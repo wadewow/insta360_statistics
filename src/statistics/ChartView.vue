@@ -28,7 +28,6 @@
   </div>
   <block :items="data"></block>
   <chart :name="name" :data="data"></chart>
-  <input type='hidden' id="chartType" value="{{ data['series'][0]['type'] }}"/>
   </div>
 </template>
 
@@ -99,7 +98,7 @@ export default {
         this.endTime = moment().format('YYYY-MM-DD')
       } else if (val === 1) {
         this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
-        this.endTime = moment().format('YYYY-MM-DD')
+        // this.endTime = moment().format('YYYY-MM-DD')
         this.endTime = this.startTime
       } else if (val === 0) {
         this.startTime = moment().format('YYYY-MM-DD')

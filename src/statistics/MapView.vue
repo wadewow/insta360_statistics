@@ -175,6 +175,8 @@ export default {
         s = 'share_area'
       } else if (cname === 'share_visitor') {
         s = 'visit_area'
+      } else if (cname === 'user_distribution') {
+        s = 'user_area'
       }
       return '#!/area/' + s + '/' + start + '/' + end + '/' + v
     },

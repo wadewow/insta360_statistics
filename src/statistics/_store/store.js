@@ -39,7 +39,11 @@ const state = {
       xAxis: {
       },
       yAxis: {},
-      series: []
+      series: [],
+      top: {
+        native: [],
+        abroad: []
+      }
     }
   },
   table: {
@@ -75,6 +79,7 @@ const state = {
 const apiQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
+    // console.log(res)
     state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body), query.location)
     // console.log(state.chart.data)
   }, (res) => {
@@ -149,9 +154,26 @@ const mutations = {
   VALIDATE (state, username, password) {
     if (username === 'insta360_admin' && password === '50lan123') {
       state.isLogin = true
-    } else {
-      state.isLogin = false
+      return
     }
+    const query = {
+      username: username,
+      password: password
+    }
+    var result = false
+    Vue.http.get(Api['login'].url, { params: query }).then((res) => {
+    // success callback
+      result = ChartSerializer[Api['login'].serialize](JSON.parse(res.body))
+      if (result) {
+        state.isLogin = true
+      } else {
+        state.isLogin = false
+      }
+    }, (res) => {
+    // error callback
+      console.log(res)
+      state.isLogin = false
+    })
   }
 }
 
