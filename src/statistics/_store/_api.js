@@ -66,6 +66,10 @@ export default {
     url: baseUrl + 'api/knowmore/click_know_more_statistics',
     serialize: 'knowmore'
   },
+  link_query: {
+    url: baseUrl + 'api/buylinkCustom',
+    serialize: 'link_query'
+  },
   use_condition: {
     url: baseUrl1 + 'use_condition/',
     serialize: 'use_condition'

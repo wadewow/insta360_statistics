@@ -965,9 +965,9 @@ export default {
     // data_total.push(data2)
 
     return {
-      total: 1,
-      current_page: 1,
-      page_total: 1,
+      // total: 1,
+      // current_page: 1,
+      // page_total: 1,
       // column: column,
       series: data_total
     }
@@ -1008,6 +1008,16 @@ export default {
       page_total: data['data']['page_total'],
       column: [column1, column2],
       series: data_total
+    }
+  },
+  link_query: data => {
+    const column = ['链接标题', '链接地址', '访问次数']
+    return {
+      total: data['total'],
+      current_page: data['page'],
+      page_total: data['page_total'],
+      column: column,
+      series: data['data']
     }
   },
   nano_store: data => {

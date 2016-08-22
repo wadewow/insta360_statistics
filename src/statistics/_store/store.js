@@ -49,8 +49,8 @@ const state = {
   table: {
     name: 'table',
     data: {
-      current_page: 1,
-      page_total: 1,
+      // current_page: 1,
+      // page_total: 1,
       column: [],
       series: []
     }
@@ -65,6 +65,15 @@ const state = {
     }
   },
   table2: {
+    name: 'table',
+    data: {
+      current_page: 1,
+      page_total: 1,
+      column: [],
+      series: []
+    }
+  },
+  table3: {
     name: 'table',
     data: {
       current_page: 1,
@@ -118,6 +127,17 @@ const apiQueryTable2 = (path, query) => {
   })
 }
 
+const apiQueryTable3 = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.table3.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数
 const mutations = {
   POSTS_NEXT (state, offset) {
@@ -147,6 +167,8 @@ const mutations = {
       apiQueryTable(tname, query)
     } else if (tname === 'knowmore') {
       apiQueryTable2(tname, query)
+    } else if (tname === 'link_query') {
+      apiQueryTable3(tname, query)
     }else {
       state.table.data = ChartData[tname]
     }

@@ -13,6 +13,7 @@ import RestStatisticsView from './RestStatisticsView'
 import CompetitorChartView from './CompetitorChartView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
+import LinkQueryView from './LinkQueryView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import pikaday from '../_directives/pikaday'
@@ -66,6 +67,9 @@ router.map({
   },
   '/competitor_chart/:cname/:source': {
     component: CompetitorChartView
+  },
+  '/link_query/:tname': {
+    component: LinkQueryView
   }
 })
 
