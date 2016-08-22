@@ -19,8 +19,8 @@
       <tbody>
         <tr v-for="item in data['series']">
           <td>{{ item.name }}</td>
-          <td><a target="_blank" href="{{ item.url }}">{{ item.url }}</a></td>
           <td><a target="_blank" href="{{ item.buylink_url }}">{{ item.buylink_url }}</a></td>
+          <td><a target="_blank" href="{{ item.url }}">{{ item.url }}</a></td>
           <td>{{ item.total }}</td>
         </tr>
     </tbody>
