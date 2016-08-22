@@ -1,4 +1,5 @@
 const baseUrl = 'http://statistics.internal.insta360.com/'
+const baseUrl1 = 'http://localhost:8000/crawler/'
 
 export default {
   nano_active: {
@@ -64,5 +65,45 @@ export default {
   knowmore: {
     url: baseUrl + 'api/knowmore/click_know_more_statistics',
     serialize: 'knowmore'
+  },
+  link_query: {
+    url: baseUrl + 'api/buylinkCustom',
+    serialize: 'link_query'
+  },
+  use_condition: {
+    url: baseUrl1 + 'use_condition/',
+    serialize: 'use_condition'
+  },
+  user_distribution: {
+    url: baseUrl1 + 'user_distribution/',
+    serialize: 'user_distribution'
+  },
+  market_environment: {
+    url: baseUrl1 + 'market_environment/',
+    serialize: 'market_environment'
+  },
+  user_area: {
+    url: baseUrl1 + 'user_area/',
+    serialize: 'user_area'
+  },
+  error_condition: {
+    url: baseUrl1 + 'error_condition/',
+    serialize: 'error_condition'
+  },
+  competitor_data: {
+    url: baseUrl1 + 'competitor_data/',
+    serialize: 'competitor_data'
+  },
+  sales_status: {
+    url: baseUrl1 + 'get_sales_status/',
+    serialize: 'sales_status'
+  },
+  electronic_sales: {
+    url: baseUrl1 + 'get_electronic_sales/',
+    serialize: 'electronic_sales'
+  },
+  login: {
+    url: baseUrl1 + 'login/',
+    serialize: 'login'
   }
 }

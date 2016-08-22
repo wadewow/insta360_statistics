@@ -39,14 +39,18 @@ const state = {
       xAxis: {
       },
       yAxis: {},
-      series: []
+      series: [],
+      top: {
+        native: [],
+        abroad: []
+      }
     }
   },
   table: {
     name: 'table',
     data: {
-      current_page: 1,
-      page_total: 1,
+      // current_page: 1,
+      // page_total: 1,
       column: [],
       series: []
     }
@@ -68,6 +72,15 @@ const state = {
       column: [],
       series: []
     }
+  },
+  table3: {
+    name: 'table',
+    data: {
+      current_page: 1,
+      page_total: 1,
+      column: [],
+      series: []
+    }
   }
 }
 
@@ -75,6 +88,7 @@ const state = {
 const apiQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
+    // console.log(res)
     state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body), query.location)
     // console.log(state.chart.data)
   }, (res) => {
@@ -113,6 +127,17 @@ const apiQueryTable2 = (path, query) => {
   })
 }
 
+const apiQueryTable3 = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.table3.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数
 const mutations = {
   POSTS_NEXT (state, offset) {
@@ -142,17 +167,37 @@ const mutations = {
       apiQueryTable(tname, query)
     } else if (tname === 'knowmore') {
       apiQueryTable2(tname, query)
+    } else if (tname === 'link_query') {
+      apiQueryTable3(tname, query)
     }else {
       state.table.data = ChartData[tname]
     }
-  },
-  VALIDATE (state, username, password) {
-    if (username === 'insta360_admin' && password === '50lan123') {
-      state.isLogin = true
-    } else {
-      state.isLogin = false
-    }
   }
+  // VALIDATE (state, username, password) {
+  //   if (username === 'insta360_admin' && password === '50lan123') {
+  //     state.isLogin = true
+  //     console.log(state.isLogin)
+  //     return
+  //   }
+  //   const query = {
+  //     username: username,
+  //     password: password
+  //   }
+  //   var result = false
+  //   Vue.http.get(Api['login'].url, { params: query }).then((res) => {
+  //   // success callback
+  //     result = ChartSerializer[Api['login'].serialize](JSON.parse(res.body))
+  //     if (result) {
+  //       state.isLogin = true
+  //     } else {
+  //       state.isLogin = false
+  //     }
+  //   }, (res) => {
+  //   // error callback
+  //     console.log(res)
+  //     state.isLogin = false
+  //   })
+  // }
 }
 
 export default new Vuex.Store({

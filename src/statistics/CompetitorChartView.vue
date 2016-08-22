@@ -1,7 +1,7 @@
 <template>
   <div>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-7">
+    <div class="mui-col-md-5">
       <div>
         <a id="0" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button1 }}" @click="queryPeriod(0)">今天</a>
         <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button2 }}" @click="queryPeriod(1)">昨天</a>
@@ -10,7 +10,17 @@
         <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button5 }}" @click="queryPeriod(100)">全部</a>
       </div>
     </div>
-    <div class="mui-col-md-4">
+    <div class="mui-col-md-3">
+    <div class="" style="display:block;height:50px;padding-top:10px">
+    <div class="mui-radio">
+        <label><input type="radio" name="source" value="taobao" v-model='source' checked @click="querySource('taobao')">淘宝</label>
+    </div>
+    <div class="mui-radio">
+        <label><input type="radio" name="source" v-model='source' value="jd" @click="querySource('jd')">京东</label>
+   </div>
+   </div>
+    </div>
+    <div class="mui-col-md-3">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -29,90 +39,8 @@
 <div class="mui-container-fluid">
     <block :items="data"></block>
 </div>
-  <div class="mui-col-md-8">
-    <chart class="chart" :name="name" :data="data"></chart>
+  <chart :name="name" :data="data"></chart>
   </div>
-  <div class="mui-col-md-4" style="min-width:370px">
-  <div class="right" style="min-width:370px">
-    <div class="div1 show">
-    <table class="mui-table mui-table--bordered table">
-      <thead>
-        <tr><td colspan="2"  class="mui--text-center"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
-        <tr>
-            <th>全国</th>
-            <th>激活数量</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in data['top']['native']">
-          <template v-if="$index < 10">
-            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
-            <td class="mui--text-center">{{ item.value }}</td>
-          </template>
-        </tr>
-        <tr><td colspan="2" class="mui--text-center"><a @click="spread('1')" class="mui-btn mui-btn--primary mui-btn--small">展开</a></td></tr>
-      </tbody>
-    </table>
-    </div>
-    <div class="div1 hidden">
-    <table class="mui-table mui-table--bordered table">
-      <thead>
-        <tr><td colspan="2" class="mui--text-center"><a :href="href('1')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
-        <tr>
-            <th>全国</th>
-            <th>激活数量</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in data['top']['native']">
-            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
-            <td class="mui--text-center">{{ item.value }}</td>
-        </tr>
-        <tr><td colspan="2" class="mui--text-center"><a @click="spread('1')" class="mui-btn mui-btn--primary mui-btn--small">收起</a></td></tr>
-      </tbody>
-    </table>
-    </div>
-    <div class="div0 show">
-    <table class="mui-table mui-table--bordered table">
-      <thead>
-        <tr><td colspan="2" class="mui--text-center"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
-        <tr>
-            <th>世界</th>
-            <th>激活数量</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in data['top']['abroad']">
-          <template v-if="$index < 10">
-            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
-            <td class="mui--text-center">{{ item.value }}</td>
-          </template>
-        </tr>
-        <tr><td colspan="2" class="mui--text-center"><a @click="spread('0')" class="mui-btn mui-btn--primary mui-btn--small">展开</a></td></tr>
-        </tbody>
-            </table>
-    </div>
-   <div class="div0 hidden">
-    <table class="mui-table mui-table--bordered table">
-      <thead>
-        <tr><td colspan="2" class="mui--text-center"><a :href="href('0')" class="mui-btn mui-btn--primary mui-btn--small">区域对比</a></td></tr>
-        <tr>
-            <th>世界</th>
-            <th>激活数量</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in data['top']['abroad']">
-            <td><a href="#!/location_active_detail/location_active_detail/{{ item.name }}">{{ item.name }}</a></td>
-            <td class="mui--text-center">{{ item.value }}</td>
-        </tr>
-        <tr><td colspan="2" class="mui--text-center"><a @click="spread('0')" class="mui-btn mui-btn--primary mui-btn--small">收起</a></td></tr>
-      </tbody>
-    </table>
-    </div>
-    </div>
-    </div>
-    </div>
 </template>
 
 <script>
@@ -145,38 +73,21 @@ export default {
       startTime: '',
       endTime: '',
       start: '',
-      end: ''
+      end: '',
+      source: 'taobao'
     }
   },
-  computed: {
-  },
+
   created () {
     this.startTime = store.state.startTime
     this.endTime = store.state.endTime
     this.start = this.startTime
     this.end = this.endTime
     this.updateColor()
+    this.source = 'taobao'
   },
 
   methods: {
-    href (v) {
-      var start = this.start.replace(/\//g, '-')
-      var end = this.end.replace(/\//g, '-')
-      return '#!/area/nano_active_area/' + start + '/' + end + '/' + v
-    },
-    spread (v) {
-      var div = 'div' + v
-      var elements = document.getElementsByClassName(div)
-      for (var i = 0; i < elements.length; i++) {
-        var show = elements[i].getAttribute('class')
-        if (show === div + ' show') {
-          elements[i].setAttribute('class', div + ' hidden')
-        } else if (show === div + ' hidden') {
-          elements[i].setAttribute('class', div + ' show')
-        }
-      }
-
-    },
     queryDate () {
       this.updateColor()
       this.start = this.startTime
@@ -186,7 +97,18 @@ export default {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.startTime,
-        end_time: this.endTime
+        end_time: this.endTime,
+        source: this.source
+      }
+      store.dispatch('CHART_UPDATE', cname, query)
+    },
+    querySource (val) {
+      this.source = val
+      const cname = this.$route.params.cname
+      const query = {
+        start_time: this.startTime,
+        end_time: this.endTime,
+        source: this.source
       }
       store.dispatch('CHART_UPDATE', cname, query)
     },
@@ -197,6 +119,7 @@ export default {
         this.endTime = moment().format('YYYY-MM-DD')
       } else if (val === 1) {
         this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
+        // this.endTime = moment().format('YYYY-MM-DD')
         this.endTime = this.startTime
       } else if (val === 0) {
         this.startTime = moment().format('YYYY-MM-DD')
@@ -212,7 +135,8 @@ export default {
       const cname = this.$route.params.cname
       const query = {
         start_time: this.start,
-        end_time: this.end
+        end_time: this.end,
+        source: this.source
       }
       store.dispatch('CHART_UPDATE', cname, query)
     },
@@ -260,7 +184,8 @@ export default {
       const cname = to.params.cname
       const query = {
         start_time: this.start,
-        end_time: this.end
+        end_time: this.end,
+        source: this.source
       }
       store.dispatch('CHART_UPDATE', cname, query)
       this.updateColor()
@@ -279,19 +204,11 @@ export default {
     .mui-textfield {
       margin-left: 16px;
     }
-  }
-  .chart {
-    width: 100%;
-  }
-  .table {
-    display: inline;
-    margin-left: 10px;
-    margin-top: -20px;
-  }
-  .hidden {
-    display:none
-  }
-  .show{
-    display:inline
+    .active {
+      background: #EE7700
+    }
+    .active:hover {
+      background: #EE7700
+    }
   }
 </style>

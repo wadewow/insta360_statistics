@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './app'
 import PostsView from './PostsView'
 import ChartView from './ChartView'
+import SalesChartView from './SalesChartView'
 import ActiveMapView from './ActiveMapView'
 import MapView from './MapView'
 import AreaView from './AreaView'
@@ -9,8 +10,10 @@ import TableView from './TableView'
 import PostView from './PostView'
 import LocationActiveDetail from './LocationActiveDetail'
 import RestStatisticsView from './RestStatisticsView'
+import CompetitorChartView from './CompetitorChartView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
+import LinkQueryView from './LinkQueryView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import pikaday from '../_directives/pikaday'
@@ -58,6 +61,15 @@ router.map({
   },
   '/login': {
     component: LoginView
+  },
+  '/sales_chart/:cname/:is_native': {
+    component: SalesChartView
+  },
+  '/competitor_chart/:cname/:source': {
+    component: CompetitorChartView
+  },
+  '/link_query/:tname': {
+    component: LinkQueryView
   }
 })
 

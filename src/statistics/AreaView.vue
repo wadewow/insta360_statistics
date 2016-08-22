@@ -29,9 +29,10 @@
       </div>
     </div>
   </div>
-  <block :items="data"></block>
+<div class="mui-container-fluid">
+    <block :items="data"></block>
+</div>
   <chart :name="name" :data="data"></chart>
-  <input type='hidden' id="chartType" value="{{ data['series'][0]['type'] }}"/>
   </div>
 </template>
 
@@ -89,6 +90,8 @@ export default {
         s = 'map/location_share'
       } else if (cname === 'visit_area') {
         s = 'map/share_visitor'
+      } else if (cname === 'user_area') {
+        s = 'map/user_distribution'
       }
       return '#!/' + s
     },
@@ -113,7 +116,7 @@ export default {
         this.endTime = moment().format('YYYY-MM-DD')
       } else if (val === 1) {
         this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
-        this.endTime = moment().format('YYYY-MM-DD')
+        // this.endTime = moment().format('YYYY-MM-DD')
         this.endTime = this.startTime
       } else if (val === 0) {
         this.startTime = moment().format('YYYY-MM-DD')

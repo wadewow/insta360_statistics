@@ -26,9 +26,9 @@
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
     </div>
   </div>
-  <div style="display:block;height:100px">
+<div class="mui-container-fluid">
     <block :items="data"></block>
-  </div>
+</div>
   <div class="mui-col-md-8">
   <chart class="chart" :name="name" :data="data"></chart>
   </div>
@@ -175,6 +175,8 @@ export default {
         s = 'share_area'
       } else if (cname === 'share_visitor') {
         s = 'visit_area'
+      } else if (cname === 'user_distribution') {
+        s = 'user_area'
       }
       return '#!/area/' + s + '/' + start + '/' + end + '/' + v
     },

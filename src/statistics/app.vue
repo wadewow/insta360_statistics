@@ -3,14 +3,20 @@
     <div id="sidedrawer-brand" class="mui--appbar-line-height">Statistics</div>
     <div class="mui-divider"></div>
     <ul>
-      <!--主菜单-->
       <!--<li>
-        <strong @click="toggleCollapse">主页面板</strong>
-        <ul>
-          <li><a v-link="{ path: '/posts/1' }">Home</a></li>
+        <strong @click="toggleCollapse">Nano销售情况</strong>
+        <ul style="display:block">
+          <li>
+            <a href="#!/sales_chart/sales_status/1" @click="click">国内销售情况</a>
+          </li>
+          <li>
+            <a href="#!/sales_chart/sales_status/0" @click="click">海外销售情况</a>
+          </li>
+          <li>
+            <a href="#!/sales_chart/electronic_sales/1" @click="click">自有电商渠道</a>
+          </li>
         </ul>
       </li>-->
-      <!--nano激活-->
       <li>
         <strong @click="toggleCollapse">设备激活情况</strong>
         <ul style="display:block">
@@ -54,8 +60,36 @@
           <li>
             <a href="#!/chart/click_buylink" @click="click">点击购买按钮者地区分布</a>
           </li>
+          <li>
+            <a href="#!/link_query/link_query" @click="click">导流链接查询</a>
+          </li>
         </ul>
       </li>
+      <!--<li>
+        <strong @click="toggleCollapse">Nano市场环境</strong>
+        <ul style="display:block">
+          <li>
+            <a href="#!/chart/market_environment" @click="click">百度指数</a>
+          </li>
+          <li>
+            <a href="#!/competitor_chart/competitor_data/taobao" @click="click">竞品销量</a>
+          </li>
+        </ul>
+      </li>-->
+      <!--<li>
+        <strong @click="toggleCollapse">Nano App使用情况</strong>
+        <ul style="display:block">
+          <li>
+            <a href="#!/chart/use_condition" @click="click">用户概况</a>
+          </li>
+          <li>
+            <a href="#!/map/user_distribution" @click="click">APP用户区域分布</a>
+          </li>
+          <li>
+            <a href="#!/chart/error_condition" @click="click">错误异常</a>
+          </li>
+        </ul>
+      </li>-->
       <li>
         <strong @click="toggleCollapse">历史总数</strong>
         <ul style="display:block">
@@ -67,15 +101,6 @@
           </li>
         </ul>
       </li>
-      <!--示例内容-->
-      <!--<li>
-        <strong @click="toggleCollapse">示例内容</strong>
-        <ul style="display:block">
-          <li class="li-chart" v-for="chart in list">
-            <a href="{{'#/chart/' + chart.url}}">{{chart.name}}</a>
-          </li>
-        </ul>
-      </li>-->
     </ul>
   </div>
   <header id="header">

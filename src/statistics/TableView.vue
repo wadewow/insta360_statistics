@@ -1,7 +1,7 @@
 <template>
   <div>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-6">
+    <div class="mui-col-md-5">
         <div class="period">
         <a id="0" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button1 }}" @click="queryPeriod(0)">今天</a>
         <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button2 }}" @click="queryPeriod(1)">昨天</a>
@@ -10,14 +10,18 @@
         <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button5 }}" @click="queryPeriod(100)">全部</a>
         </div>
     </div>
-    <div class="mui-col-md-2" style="min-width:170px">
-      <div class="right" style="min-width:170px;line-height:30px;">
-        <div class="mui-radio right">
-            <input class="radio" type="radio" checked="checked" name="type" value="all" v-model='type' @click="queryType('all')">全部</input>
-            <input class="radio" type="radio" name="type" value="video" v-model='type' @click="queryType('video')">视频</input>
-            <input class="radio" type="radio" name="type" value="img" v-model='type' @click="queryType('img')">图片</input>
-        </div>
-      </div>
+    <div class="mui-col-md-3" style="min-width:190px;">
+      <div class="" style="display:block;height:50px;padding-top:10px">
+    <div class="mui-radio">
+        <label><input type="radio" name="type" value="all" v-model='type' checked @click="queryType('all')">全部</label>
+    </div>
+    <div class="mui-radio">
+        <label><input type="radio" name="type" v-model='type' value="video" @click="queryType('video')">视频</label>
+   </div>
+    <div class="mui-radio">
+        <label><input type="radio" name="type" v-model='type' value="img" @click="queryType('img')">图片</label>
+   </div>
+   </div>
     </div>
 
     <div class="mui-col-md-3" style="min-width:235px">
@@ -304,9 +308,7 @@ export default {
     }*/
     .mui-radio {
       display:inline;
-      .radio {
-        margin-left: 10px;
-      }
+      margin-left:10px;
     }
   }
   .skip {
