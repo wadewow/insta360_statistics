@@ -1,5 +1,7 @@
 <template>
-    <login :name="name"></simpletable>
+  <div>
+    <login :name="name"></login>
+  </div>
 </template>
 
 <script>

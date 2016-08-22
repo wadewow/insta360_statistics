@@ -25,6 +25,8 @@ export default {
     margin-left:50px;
     width:120px;
     height:100px;
-    background:#FFD180
+    margin-bottom:0px;
+    margin-top:0px;
+    background:#FFD180;
   }
 </style>

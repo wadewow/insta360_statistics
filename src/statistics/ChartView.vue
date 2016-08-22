@@ -26,7 +26,9 @@
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
     </div>
   </div>
-  <block :items="data"></block>
+<div class="mui-container-fluid">
+    <block :items="data"></block>
+</div>
   <chart :name="name" :data="data"></chart>
   </div>
 </template>

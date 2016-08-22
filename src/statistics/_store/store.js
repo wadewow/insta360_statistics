@@ -150,31 +150,32 @@ const mutations = {
     }else {
       state.table.data = ChartData[tname]
     }
-  },
-  VALIDATE (state, username, password) {
-    if (username === 'insta360_admin' && password === '50lan123') {
-      state.isLogin = true
-      return
-    }
-    const query = {
-      username: username,
-      password: password
-    }
-    var result = false
-    Vue.http.get(Api['login'].url, { params: query }).then((res) => {
-    // success callback
-      result = ChartSerializer[Api['login'].serialize](JSON.parse(res.body))
-      if (result) {
-        state.isLogin = true
-      } else {
-        state.isLogin = false
-      }
-    }, (res) => {
-    // error callback
-      console.log(res)
-      state.isLogin = false
-    })
   }
+  // VALIDATE (state, username, password) {
+  //   if (username === 'insta360_admin' && password === '50lan123') {
+  //     state.isLogin = true
+  //     console.log(state.isLogin)
+  //     return
+  //   }
+  //   const query = {
+  //     username: username,
+  //     password: password
+  //   }
+  //   var result = false
+  //   Vue.http.get(Api['login'].url, { params: query }).then((res) => {
+  //   // success callback
+  //     result = ChartSerializer[Api['login'].serialize](JSON.parse(res.body))
+  //     if (result) {
+  //       state.isLogin = true
+  //     } else {
+  //       state.isLogin = false
+  //     }
+  //   }, (res) => {
+  //   // error callback
+  //     console.log(res)
+  //     state.isLogin = false
+  //   })
+  // }
 }
 
 export default new Vuex.Store({

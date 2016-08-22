@@ -18,7 +18,7 @@ export default {
 
   created () {
     var _this = this
-    console.log(this.data)
+    // console.log(this.data)
     setTimeout(() => {
       _this.loading = false
     }, 2000)
