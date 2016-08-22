@@ -19,7 +19,8 @@
       <tbody>
         <tr v-for="item in data['series']">
           <td>{{ item.name }}</td>
-          <td><a href="{{ item.url }}">{{ item.url }}</a></td>
+          <td><a target="_blank" href="{{ item.url }}">{{ item.url }}</a></td>
+          <td><a target="_blank" href="{{ item.buylink_url }}">{{ item.buylink_url }}</a></td>
           <td>{{ item.total }}</td>
         </tr>
     </tbody>
@@ -120,7 +121,7 @@ export default {
     query () {
       const tname = this.$route.params.tname
       const query = {
-        page_number: this.page,
+        page: this.page,
         page_size: this.pageSize,
         search_words: this.key
       }
@@ -133,6 +134,9 @@ export default {
       this.key = ''
       const tname = to.params.tname
       const query = {
+        page: this.page,
+        page_size: this.pageSize,
+        search_words: this.key
       }
       store.dispatch('TABLE_UPDATE', tname, query)
     }

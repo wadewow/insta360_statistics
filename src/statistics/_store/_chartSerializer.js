@@ -1011,7 +1011,7 @@ export default {
     }
   },
   link_query: data => {
-    const column = ['链接标题', '链接地址', '访问次数']
+    const column = ['链接标题', '链接地址', '定制地址', '访问次数']
     return {
       total: data['total'],
       current_page: data['page'],

@@ -17,7 +17,7 @@
         <!--<td v-for="i in item">{{ i }}</td>-->
         <td style="width:6%">{{ item.type }}</td>
         <td style="width:16%">{{ item.share_location }}</td>
-        <td style="width:30%"><a href= "{{ item.page_url }}" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
+        <td style="width:30%"><a href= "{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
         <td style="width:16%">{{ item.serial_num }}</td>
         <td style="width:8%">{{ item.week_prews }}</td>
         <td style="width:8%">{{ item.view_times }}</td>
