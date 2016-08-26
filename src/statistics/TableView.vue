@@ -102,6 +102,7 @@ export default {
     this.order = 'time_desc'
     this.pageSize = 15
     this.updateColor()
+    this.skip = ''
   },
 
   methods: {

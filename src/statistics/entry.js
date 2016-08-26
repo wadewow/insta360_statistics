@@ -16,6 +16,7 @@ import LoginView from './LoginView'
 import LinkQueryView from './LinkQueryView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
+import store from './_store/store'
 import pikaday from '../_directives/pikaday'
 // import store from './_store/store'
 import 'muicss/lib/css/mui.min.css'
@@ -74,13 +75,17 @@ router.map({
 })
 
 router.beforeEach(function () {
-  // window.scrollTo(0, 0)
-  // var isLogin = store.state.isLogin
-  // if (!isLogin) {
-  //   router.go('/login')
-  // }
   if (document.cookie.indexOf('isLogin=true') < 0) {
     router.go('/login')
+  } else {
+    var username = getCookie('username')
+    if (username !== '') {
+      store.state.userInfo.username = getCookie('username')
+    }
+    var power = getCookie('power')
+    if (power !== '') {
+      store.state.userInfo.power = JSON.parse(getCookie('power'))
+    }
   }
 })
 
@@ -89,3 +94,18 @@ router.redirect({
 })
 
 router.start(App, '#app')
+
+function getCookie (c_name) {
+  if (document.cookie.length > 0) {
+    var c_start = document.cookie.indexOf(c_name + '=')
+    if (c_start !== -1) {
+      c_start = c_start + c_name.length + 1
+      var c_end = document.cookie.indexOf(';', c_start)
+      if (c_end === -1) {
+        c_end = document.cookie.length
+      }
+      return unescape(document.cookie.substring(c_start, c_end))
+    }
+  }
+  return ''
+}
