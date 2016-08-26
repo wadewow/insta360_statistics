@@ -3,9 +3,14 @@
     <div id="sidedrawer-brand" class="mui--appbar-line-height">Statistics</div>
     <div class="mui-divider"></div>
     <ul>
-      <!--<li>
-        <strong @click="toggleCollapse">Nano销售情况</strong>
-        <ul style="display:block">
+      <li>
+        <template v-if="power['nano_sales']">
+          <strong @click="toggleCollapse">Nano销售情况</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">Nano销售情况</strong>
+        </template>
+        <ul>
           <li>
             <a href="#!/sales_chart/sales_status/1" @click="click">国内销售情况</a>
           </li>
@@ -16,10 +21,15 @@
             <a href="#!/sales_chart/electronic_sales/1" @click="click">自有电商渠道</a>
           </li>
         </ul>
-      </li>-->
+      </li>
       <li>
-        <strong @click="toggleCollapse">设备激活情况</strong>
-        <ul style="display:block">
+        <template v-if="power['nano_activation']">
+          <strong @click="toggleCollapse">设备激活情况</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">设备激活情况</strong>
+        </template>
+        <ul>
           <li>
             <a href="#!/chart/nano_active" @click="click">激活数量走势</a>
           </li>
@@ -29,8 +39,13 @@
         </ul>
       </li>
       <li>
-        <strong @click="toggleCollapse">Nano内容分享</strong>
-        <ul style="display:block">
+        <template v-if="power['nano_share']">
+          <strong @click="toggleCollapse">Nano内容分享</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">Nano内容分享</strong>
+        </template>
+        <ul>
           <li>
             <a href="#!/table/share_list" @click="click">分享内容列表</a>
           </li>
@@ -49,8 +64,13 @@
         </ul>
       </li>
       <li>
-        <strong @click="toggleCollapse">Nano购买链接</strong>
-        <ul style="display:block">
+        <template v-if="power['nano_link']">
+          <strong @click="toggleCollapse">Nano购买链接</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">Nano购买链接</strong>
+        </template>
+        <ul>
           <li>
             <a href="#!/chart/nano_store" @click="click">店铺流量分布</a>
           </li>
@@ -65,9 +85,14 @@
           </li>
         </ul>
       </li>
-      <!--<li>
-        <strong @click="toggleCollapse">Nano市场环境</strong>
-        <ul style="display:block">
+      <li>
+        <template v-if="power['nano_market']">
+          <strong @click="toggleCollapse">Nano市场环境</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">Nano市场环境</strong>
+        </template>
+        <ul>
           <li>
             <a href="#!/chart/market_environment" @click="click">百度指数</a>
           </li>
@@ -75,13 +100,21 @@
             <a href="#!/competitor_chart/competitor_data/taobao" @click="click">竞品销量</a>
           </li>
         </ul>
-      </li>-->
-      <!--<li>
-        <strong @click="toggleCollapse">Nano App使用情况</strong>
-        <ul style="display:block">
+      </li>
+      <li>
+        <template v-if="power['nano_use_condition']">
+          <strong @click="toggleCollapse">Nano App使用情况</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">Nano App使用情况</strong>
+        </template>
+        <ul>
           <li>
             <a href="#!/chart/use_condition" @click="click">用户概况</a>
           </li>
+          <!--<li>
+            <a href="#!/chart/content_production" @click="click">内容生产</a>
+          </li>-->
           <li>
             <a href="#!/map/user_distribution" @click="click">APP用户区域分布</a>
           </li>
@@ -89,10 +122,15 @@
             <a href="#!/chart/error_condition" @click="click">错误异常</a>
           </li>
         </ul>
-      </li>-->
+      </li>
       <li>
-        <strong @click="toggleCollapse">历史总数</strong>
-        <ul style="display:block">
+        <template v-if="power['nano_history']">
+          <strong @click="toggleCollapse">历史总数</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">历史总数</strong>
+        </template>
+        <ul>
           <li>
             <a href="#!/rest_statistics/rest_statistics" @click="click">历史总数据</a>
           </li>
@@ -111,6 +149,8 @@
         <span class="mui--text-title mui--visible-xs-inline-block mui--visible-sm-inline-block">Statistics</span>
         <span class="mui--text-title" id="name">{{ name }}</span>
         <span id="comment" style="margin-left:20px">{{ comment }}</span>
+        <a href="#/login" @click="logout" class="mui-btn right" style="margin-top:12px">退出</a>
+        <span class="right" style="margin-right:10px">欢迎您，{{ username }}</span>
       </div>
     </div>
   </header>
@@ -130,7 +170,7 @@
 
 <script>
 import store from './_store/store'
-import { getChartList, getChartName, getChartComment } from './_store/getters'
+import { getChartList, getChartName, getChartComment, getPower, getUsername } from './_store/getters'
 export default {
 
   store: store,
@@ -141,7 +181,9 @@ export default {
     getters: {
       name: getChartName,
       list: getChartList,
-      comment: getChartComment
+      comment: getChartComment,
+      power: getPower,
+      username: getUsername
     }
   },
 
@@ -196,6 +238,12 @@ export default {
       var src = ev.srcElement || ev.target
       var li = src.parentNode
       li.setAttribute('class', 'selected')
+    },
+    logout () {
+      var lifeTime = new Date()
+      lifeTime.setTime(lifeTime.getTime() - 1)
+      document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
+      return true
     }
   }
 }

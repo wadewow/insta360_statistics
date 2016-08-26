@@ -2189,7 +2189,7 @@ export default {
       },
       total: [],
       title: {
-        text: '竞品数据',
+        text: '竞品月销量/评论趋势',
         x: 'left'
       },
       tooltip: {

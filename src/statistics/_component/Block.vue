@@ -26,7 +26,7 @@ export default {
     width:140px;
     height:100px;
     margin-bottom:0px;
-    margin-top:0px;
+    margin-top:5px;
     background:#FFD180;
   }
 </style>
