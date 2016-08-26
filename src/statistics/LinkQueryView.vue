@@ -64,7 +64,8 @@ export default {
     return {
       page: 1,
       pageSize: 15,
-      key: ''
+      key: '',
+      skip: ''
     }
   },
 
@@ -72,6 +73,7 @@ export default {
     this.page = 1
     this.pageSize = 15
     this.key = ''
+    this.skip = ''
   },
 
   methods: {

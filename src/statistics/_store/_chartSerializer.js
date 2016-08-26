@@ -105,7 +105,6 @@ export default {
       y_video.push(parseInt(data[index]['share_video_nums'], 10))
       y_image.push(parseInt(data[index]['share_image_nums'], 10))
     }
-
     return {
       top: {
         native: [],
@@ -172,6 +171,102 @@ export default {
         stack: 'all',
         data: y_video,
         itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      }]
+    }
+  },
+  content_production: data => {
+    const x = []
+    const y_video = []
+    const y_image = []
+    const y_length = []
+    for (var index in data) {
+      x.push(data[index]['time'])
+      y_video.push(parseInt(data[index]['share_video_nums'], 10))
+      y_image.push(parseInt(data[index]['share_image_nums'], 10))
+      y_length.push(parseInt(data[index]['video_duration'], 10))
+    }
+    var y_length_sum = _.sum(y_length)
+    var duration = moment.duration(y_length_sum, 'seconds')
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: [{
+        name: '累计图片数量',
+        value: _.sum(y_image)
+      },
+      {
+        name: '累计视频数量',
+        value: _.sum(y_video)
+      },
+      {
+        name: '累计视频时长',
+        value: duration.hours() + 'h ' + duration.minutes() + 'm ' + duration.seconds() + 's'
+      }
+      ],
+      title: {
+        text: '内容生产',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['图片数量', '视频数量', '视频时长(s)']
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: [
+        {
+        },
+        {
+          name: '时长',
+          type: 'value',
+          axisLabel: {
+            formatter: function (value) {
+              return value + ' s'
+            }
+          },
+          splitLine: {
+            show: false
+          }
+        }],
+      series: [{
+        name: '图片数量',
+        type: 'line',
+        data: y_image,
+        stack: 'all',
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      },
+      {
+        name: '视频数量',
+        type: 'line',
+        data: y_video,
+        stack: 'all',
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      },
+      {
+        name: '视频时长(s)',
+        type: 'line',
+        data: y_length,
+        yAxisIndex: 1
       }]
     }
   },
@@ -973,22 +1068,20 @@ export default {
     }
   },
   knowmore: data => {
-    const tip1 = ['上线 ~ 2016.7.25 18:00', '2016.7.27 17:47 ~ 2016.7.29 12:17', '2016.7.29 12:17 ~ 2016.8.13 18:40', '2016.8.13 18:40 至今']
-    const tip2 = ['第一次上线', '从默认拖拽改成陀螺仪', '回滚为默认拖拽', '优化了页面加载速度']
+    // const tip1 = ['上线 ~ 2016.7.25 18:00', '2016.7.27 17:47 ~ 2016.7.29 12:17', '2016.7.29 12:17 ~ 2016.8.13 18:40', '2016.8.13 18:40 至今']
+    // const tip2 = ['第一次上线', '从默认拖拽改成陀螺仪', '回滚为默认拖拽', '优化了页面加载速度']
     const column1 = ['Knowmore 点击比例', '数据', '分享内容页版本']
     const column2 = ['日期', '点击knowmore新增用户/总点击数']
-    var count = 0
 
     const data1 = []
     const data2 = []
     for (var item1 in data['know_more']) {
-      var array1 = data['know_more'][item1].split('/')
-      var percent1 = 0
-      if (array1.length > 1 && array1[1] !== 0) {
-        percent1 = _.round(isNaN((parseFloat(array1[0]) / parseFloat(array1[1])) * 100) ? 0 : ((parseFloat(array1[0]) / parseFloat(array1[1])) * 100), 1)
-      }
-      data1.push(_.assign({'name': tip1[count], 'value': data['know_more'][item1] + ' (' + percent1 + '%)', 'comment': tip2[count]}))
-      count++
+      // var array1 = data['know_more'][item1].split('/')
+      // var percent1 = 0
+      // if (array1.length > 1 && array1[1] !== 0) {
+      //   percent1 = _.round(isNaN((parseFloat(array1[0]) / parseFloat(array1[1])) * 100) ? 0 : ((parseFloat(array1[0]) / parseFloat(array1[1])) * 100), 1)
+      // }
+      data1.push(_.assign({'name': data['know_more'][item1]['time_interval'], 'value': data['know_more'][item1]['know_more_scale'], 'comment': data['know_more'][item1]['description']}))
     }
 
     for (var item2 in data['data']['info']) {
@@ -1616,38 +1709,54 @@ export default {
         feature: {
           // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          // magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
-          // restore: { show: true },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          restore: { show: true },
           saveAsImage: { show: true }
         }
       },
       legend: {
         x: 'center',
-        data: ['新增用户', '活跃用户', '平均使用时长(s)'],
-        selectedMode: 'single'
+        data: ['新增用户', '活跃用户', '平均使用时长(s)']
+        // selectedMode: 'single'
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
       },
-      yAxis: {},
+      yAxis: [
+        {
+        },
+        {
+          name: '时长',
+          type: 'value',
+          axisLabel: {
+            formatter: function (value) {
+              return value + ' s'
+            }
+          },
+          splitLine: {
+            show: false
+          }
+        }],
       series: [
         {
           name: '新增用户',
           type: 'line',
           data: y_new,
+          stack: 'all',
           itemStyle: {normal: {areaStyle: {type: 'default'}}}
         },
         {
           name: '活跃用户',
           type: 'line',
           data: y_active,
+          stack: 'all',
           itemStyle: {normal: {areaStyle: {type: 'default'}}}
         },
         {
+          yAxisIndex: 1,
           name: '平均使用时长(s)',
           type: 'line',
-          data: y_duration,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+          data: y_duration
         }]
     }
   },
@@ -2163,12 +2272,12 @@ export default {
       {
         name: '本期库存：' + (_.sum(y_inventory) + _.sum(y_reject)),
         value: '一级：' + _.sum(y_inventory_first),
-        comment: '下级：' + _.sum(last_inventory_lower),
+        comment: '下级：' + _.sum(y_inventory_lower),
         comment1: '退货：' + _.sum(y_reject)
       }
       ],
       title: {
-        text: '国内销售情况',
+        text: '销售情况',
         x: 'left'
       },
       tooltip: {
@@ -2257,7 +2366,6 @@ export default {
       },
       locations: locations,
       total: [{
-        // ////////////////////////////////
         name: '支付件数',
         value: _.sum(y_number)
       },
@@ -2304,13 +2412,27 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['支付件数', '支付买家数', '浏览量', '访客数']
+        data: ['支付件数', '支付买家数', '浏览量', '访客数', '支付金额']
         // selected: { '全部激活数量': false }
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
       },
-      yAxis: {},
+      yAxis: [
+        {
+        },
+        {
+          name: '金额',
+          type: 'value',
+          axisLabel: {
+            formatter: function (value) {
+              return value + ' 元'
+            }
+          },
+          splitLine: {
+            show: false
+          }
+        }],
       series: [
         {
           name: '支付件数',
@@ -2326,30 +2448,37 @@ export default {
           stack: 'all',
           itemStyle: {normal: {areaStyle: {type: 'default'}}}
         },
-        // {
-        //   name: '支付金额',
-        //   type: 'line',
-        //   data: y_payment,
-        //   stack: 'all',
-        //   itemStyle: {normal: {areaStyle: {type: 'default'}}}
-        // },
         {
           name: '浏览量',
           type: 'line',
-          data: y_view,
           stack: 'all',
+          data: y_view,
           itemStyle: {normal: {areaStyle: {type: 'default'}}}
         },
         {
           name: '访客数',
           type: 'line',
-          data: y_visitor,
           stack: 'all',
+          data: y_visitor,
           itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '支付金额',
+          type: 'line',
+          data: y_payment,
+          yAxisIndex: 1
         }]
     }
   },
   login: data => {
-    return data['result']
+    var result = {}
+    const groups = data['group']
+    for (var i in groups) {
+      result[groups[i]] = true
+    }
+    return {
+      username: data['username'],
+      power: result
+    }
   }
 }

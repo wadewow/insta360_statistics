@@ -23,7 +23,7 @@ export default {
   #block {
     float:left;
     margin-left:50px;
-    width:120px;
+    width:140px;
     height:100px;
     margin-bottom:0px;
     margin-top:0px;

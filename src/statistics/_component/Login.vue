@@ -40,9 +40,13 @@ export default {
       ev.preventDefault()
       if (this.username === 'insta360_admin' && this.password === '50lan123') {
         var lifeTime = new Date()
+        this.tip = ''
         store.state.isLogin = true
         lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
         document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
+        document.cookie = 'username=' + store.state.userInfo.username + ';expires=' + lifeTime.toUTCString()
+        var powerJson = JSON.stringify(store.state.userInfo.power)
+        document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
         router.go('/chart/nano_active')
         return
       }
@@ -53,18 +57,23 @@ export default {
       var result = false
       Vue.http.get(Api['login'].url, { params: query }).then((res) => {
       // success callback
-        result = ChartSerializer[Api['login'].serialize](JSON.parse(res.body))
+        const jsonData = JSON.parse(res.body)
+        result = jsonData['result']
         var lifeTime = new Date()
         if (result) {
+          this.tip = ''
           store.state.isLogin = true
+          store.state.userInfo = ChartSerializer[Api['login'].serialize](jsonData)
           lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
           document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
+          document.cookie = 'username=' + store.state.userInfo.username + ';expires=' + lifeTime.toUTCString()
+          var powerJson = JSON.stringify(store.state.userInfo.power)
+          document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
           router.go('/chart/nano_active')
         } else {
           store.state.isLogin = false
           this.tip = '账号或密码错误！'
           lifeTime.setTime(lifeTime.getTime() - 1)
-          // console.log(lifeTime.toUTCString())
           document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
         }
       }, (res) => {
@@ -73,33 +82,8 @@ export default {
         store.state.isLogin = false
         this.tip = '网络连接失败！'
       })
-      // _count = 3
-      // windows._interval = setInterval((){
-
-      //     if(true){
-      //       windows.clearInterval(windows._interval)
-      //       return
-      //     }
-
-      // },200);
-
-      // var lifeTime = new Date()
-      // console.log('submit:' + store.state.isLogin)
-      // if (store.state.isLogin) {
-      //   lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
-      //   document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
-      //   router.go('/chart/nano_active')
-      // } else {
-      //   this.tip = '账号或密码错误！'
-      //   lifeTime.setTime(lifeTime.getTime() - 1)
-      //   console.log(lifeTime.toUTCString())
-      //   document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
-      // }
     }
 
-    // changePwd (ev) {
-    //   store.dispatch('VALIDATE', this.username, this.password)
-    // }
   }
 }
 

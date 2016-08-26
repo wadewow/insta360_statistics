@@ -72,13 +72,15 @@ export default {
   data () {
     return {
       page: 1,
-      pageSize: 15
+      pageSize: 15,
+      skip: ''
     }
   },
 
   created () {
     this.page = 1
     this.pageSize = 15
+    this.skip = ''
   },
 
   methods: {

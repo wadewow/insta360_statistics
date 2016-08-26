@@ -1,5 +1,5 @@
 const baseUrl = 'http://statistics.internal.insta360.com/'
-const baseUrl1 = 'http://localhost:8000/crawler/'
+const baseUrl1 = 'http://192.168.3.84:8000/crawler/'
 
 export default {
   nano_active: {
@@ -63,12 +63,16 @@ export default {
     serialize: 'buylink_store_trends'
   },
   knowmore: {
-    url: baseUrl + 'api/knowmore/click_know_more_statistics',
+    url: baseUrl + 'api/Knowmore/click_know_more_display',
     serialize: 'knowmore'
   },
   link_query: {
     url: baseUrl + 'api/buylinkCustom',
     serialize: 'link_query'
+  },
+  content_production: {
+    url: baseUrl + 'api/share/month_share_trends/',
+    serialize: 'content_production'
   },
   use_condition: {
     url: baseUrl1 + 'use_condition/',
