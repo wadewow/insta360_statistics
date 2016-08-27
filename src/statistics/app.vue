@@ -257,7 +257,7 @@ export default {
   html,
   body {
     height: 100%;
-    min-width: 800px
+    min-width: 850px
   }
   
   html,
@@ -280,7 +280,7 @@ export default {
     left: 0;
     z-index: 2;
     transition: left 0.2s;
-    min-width: 830px
+    min-width: 850px;
   }
   
   #sidedrawer {
