@@ -111,13 +111,14 @@ export default {
     bottom: 0;
     opacity: 0.9;
     z-index: 999;
-    background: black;
+    background: black
   }
   .login {
     width: 550px;
     height: 320px;
     background: white;
     margin: 200px auto;
-    padding: 30px 50px
+    padding: 30px 50px;
+    border-radius:10px;
   }
 </style>
