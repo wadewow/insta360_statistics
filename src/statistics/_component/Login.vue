@@ -38,15 +38,26 @@ export default {
   methods: {
     submit (ev) {
       ev.preventDefault()
-      if (this.username === 'insta360_admin' && this.password === '50lan123') {
+      if (this.username === 'ciel' && this.password === '1122334') {
         var lifeTime = new Date()
         this.tip = ''
         store.state.isLogin = true
         lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
+        store.state.userInfo.username = 'insta360_admin'
         document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
         document.cookie = 'username=' + store.state.userInfo.username + ';expires=' + lifeTime.toUTCString()
+        store.state.userInfo.power = {
+          'nano_sales': true,
+          'nano_activation': true,
+          'nano_link': true,
+          'nano_share': true,
+          'nano_use_condition': true,
+          'nano_market': true,
+          'nano_history': true
+        }
         var powerJson = JSON.stringify(store.state.userInfo.power)
         document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
+        location.reload()
         router.go('/chart/nano_active')
         return
       }
@@ -69,6 +80,7 @@ export default {
           document.cookie = 'username=' + store.state.userInfo.username + ';expires=' + lifeTime.toUTCString()
           var powerJson = JSON.stringify(store.state.userInfo.power)
           document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
+          location.reload()
           router.go('/chart/nano_active')
         } else {
           store.state.isLogin = false
@@ -99,13 +111,14 @@ export default {
     bottom: 0;
     opacity: 0.9;
     z-index: 999;
-    background: black;
+    background: black
   }
   .login {
     width: 550px;
     height: 320px;
     background: white;
     margin: 200px auto;
-    padding: 30px 50px
+    padding: 30px 50px;
+    border-radius:10px;
   }
 </style>

@@ -13,10 +13,10 @@
     <div class="mui-col-md-3">
     <div class="" style="display:block;height:50px;padding-top:10px">
     <div class="mui-radio">
-        <label><input type="radio" name="source" value="taobao" v-model='source' checked @click="querySource('taobao')">淘宝</label>
+        <label><input type="radio" name="source" value="taobao" v-model='source' checked @click="querySource('taobao')">淘宝销量</label>
     </div>
     <div class="mui-radio">
-        <label><input type="radio" name="source" v-model='source' value="jd" @click="querySource('jd')">京东</label>
+        <label><input type="radio" name="source" v-model='source' value="jd" @click="querySource('jd')">京东评论</label>
    </div>
    </div>
     </div>

@@ -1,5 +1,5 @@
 const baseUrl = 'http://statistics.internal.insta360.com/'
-const baseUrl1 = 'http://192.168.3.84:8000/crawler/'
+const baseUrl1 = 'http://www.internal.insta360.com/crawler/'
 
 export default {
   nano_active: {
