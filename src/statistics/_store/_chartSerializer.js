@@ -2292,6 +2292,7 @@ export default {
     const y_inventory_first = []
     const y_sales_offline = []
     const y_sales_online = []
+    const y_sales_offline_count = []
     const y_reject = []
     const y_sales = []
     const y_inventory = []
@@ -2303,8 +2304,9 @@ export default {
       y_inventory_first.push(data[index]['inventory_first'])
       y_sales_offline.push(data[index]['sales_offline'])
       y_sales_online.push(data[index]['sales_online'])
+      y_sales_offline_count.push(data[index]['sales_offline_count'])
       y_reject.push(data[index]['reject'])
-      y_sales.push(data[index]['sales_offline'] + data[index]['sales_online'])
+      y_sales.push(data[index]['sales_offline'] + data[index]['sales_online'] + data[index]['sales_offline_count'])
       y_inventory.push(data[index]['inventory_lower'] + data[index]['inventory_first'])
     }
     return {
@@ -2325,8 +2327,9 @@ export default {
       },
       {
         name: '本期销售：' + _.sum(y_sales),
-        value: '线上：' + _.sum(y_sales_online),
-        comment: '线下：' + _.sum(y_sales_offline)
+        value: '一级线上：' + _.sum(y_sales_online),
+        comment: '一级线下：' + _.sum(y_sales_offline),
+        comment1: '下级代理：' + _.sum(y_sales_offline_count)
       },
       {
         name: '本期库存：' + (_.sum(y_inventory) + _.sum(y_reject)),
