@@ -80,6 +80,8 @@ export default {
           document.cookie = 'username=' + store.state.userInfo.username + ';expires=' + lifeTime.toUTCString()
           var powerJson = JSON.stringify(store.state.userInfo.power)
           document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
+          lifeTime.setTime(lifeTime.getTime() - 1)
+          document.cookie = 'nav=' + ';expires=' + lifeTime.toUTCString()
           location.reload()
           router.go('/chart/nano_active')
         } else {
