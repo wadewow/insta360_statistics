@@ -3,16 +3,49 @@ import _ from 'lodash'
 import dict_json from './dictionary.json'
 export default {
   nano_active: data => {
-
     const x = []
+    const x_week = []
     const y_native = []
     const y_abroad = []
     const y_all = []
+    const y_week_native = []
+    const y_week_abroad = []
+    const y_week = []
     for (var index in data) {
       x.push(index)
       y_native.push(data[index]['native'])
       y_abroad.push(data[index]['abroad'])
       y_all.push(data[index]['all'])
+    }
+    const length = x.length
+    var start = moment(x[0]).diff(moment(x[0]).startOf('week'), 'days')
+    // var end = moment(x[length - 1]).diff(moment(x[length - 1]).startOf('week'), 'days')
+
+    for (var i = (7 - start) % 7; i < length; i += 7) {
+      x_week.push(x[i])
+      // console.log(x[i])
+    }
+    for (var k in x_week) {
+      var sum_native = 0
+      var sum_abroad = 0
+      var num
+      for (var count = 0; count < 7; count++) {
+        var date = moment(x_week[k]).add(count, 'days').format('YYYY-MM-DD')
+        num = count + 1
+        if (data[date] === undefined) {
+          num--
+          break
+        }
+        sum_native += data[date]['native']
+        sum_abroad += data[date]['abroad']
+      }
+      y_week_native.push(_.round(sum_native / num, 0))
+      y_week_abroad.push(_.round(sum_abroad / num, 0))
+      y_week.push(_.round((sum_abroad + sum_native) / num, 0))
+      x_week[k] = x_week[k].substring(5) + '~' + moment(x_week[k]).add(num - 1, 'days').format('MM-DD')
+    }
+    for (var j in x) {
+      x[j] = x[j].substring(5)
     }
 
     return {
@@ -66,12 +99,15 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['国内激活数量', '国外激活数量']
+        data: ['国内激活数量', '国外激活数量', '总计周-日均']
         // selected: { '全部激活数量': false }
       },
-      xAxis: {
+      xAxis: [{
         data: x // 横向则将data放到yAxis
       },
+      {
+        data: x_week
+      }],
       yAxis: {},
       series: [
         // {
@@ -80,6 +116,26 @@ export default {
         //   data: y_all,
         //   itemStyle: {normal: {areaStyle: {type: 'default'}}}
         // },
+        {
+          name: '国内激活数量',
+          type: 'line',
+          data: y_week_native,
+          xAxisIndex: 1
+          // stack: 'week'
+        },
+        {
+          name: '国外激活数量',
+          type: 'line',
+          data: y_week_abroad,
+          xAxisIndex: 1
+          // stack: 'week'
+        },
+        {
+          name: '总计周-日均',
+          type: 'line',
+          data: y_week,
+          xAxisIndex: 1
+        },
         {
           name: '国内激活数量',
           type: 'line',

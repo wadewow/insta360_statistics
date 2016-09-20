@@ -97,7 +97,7 @@
             <a href="#!/chart/market_environment" @click="click">百度指数</a>
           </li>
           <li>
-            <a href="#!/competitor_chart/competitor_data/taobao" @click="click">竞品销量</a>
+            <a href="#!/competitor_chart/competitor_data/taobao" @click="click">30天销量/评论</a>
           </li>
         </ul>
       </li>
