@@ -31,7 +31,16 @@ const state = {
       'nano_use_condition': true,
       'nano_market': true,
       'nano_history': true
-    }
+    },
+    nav: [
+      'hide',
+      'hide',
+      'hide',
+      'hide',
+      'hide',
+      'hide',
+      'hide'
+    ]
   },
   posts: {
     page: 1,

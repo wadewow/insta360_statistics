@@ -10,7 +10,7 @@
         <template v-else>
           <strong style="cursor: not-allowed;">Nano销售情况</strong>
         </template>
-        <ul>
+        <ul class="nav" show="{{ nav[0] }}">
           <li>
             <a href="#!/sales_chart/sales_status/1" @click="click">国内销售情况</a>
           </li>
@@ -29,7 +29,7 @@
         <template v-else>
           <strong style="cursor: not-allowed;">设备激活情况</strong>
         </template>
-        <ul>
+        <ul class="nav" show="{{ nav[1] }}">
           <li>
             <a href="#!/chart/nano_active" @click="click">激活数量走势</a>
           </li>
@@ -45,7 +45,7 @@
         <template v-else>
           <strong style="cursor: not-allowed;">Nano内容分享</strong>
         </template>
-        <ul>
+        <ul class="nav" show="{{ nav[2] }}">
           <li>
             <a href="#!/table/share_list" @click="click">分享内容列表</a>
           </li>
@@ -70,7 +70,7 @@
         <template v-else>
           <strong style="cursor: not-allowed;">Nano购买链接</strong>
         </template>
-        <ul>
+        <ul class="nav" show="{{ nav[3] }}">
           <li>
             <a href="#!/chart/nano_store" @click="click">店铺流量分布</a>
           </li>
@@ -92,7 +92,7 @@
         <template v-else>
           <strong style="cursor: not-allowed;">Nano市场环境</strong>
         </template>
-        <ul>
+        <ul class="nav" show="{{ nav[4] }}">
           <li>
             <a href="#!/chart/market_environment" @click="click">百度指数</a>
           </li>
@@ -108,7 +108,7 @@
         <template v-else>
           <strong style="cursor: not-allowed;">Nano App使用情况</strong>
         </template>
-        <ul>
+        <ul class="nav" show="{{ nav[5] }}">
           <li>
             <a href="#!/chart/use_condition" @click="click">用户概况</a>
           </li>
@@ -130,7 +130,7 @@
         <template v-else>
           <strong style="cursor: not-allowed;">历史总数</strong>
         </template>
-        <ul>
+        <ul class="nav" show="{{ nav[6] }}">
           <li>
             <a href="#!/rest_statistics/rest_statistics" @click="click">历史总数据</a>
           </li>
@@ -170,7 +170,7 @@
 
 <script>
 import store from './_store/store'
-import { getChartList, getChartName, getChartComment, getPower, getUsername } from './_store/getters'
+import { getChartList, getChartName, getChartComment, getPower, getNav, getUsername } from './_store/getters'
 export default {
 
   store: store,
@@ -183,6 +183,7 @@ export default {
       list: getChartList,
       comment: getChartComment,
       power: getPower,
+      nav: getNav,
       username: getUsername
     }
   },
@@ -195,6 +196,18 @@ export default {
       // comment: ' '
     }
   },
+  created () {
+    var nav = this.getCookie('nav')
+    if (nav !== '') {
+      store.state.userInfo.nav = JSON.parse(this.getCookie('nav'))
+    }
+  },
+  ready () {
+    var els = document.getElementsByClassName('nav')
+    for (var i = 0; i < els.length; i++) {
+      els[i].setAttribute('style', els[i].getAttribute('show') === 'show' ? 'display:block' : 'display:none')
+    }
+  },
   methods: {
     toggleSidedrawer (ev) {
       this.sidedrawerActive = !this.sidedrawerActive
@@ -203,16 +216,40 @@ export default {
       // this is for overlay
       this.sidedrawerStatus = this.sidedrawerActive ? 'active' : ''
     },
-
+    getCookie (c_name) {
+      if (document.cookie.length > 0) {
+        var c_start = document.cookie.indexOf(c_name + '=')
+        if (c_start !== -1) {
+          c_start = c_start + c_name.length + 1
+          var c_end = document.cookie.indexOf(';', c_start)
+          if (c_end === -1) {
+            c_end = document.cookie.length
+          }
+          return unescape(document.cookie.substring(c_start, c_end))
+        }
+      }
+      return ''
+    },
     toggleCollapse (ev) {
       var src = ev.srcElement || ev.target
       var _el = src.nextElementSibling || this.getNextSibling(src)
       if (_el.getAttribute('show') === null) {
-        _el.setAttribute('show', 'show')
+        _el.setAttribute('show', 'hide')
       }
-      _el.setAttribute('style', _el.getAttribute('show') === 'show' ? 'display:block' : 'display:none')
+      _el.setAttribute('style', _el.getAttribute('show') === 'hide' ? 'display:block' : 'display:none')
       // _el.style = _el.getAttribute('show') === 'show' ? 'display:block' : 'display:none'
       _el.setAttribute('show', _el.getAttribute('show') === 'hide' ? 'show' : 'hide')
+
+      var els = document.getElementsByClassName('nav')
+      for (var i = 0; i < els.length; i++) {
+        store.state.userInfo.nav[i] = els[i].getAttribute('show')
+      }
+
+      // 记录菜单展开状态的cookie
+      var lifeTime = new Date()
+      lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
+      var navJson = JSON.stringify(store.state.userInfo.nav)
+      document.cookie = 'nav=' + navJson + ';expires=' + lifeTime.toUTCString()
     },
 
     getNextSibling (node) {
@@ -220,16 +257,6 @@ export default {
       return node
     },
 
-    // setComment (val) {
-    //   // if (val === 0) {
-    //   //   this.comment = '6月7日 开始统计'
-    //   // } else if (val === 1) {
-    //   //   this.comment = '6月21日 18:00 开始统计'
-    //   // } else if (val === 2) {
-    //   //   this.comment = '7月12日 开始统计'
-    //   // }
-    //   // // this.comment = dict_comment[val]
-    // }
     click (ev) {
       var s = document.getElementsByClassName('selected')
       for (var i = 0; i < s.length; i++) {

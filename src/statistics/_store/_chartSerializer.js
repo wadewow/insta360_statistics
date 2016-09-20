@@ -39,9 +39,9 @@ export default {
         sum_native += data[date]['native']
         sum_abroad += data[date]['abroad']
       }
-      y_week_native.push(_.round(sum_native / num, 0))
-      y_week_abroad.push(_.round(sum_abroad / num, 0))
-      y_week.push(_.round((sum_abroad + sum_native) / num, 0))
+      y_week_native.push(sum_native)
+      y_week_abroad.push(sum_abroad)
+      y_week.push(sum_abroad + sum_native)
       x_week[k] = x_week[k].substring(5) + '~' + moment(x_week[k]).add(num - 1, 'days').format('MM-DD')
     }
     for (var j in x) {
@@ -99,7 +99,7 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['国内激活数量', '国外激活数量', '总计周-日均']
+        data: ['国内激活数量', '国外激活数量', '总计周平均']
         // selected: { '全部激活数量': false }
       },
       xAxis: [{
@@ -108,7 +108,7 @@ export default {
       {
         data: x_week
       }],
-      yAxis: {},
+      yAxis: [{name: '日激活'}, {name: '周平均'}],
       series: [
         // {
         //   name: '全部激活数量',
@@ -120,21 +120,24 @@ export default {
           name: '国内激活数量',
           type: 'line',
           data: y_week_native,
-          xAxisIndex: 1
+          xAxisIndex: 1,
+          yAxisIndex: 1
           // stack: 'week'
         },
         {
           name: '国外激活数量',
           type: 'line',
           data: y_week_abroad,
-          xAxisIndex: 1
+          xAxisIndex: 1,
+          yAxisIndex: 1
           // stack: 'week'
         },
         {
-          name: '总计周-日均',
+          name: '总计周平均',
           type: 'line',
           data: y_week,
-          xAxisIndex: 1
+          xAxisIndex: 1,
+          yAxisIndex: 1
         },
         {
           name: '国内激活数量',
@@ -2289,6 +2292,7 @@ export default {
     const y_inventory_first = []
     const y_sales_offline = []
     const y_sales_online = []
+    const y_sales_offline_count = []
     const y_reject = []
     const y_sales = []
     const y_inventory = []
@@ -2300,8 +2304,9 @@ export default {
       y_inventory_first.push(data[index]['inventory_first'])
       y_sales_offline.push(data[index]['sales_offline'])
       y_sales_online.push(data[index]['sales_online'])
+      y_sales_offline_count.push(data[index]['sales_offline_count'])
       y_reject.push(data[index]['reject'])
-      y_sales.push(data[index]['sales_offline'] + data[index]['sales_online'])
+      y_sales.push(data[index]['sales_offline'] + data[index]['sales_online'] + data[index]['sales_offline_count'])
       y_inventory.push(data[index]['inventory_lower'] + data[index]['inventory_first'])
     }
     return {
@@ -2322,8 +2327,9 @@ export default {
       },
       {
         name: '本期销售：' + _.sum(y_sales),
-        value: '线上：' + _.sum(y_sales_online),
-        comment: '线下：' + _.sum(y_sales_offline)
+        value: '一级线上：' + _.sum(y_sales_online),
+        comment: '一级线下：' + _.sum(y_sales_offline),
+        comment1: '下级代理：' + _.sum(y_sales_offline_count)
       },
       {
         name: '本期库存：' + (_.sum(y_inventory) + _.sum(y_reject)),
