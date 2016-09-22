@@ -2235,7 +2235,7 @@ export default {
       }
       count++
     }
-
+    y.reverse()
     const _series = []
     for (var item in y) {
       _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
