@@ -1754,8 +1754,8 @@ export default {
         value: _.sum(y_new)
       },
       {
-        name: '活跃用户',
-        value: _.sum(y_active)
+        name: '日均活跃用户',
+        value: _.round(_.mean(y_active))
       },
       {
         name: '平均使用时长',
