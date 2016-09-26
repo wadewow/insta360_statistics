@@ -102,6 +102,15 @@ const state = {
       column: [],
       series: []
     }
+  },
+  table4: {
+    name: 'table',
+    data: {
+      current_page: 1,
+      page_total: 1,
+      column: [],
+      series: []
+    }
   }
 }
 
@@ -159,6 +168,16 @@ const apiQueryTable3 = (path, query) => {
   })
 }
 
+const apiQueryTable4 = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.table4.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数
 const mutations = {
   POSTS_NEXT (state, offset) {
@@ -190,6 +209,8 @@ const mutations = {
       apiQueryTable2(tname, query)
     } else if (tname === 'link_query') {
       apiQueryTable3(tname, query)
+    } else if (tname === 'landing_page') {
+      apiQueryTable4(tname, query)
     }else {
       state.table.data = ChartData[tname]
     }

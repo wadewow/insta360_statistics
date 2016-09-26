@@ -74,6 +74,10 @@ export default {
     url: baseUrl + 'api/share/month_share_trends/',
     serialize: 'content_production'
   },
+  landing_page: {
+    url: baseUrl + 'api/LandingPage',
+    serialize: 'landing_page'
+  },
   use_condition: {
     url: baseUrl1 + 'use_condition/',
     serialize: 'use_condition'

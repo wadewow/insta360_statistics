@@ -1172,6 +1172,15 @@ export default {
       series: data['data']
     }
   },
+  landing_page: data => {
+    const column = ['日期', '国内页面PV', '国内页面UV', '点击京东次数', '点击淘宝次数', '国外页面PV', '国外页面UV', '点击buynow次数']
+    return {
+      current_page: data['current_page'],
+      page_total: data['total'],
+      column: column,
+      series: data['data']
+    }
+  },
   nano_store: data => {
 
     const x = []

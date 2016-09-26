@@ -21,6 +21,8 @@ export const getTableName2 = state => state.table2.name
 export const getTableData2 = state => state.table2.data
 export const getTableName3 = state => state.table3.name
 export const getTableData3 = state => state.table3.data
+export const getTableName4 = state => state.table4.name
+export const getTableData4 = state => state.table4.data
 export const getButtonState = state => state.button
 export const getPower = state => state.userInfo.power
 export const getNav = state => state.userInfo.nav

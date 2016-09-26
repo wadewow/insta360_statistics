@@ -11,6 +11,7 @@ import TableView from './TableView'
 import PostView from './PostView'
 import LocationActiveDetail from './LocationActiveDetail'
 import RestStatisticsView from './RestStatisticsView'
+import LandingPageView from './LandingPageView'
 import CompetitorChartView from './CompetitorChartView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
@@ -54,6 +55,9 @@ router.map({
   },
   '/location_active_detail/:cname/:city': {
     component: LocationActiveDetail
+  },
+  '/landing_page/:tname': {
+    component: LandingPageView
   },
   '/rest_statistics/:tname': {
     component: RestStatisticsView

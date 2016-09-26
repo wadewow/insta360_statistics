@@ -83,6 +83,9 @@
           <li>
             <a href="#!/link_query/link_query" @click="click">导流链接查询</a>
           </li>
+          <li>
+            <a href="#!/landing_page/landing_page" @click="click">新LandingPage点击购买情况</a>
+          </li>
         </ul>
       </li>
       <li>
