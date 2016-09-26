@@ -3,6 +3,7 @@ import App from './app'
 import PostsView from './PostsView'
 import ChartView from './ChartView'
 import SalesChartView from './SalesChartView'
+import ElectronicSalesView from './ElectronicSalesView'
 import ActiveMapView from './ActiveMapView'
 import MapView from './MapView'
 import AreaView from './AreaView'
@@ -65,6 +66,9 @@ router.map({
   },
   '/sales_chart/:cname/:is_native': {
     component: SalesChartView
+  },
+  '/electronic_sales/:cname': {
+    component: ElectronicSalesView
   },
   '/competitor_chart/:cname/:source': {
     component: CompetitorChartView

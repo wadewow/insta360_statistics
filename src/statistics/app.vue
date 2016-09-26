@@ -18,7 +18,7 @@
             <a href="#!/sales_chart/sales_status/0" @click="click">海外销售情况</a>
           </li>
           <li>
-            <a href="#!/sales_chart/electronic_sales/1" @click="click">自有电商渠道</a>
+            <a href="#!/electronic_sales/electronic_sales" @click="click">自有电商渠道</a>
           </li>
         </ul>
       </li>
