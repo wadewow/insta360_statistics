@@ -18,7 +18,7 @@
             <a href="#!/sales_chart/sales_status/0" @click="click">海外销售情况</a>
           </li>
           <li>
-            <a href="#!/sales_chart/electronic_sales/1" @click="click">自有电商渠道</a>
+            <a href="#!/electronic_sales/electronic_sales" @click="click">自有电商渠道</a>
           </li>
         </ul>
       </li>
@@ -82,6 +82,9 @@
           </li>
           <li>
             <a href="#!/link_query/link_query" @click="click">导流链接查询</a>
+          </li>
+          <li>
+            <a href="#!/landing_page/landing_page" @click="click">新LandingPage点击购买情况</a>
           </li>
         </ul>
       </li>
@@ -421,7 +424,7 @@ export default {
               padding-left: 25px;
               display: block;
               width: 100%;
-              height: 32px;
+              min-height: 32px;
               line-height: 32px;
               &:hover {
                 text-decoration: none;

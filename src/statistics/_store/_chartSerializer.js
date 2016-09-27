@@ -99,7 +99,7 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['国内激活数量', '国外激活数量', '总计周平均']
+        data: ['国内激活数量', '国外激活数量', '周激活数量']
         // selected: { '全部激活数量': false }
       },
       xAxis: [{
@@ -108,7 +108,7 @@ export default {
       {
         data: x_week
       }],
-      yAxis: [{name: '日激活'}, {name: '周平均'}],
+      yAxis: [{name: '日激活'}, {name: '周激活'}],
       series: [
         // {
         //   name: '全部激活数量',
@@ -133,7 +133,7 @@ export default {
           // stack: 'week'
         },
         {
-          name: '总计周平均',
+          name: '周激活数量',
           type: 'line',
           data: y_week,
           xAxisIndex: 1,
@@ -1172,6 +1172,15 @@ export default {
       series: data['data']
     }
   },
+  landing_page: data => {
+    const column = ['日期', '国内页面PV', '国内页面UV', '点击京东次数', '点击淘宝次数', '国外页面PV', '国外页面UV', '点击buynow次数']
+    return {
+      current_page: data['current_page'],
+      page_total: data['total'],
+      column: column,
+      series: data['data']
+    }
+  },
   nano_store: data => {
 
     const x = []
@@ -1745,8 +1754,8 @@ export default {
         value: _.sum(y_new)
       },
       {
-        name: '活跃用户',
-        value: _.sum(y_active)
+        name: '日均活跃用户',
+        value: _.round(_.mean(y_active))
       },
       {
         name: '平均使用时长',
@@ -2235,7 +2244,7 @@ export default {
       }
       count++
     }
-
+    y.reverse()
     const _series = []
     for (var item in y) {
       _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))

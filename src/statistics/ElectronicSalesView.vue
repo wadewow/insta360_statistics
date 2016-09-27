@@ -13,7 +13,7 @@
     <div class="mui-select">
     <select v-model="location" @change="queryLocation">
       <option value="all">所有代理</option>
-      <option v-for="location in data['locations']" value="{{ location['location'] }}" >{{ location['location'] }} ({{ location['agent_name'] }}，{{ location['agent_type'] }}，{{ location['agent_price'] }})</option>
+      <option v-for="location in data['locations']" >{{ location }}</option>
     </select>
     <label>选择代理</label>
     </div>

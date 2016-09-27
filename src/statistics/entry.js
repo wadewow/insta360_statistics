@@ -3,6 +3,7 @@ import App from './app'
 import PostsView from './PostsView'
 import ChartView from './ChartView'
 import SalesChartView from './SalesChartView'
+import ElectronicSalesView from './ElectronicSalesView'
 import ActiveMapView from './ActiveMapView'
 import MapView from './MapView'
 import AreaView from './AreaView'
@@ -10,6 +11,7 @@ import TableView from './TableView'
 import PostView from './PostView'
 import LocationActiveDetail from './LocationActiveDetail'
 import RestStatisticsView from './RestStatisticsView'
+import LandingPageView from './LandingPageView'
 import CompetitorChartView from './CompetitorChartView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
@@ -54,6 +56,9 @@ router.map({
   '/location_active_detail/:cname/:city': {
     component: LocationActiveDetail
   },
+  '/landing_page/:tname': {
+    component: LandingPageView
+  },
   '/rest_statistics/:tname': {
     component: RestStatisticsView
   },
@@ -65,6 +70,9 @@ router.map({
   },
   '/sales_chart/:cname/:is_native': {
     component: SalesChartView
+  },
+  '/electronic_sales/:cname': {
+    component: ElectronicSalesView
   },
   '/competitor_chart/:cname/:source': {
     component: CompetitorChartView
