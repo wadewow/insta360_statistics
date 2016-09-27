@@ -99,7 +99,7 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['国内激活数量', '国外激活数量', '总计周平均']
+        data: ['国内激活数量', '国外激活数量', '周激活数量']
         // selected: { '全部激活数量': false }
       },
       xAxis: [{
@@ -108,7 +108,7 @@ export default {
       {
         data: x_week
       }],
-      yAxis: [{name: '日激活'}, {name: '周平均'}],
+      yAxis: [{name: '日激活'}, {name: '周激活'}],
       series: [
         // {
         //   name: '全部激活数量',
@@ -133,7 +133,7 @@ export default {
           // stack: 'week'
         },
         {
-          name: '总计周平均',
+          name: '周激活数量',
           type: 'line',
           data: y_week,
           xAxisIndex: 1,
