@@ -1,3 +1,4 @@
+var path = require('path')
 var webpack = require('webpack')
 var config = require('./webpack.base.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -30,7 +31,8 @@ config.vue.loaders = {
   stylus: ExtractTextPlugin.extract('vue-style-loader', generateExtractLoaders(['css', 'stylus']))
 }
 
-config.plugins = (config.plugins || []).concat([
+
+var htmls = [
   // http://vuejs.github.io/vue-loader/workflow/production.html
   new webpack.DefinePlugin({
     'process.env': {
@@ -48,12 +50,17 @@ config.plugins = (config.plugins || []).concat([
   // generate dist index.html with correct asset hash for caching.
   // you can customize output by editing /build/index.template.html
   // see https://github.com/ampedandwired/html-webpack-plugin
-  new HtmlWebpackPlugin({
-    title: config.site.getName('Statistics'),
-    filename: 'statistics.html',
-    template: 'src/statistics/page.html',
-    chunks: ['statistics']    
-  })    
-])
+]
+
+for (_entry in config.entry) {
+  htmls.push(new HtmlWebpackPlugin({
+    title: config.site.getName(_entry),
+    filename: path.join('../',  _entry + '.html'),
+    template: path.join('src', _entry, 'page.html'),
+    chunks: [_entry]
+  }))
+}
+
+config.plugins = (config.plugins || []).concat(htmls)
 
 module.exports = config

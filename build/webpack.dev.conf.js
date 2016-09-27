@@ -13,21 +13,23 @@ Object.keys(config.entry).forEach(function (name, i) {
   config.entry[name] = extras.concat(config.entry[name])
 })
 
-// necessary for the html plugin to work properly
-// when serving the html from in-memory
-config.output.publicPath = '/'
-config.plugins = (config.plugins || []).concat([
-  // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
+
+var htmls = [
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin(),
-  // https://github.com/ampedandwired/html-webpack-plugin
-  new HtmlWebpackPlugin({
-    title: config.site.getName('Statistics'),
-    filename: 'statistics.html',
-    template: 'src/statistics/page.html',
-    chunks: ['statistics']    
-  })    
-])
+  new webpack.NoErrorsPlugin()
+]
+
+for (_entry in config.entry) {
+  htmls.push(new HtmlWebpackPlugin({
+    title: config.site.getName(_entry),
+    filename: _entry + '.html',
+    template: path.join('src', _entry, 'page.html'),
+    chunks: [_entry]
+  }))
+}
+
+config.output.publicPath = '/'
+config.plugins = (config.plugins || []).concat(htmls)
 
 module.exports = config
