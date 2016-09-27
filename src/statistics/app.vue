@@ -424,7 +424,7 @@ export default {
               padding-left: 25px;
               display: block;
               width: 100%;
-              height: 32px;
+              min-height: 32px;
               line-height: 32px;
               &:hover {
                 text-decoration: none;
