@@ -40,6 +40,47 @@
     <block :items="data"></block>
 </div>
   <chart :name="name" :data="data"></chart>
+   <div class="mui-row">
+<div class="mui-col-md-2">
+    <div class="mui-select">
+    <select v-model="commodity">
+      <option v-for="commodity in data1['commodities']" value="{{ commodity }}" >{{ commodity }}</option>
+    </select>
+    <label>选择产品</label>
+    </div>
+  </div>
+  <div class="mui-col-md-2">
+      <div class="mui-textfield">
+        <label for="date">Date</label>
+        <input type="text" id="date" placeholder="Date" v-pikaday="date">
+      </div>
+  </div>
+    <div class="mui-col-md-1">
+      <button @click="queryDetail" class="mui-btn mui-btn--raised text-right">查询</button>
+    </div>
+    <div class="mui-col-md-7"></div>
+   </div>
+    <div id='tableContainer'>
+    <table class="mui-table mui-table--bordered">
+      <thead>
+        <tr>
+          <th v-for="column in data1['column']">{{ column }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data1['series']">
+          <td>{{ item.shop }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.sales }}</td>
+          <td><a target="_blank" href="{{ item.link }}">{{ item.link }}</a></td>
+          <td>{{ item.location }}</td>
+          <td v-if="item.is_tmall==0">淘宝</td>
+          <td v-else>天猫</td>
+        </tr>
+    </tbody>
+    </table>
+    </div>
   </div>
 </template>
 
@@ -48,7 +89,7 @@ import Chart from './_component/Chart'
 import Block from './_component/Block'
 import store from './_store/store'
 import moment from 'moment'
-import { getChartName, getChartData, getButtonState } from './_store/getters'
+import { getChartName, getChartData, getButtonState, getTableName5, getTableData5 } from './_store/getters'
 
 export default {
   name: 'ChartView',
@@ -64,7 +105,9 @@ export default {
     getters: {
       name: getChartName,
       data: getChartData,
-      buttonState: getButtonState
+      buttonState: getButtonState,
+      name1: getTableName5,
+      data1: getTableData5
     }
   },
 
@@ -74,7 +117,9 @@ export default {
       endTime: '',
       start: '',
       end: '',
-      source: 'taobao'
+      source: 'taobao',
+      commodity: 'insta360 Nano',
+      date: ''
     }
   },
 
@@ -85,6 +130,8 @@ export default {
     this.end = this.endTime
     this.updateColor()
     this.source = 'taobao'
+    this.commodity = 'insta360 Nano'
+    this.date = moment().subtract(1, 'days').format('YYYY-MM-DD')
   },
 
   methods: {
@@ -172,6 +219,13 @@ export default {
       } else {
         this.changeColor(-1)
       }
+    },
+    queryDetail () {
+      const query = {
+        date: this.date,
+        commodity: this.commodity
+      }
+      store.dispatch('TABLE_UPDATE', 'taobao_detail', query)
     }
   },
 
@@ -189,6 +243,12 @@ export default {
       }
       store.dispatch('CHART_UPDATE', cname, query)
       this.updateColor()
+
+      const query1 = {
+        date: this.date,
+        commodity: this.commodity
+      }
+      store.dispatch('TABLE_UPDATE', 'taobao_detail', query1)
     }
   }
 
@@ -210,5 +270,10 @@ export default {
     .active:hover {
       background: #EE7700
     }
+  }
+  #tableContainer {
+    overflow:auto;
+    height: 100%;
+    max-height: 600px;
   }
 </style>

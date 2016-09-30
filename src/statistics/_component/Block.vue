@@ -22,8 +22,8 @@ export default {
   @import '../../_less/component/animation';
   #block {
     float:left;
-    margin-left:50px;
-    width:140px;
+    margin-left:30px;
+    width:150px;
     height:100px;
     margin-bottom:0px;
     margin-top:5px;

@@ -111,6 +111,16 @@ const state = {
       column: [],
       series: []
     }
+  },
+  table5: {
+    name: 'table',
+    data: {
+      commodities: ['insta360 Nano'],
+      current_page: 1,
+      page_total: 1,
+      column: [],
+      series: []
+    }
   }
 }
 
@@ -178,6 +188,17 @@ const apiQueryTable4 = (path, query) => {
     console.log(res)
   })
 }
+
+const apiQueryTable5 = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.table4.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数
 const mutations = {
   POSTS_NEXT (state, offset) {
@@ -211,6 +232,8 @@ const mutations = {
       apiQueryTable3(tname, query)
     } else if (tname === 'landing_page') {
       apiQueryTable4(tname, query)
+    } else if (tname === 'taobao_detail') {
+      apiQueryTable5(tname, query)
     }else {
       state.table.data = ChartData[tname]
     }

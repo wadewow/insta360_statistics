@@ -1181,6 +1181,16 @@ export default {
       series: data['data']
     }
   },
+  taobao_detail: data => {
+    const column = ['店铺', '商品名', '价格', '近30天销量', '链接', '地区', '淘宝/天猫']
+    return {
+      commodities: data['commodities'],
+      current_page: 1,
+      page_total: 1,
+      column: column,
+      series: data['data']
+    }
+  },
   nano_store: data => {
 
     const x = []
@@ -2066,6 +2076,11 @@ export default {
       _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
     }
 
+    const total = []
+    for (var k in y) {
+      total.push(_.assign({'name': y[k]['name'], 'vlaue': _.sum(y[k]['data'])}))
+    }
+
     const select = {}
     for (var a in area) {
       var name = area[a]
@@ -2078,7 +2093,7 @@ export default {
         native: [],
         abroad: []
       },
-      total: [],
+      total: total,
       title: {
         text: '百度指数',
         x: 'left'
@@ -2103,6 +2118,76 @@ export default {
         x: 'center',
         data: area,
         selected: select
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+  fans_trend: data => {
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    // var _sum = 0
+    for (var index in data) {
+      x.push(index)
+      if (count === 0) {
+        for (var i in data[index]) {
+          area.push(i)
+          var temp = []
+          y.push(_.assign({'name': i, 'data': temp}))
+        }
+      }
+      for (var j in y) {
+        // _sum += data[index][y[j]['name']]
+        y[j]['data'].push(data[index][y[j]['name']])
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    const total = []
+    for (var k in y) {
+      total.push(_.assign({'name': y[k]['name'], 'vlaue': '总计：' + _.sum(y[k]['data']), 'comment': '新增：' + (_.head(y[k]['data']) - _.last(y[k]['data']))}))
+    }
+
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: total,
+      title: {
+        text: '粉丝走势',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
@@ -2288,6 +2373,7 @@ export default {
     }
   },
   sales_status: data => {
+    console.log(data)
     const locations = data['locations']
     var last_inventory_first = 0
     var last_inventory_lower = 0

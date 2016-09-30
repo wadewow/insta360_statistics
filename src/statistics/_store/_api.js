@@ -1,6 +1,6 @@
 const baseUrl = 'http://statistics.internal.insta360.com/'
 const baseUrl1 = 'http://www.internal.insta360.com/crawler/'
-
+// const baseUrl1 = 'http://localhost:8000/crawler/'
 export default {
   nano_active: {
     url: baseUrl + 'nano_active',
@@ -109,6 +109,14 @@ export default {
   electronic_sales: {
     url: baseUrl1 + 'get_electronic_sales/',
     serialize: 'electronic_sales'
+  },
+  fans_trend: {
+    url: baseUrl1 + 'media_fans/',
+    serialize: 'fans_trend'
+  },
+  taobao_detail: {
+    url: baseUrl1 + 'taobao_detail/',
+    serialize: 'taobao_detail'
   },
   login: {
     url: baseUrl1 + 'login/',
