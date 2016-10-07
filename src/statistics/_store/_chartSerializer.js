@@ -7,6 +7,7 @@ export default {
     const x_week = []
     const y_native = []
     const y_abroad = []
+    const y_special_region = []
     const y_all = []
     const y_week_native = []
     const y_week_abroad = []
@@ -15,6 +16,7 @@ export default {
       x.push(index)
       y_native.push(data[index]['native'])
       y_abroad.push(data[index]['abroad'])
+      y_special_region.push(data[index]['special_region'])
       y_all.push(data[index]['all'])
     }
     const length = x.length
@@ -60,7 +62,8 @@ export default {
       },
       {
         name: '国内激活量',
-        value: _.sum(y_native)
+        value: '大陆：' + (_.sum(y_native) - _.sum(y_special_region)),
+        comment: '港澳台：' + _.sum(y_special_region)
       },
       {
         name: '国外激活量',
@@ -521,6 +524,7 @@ export default {
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
+    const special_region_total = data['special_region']['total']
     for (var i in _native_data) {
       _native_top.push(_native_data[i])
     }
@@ -586,7 +590,8 @@ export default {
       },
         {
           name: '国内激活量',
-          value: total_native
+          value: '大陆：' + (total_native - special_region_total),
+          comment: '港澳台：' + special_region_total
         },
         {
           name: '国外激活量',
