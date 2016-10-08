@@ -2409,6 +2409,22 @@ export default {
       y_sales.push(data[index]['sales_offline'] + data[index]['sales_online'] + data[index]['sales_offline_count'])
       y_inventory.push(data[index]['inventory_lower'] + data[index]['inventory_first'])
     }
+    // 删除最后一项全为0的情况
+    const last = x.length - 1
+    if (last >= 1) {
+      if (y_pick_up[last] === 0 && y_inventory_lower[last] === 0 && y_inventory_first[last] === 0 && y_sales_offline[last] === 0 && y_sales_online[last] === 0 && y_sales_offline_count[last] === 0 && y_reject[last] === 0) {
+        x.pop()
+        y_pick_up.pop()
+        y_inventory_lower.pop()
+        y_inventory_first.pop()
+        y_sales_offline.pop()
+        y_sales_online.pop()
+        y_sales_offline_count.pop()
+        y_sales.pop()
+        y_reject.pop()
+        y_inventory.pop()
+      }
+    }
     return {
       top: {
         native: [],
@@ -2514,6 +2530,18 @@ export default {
       y_payment.push(data[index]['payment'])
       y_view.push(data[index]['view'])
       y_number.push(data[index]['number'])
+    }
+    // 删除最后一项全为0的情况
+    const last = x.length - 1
+    if (last >= 1) {
+      if (y_buyer[last] === 0 && y_visitor[last] === 0 && y_payment[last] === 0 && y_view[last] === 0 && y_number[last] === 0) {
+        x.pop()
+        y_buyer.pop()
+        y_visitor.pop()
+        y_payment.pop()
+        y_view.pop()
+        y_number.pop()
+      }
     }
     const sum_buyer = _.sum(y_buyer)
     const sum_visitor = _.sum(y_visitor)
