@@ -24,13 +24,13 @@ const state = {
   userInfo: {
     username: 'admin',
     power: {
-      'nano_sales': true,
-      'nano_activation': true,
-      'nano_link': true,
-      'nano_share': true,
-      'nano_use_condition': true,
-      'nano_market': true,
-      'nano_history': true,
+      'nano_sales': false,
+      'nano_activation': false,
+      'nano_link': false,
+      'nano_share': false,
+      'nano_use_condition': false,
+      'nano_market': false,
+      'nano_history': false,
       'content_filter': true
     },
     nav: [
@@ -41,7 +41,7 @@ const state = {
       'hide',
       'hide',
       'hide',
-      'hide'
+      'show'
     ]
   },
   posts: {
