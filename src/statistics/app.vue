@@ -142,6 +142,19 @@
           </li>
         </ul>
       </li>
+      <li>
+        <template v-if="power['content_filter']">
+          <strong @click="toggleCollapse">内容筛选</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">内容筛选</strong>
+        </template>
+        <ul class="nav" show="{{ nav[7] }}">
+          <li>
+            <a href="#!/content_filter/content_filter" @click="click">内容筛选</a>
+          </li>
+        </ul>
+      </li>
     </ul>
   </div>
   <header id="header">

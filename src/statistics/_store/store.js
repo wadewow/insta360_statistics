@@ -30,9 +30,11 @@ const state = {
       'nano_share': true,
       'nano_use_condition': true,
       'nano_market': true,
-      'nano_history': true
+      'nano_history': true,
+      'content_filter': true
     },
     nav: [
+      'hide',
       'hide',
       'hide',
       'hide',
@@ -222,7 +224,7 @@ const mutations = {
   TABLE_UPDATE (state, tname, query) {
     state.table.name = tname
     state.chart.name = tname
-    if (tname === 'share_list') {
+    if (tname === 'share_list' || tname === 'content_filter') {
       apiQueryTable1(tname, query)
     } else if (tname === 'rest_statistics') {
       apiQueryTable(tname, query)
