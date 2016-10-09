@@ -105,8 +105,8 @@ export default {
   },
 
   created () {
-    this.startTime = store.state.startTime
-    this.endTime = store.state.endTime
+    this.startTime = '2016-06-01'
+    this.endTime = moment().format('YYYY-MM-DD')
     this.start = this.startTime
     this.end = this.endTime
     this.type = 'all'
@@ -134,8 +134,6 @@ export default {
       this.end = this.endTime
       this.page = 1
       this.keepSame()
-      store.state.startTime = this.start
-      store.state.endTime = this.end
       this.query()
     },
     queryPeriod (val) {
@@ -156,14 +154,13 @@ export default {
       this.start = this.startTime
       this.end = this.endTime
       this.page = 1
-      store.state.startTime = this.start
-      store.state.endTime = this.end
       const tname = this.$route.params.tname
       const query = {
         new_time: val,
         query_type: this.type,
         query_order: this.order,
-        page_size: this.pageSize
+        page_size: this.pageSize,
+        search_location: this.location
       }
       store.dispatch('TABLE_UPDATE', tname, query)
     },
@@ -267,8 +264,6 @@ export default {
 
   route: {
     data ({ to }) {
-      this.startTime = store.state.startTime
-      this.endTime = store.state.endTime
       this.start = this.startTime
       this.end = this.endTime
       this.pagesize = 15

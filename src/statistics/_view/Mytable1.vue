@@ -20,8 +20,8 @@
         <td style="width:11%">{{ item.share_location }}</td>
         <td style="width:20%"><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
         <td style="width:15%">
-            <a href="{{ item.start_url }}" title="{{ item.title }}" target="_blank">
-                <img v-bind:src= "item.start_url" alt="{{ item.title }}" height="120px" width="120px"></img>
+            <a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">
+                <img v-bind:src= "item.start_url" alt="{{ item.title }}" height="140px" width="140px"></img>
             </a>
         </td>
         <td style="width:8%">{{ item.week_prews }}</td>
