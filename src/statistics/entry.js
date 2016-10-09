@@ -16,6 +16,7 @@ import CompetitorChartView from './CompetitorChartView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
 import LinkQueryView from './LinkQueryView'
+import ContentFilterView from './ContentFilterView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import store from './_store/store'
@@ -79,10 +80,18 @@ router.map({
   },
   '/link_query/:tname': {
     component: LinkQueryView
+  },
+  '/content_filter/:tname': {
+    component: ContentFilterView
   }
 })
 
-router.beforeEach(function () {
+router.beforeEach(function ({to, from, next}) {
+  const tname = to.params.tname
+  if (tname === 'content_filter') {
+    next()
+    return
+  }
   if (document.cookie.indexOf('isLogin=true') < 0) {
     router.go('/login')
   } else {
@@ -95,6 +104,7 @@ router.beforeEach(function () {
       store.state.userInfo.power = JSON.parse(getCookie('power'))
     }
   }
+  next()
 })
 
 router.redirect({
