@@ -7,6 +7,7 @@ export default {
     const x_week = []
     const y_native = []
     const y_abroad = []
+    const y_special_region = []
     const y_all = []
     const y_week_native = []
     const y_week_abroad = []
@@ -15,6 +16,7 @@ export default {
       x.push(index)
       y_native.push(data[index]['native'])
       y_abroad.push(data[index]['abroad'])
+      y_special_region.push(data[index]['special_region'])
       y_all.push(data[index]['all'])
     }
     const length = x.length
@@ -60,7 +62,8 @@ export default {
       },
       {
         name: '国内激活量',
-        value: _.sum(y_native)
+        value: '大陆：' + (_.sum(y_native) - _.sum(y_special_region)),
+        comment: '港澳台：' + _.sum(y_special_region)
       },
       {
         name: '国外激活量',
@@ -521,6 +524,7 @@ export default {
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
+    const special_region_total = data['special_region']['total']
     for (var i in _native_data) {
       _native_top.push(_native_data[i])
     }
@@ -586,7 +590,8 @@ export default {
       },
         {
           name: '国内激活量',
-          value: total_native
+          value: '大陆：' + (total_native - special_region_total),
+          comment: '港澳台：' + special_region_total
         },
         {
           name: '国外激活量',
@@ -2404,6 +2409,22 @@ export default {
       y_sales.push(data[index]['sales_offline'] + data[index]['sales_online'] + data[index]['sales_offline_count'])
       y_inventory.push(data[index]['inventory_lower'] + data[index]['inventory_first'])
     }
+    // 删除最后一项全为0的情况
+    const last = x.length - 1
+    if (last >= 1) {
+      if (y_pick_up[last] === 0 && y_inventory_lower[last] === 0 && y_inventory_first[last] === 0 && y_sales_offline[last] === 0 && y_sales_online[last] === 0 && y_sales_offline_count[last] === 0 && y_reject[last] === 0) {
+        x.pop()
+        y_pick_up.pop()
+        y_inventory_lower.pop()
+        y_inventory_first.pop()
+        y_sales_offline.pop()
+        y_sales_online.pop()
+        y_sales_offline_count.pop()
+        y_sales.pop()
+        y_reject.pop()
+        y_inventory.pop()
+      }
+    }
     return {
       top: {
         native: [],
@@ -2509,6 +2530,18 @@ export default {
       y_payment.push(data[index]['payment'])
       y_view.push(data[index]['view'])
       y_number.push(data[index]['number'])
+    }
+    // 删除最后一项全为0的情况
+    const last = x.length - 1
+    if (last >= 1) {
+      if (y_buyer[last] === 0 && y_visitor[last] === 0 && y_payment[last] === 0 && y_view[last] === 0 && y_number[last] === 0) {
+        x.pop()
+        y_buyer.pop()
+        y_visitor.pop()
+        y_payment.pop()
+        y_view.pop()
+        y_number.pop()
+      }
     }
     const sum_buyer = _.sum(y_buyer)
     const sum_visitor = _.sum(y_visitor)
