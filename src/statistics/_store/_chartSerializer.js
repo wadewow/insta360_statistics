@@ -1087,6 +1087,9 @@ export default {
     // }
     for (var i in data['data']) {
       data['data'][i]['share_location'] = data['data'][i]['share_location'].replace(/\,/g, ' ')
+      if (data['data'][i]['share_location'] === '') {
+        data['data'][i]['share_location'] = '其它'
+      }
       if (data['data'][i]['title'] === '') {
         data['data'][i]['title'] = '来自Insta360 Nano用户分享的全景时刻'
       }
@@ -1098,6 +1101,14 @@ export default {
       column: column,
       series: data['data']
     }
+  },
+  share_locations: data => {
+    const abroad_data = data['abroad']
+    const locations = []
+    for (var n in abroad_data) {
+      locations.push(dict_json[n] !== undefined ? dict_json[n] : n)
+    }
+    return locations
   },
   rest_statistics: data => {
     const column1 = ['出厂序列号总数', '已激活序列号总数', '分享的视频总数', '分享的图片总数', '有分享行为的序列号数', '不重复的视频数', '不重复的图片数']

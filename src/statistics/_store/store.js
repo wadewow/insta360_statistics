@@ -24,14 +24,13 @@ const state = {
   userInfo: {
     username: 'admin',
     power: {
-      'nano_sales': false,
-      'nano_activation': false,
-      'nano_link': false,
-      'nano_share': false,
-      'nano_use_condition': false,
-      'nano_market': false,
-      'nano_history': false,
-      'content_filter': true
+      'nano_sales': true,
+      'nano_activation': true,
+      'nano_link': true,
+      'nano_share': true,
+      'nano_use_condition': true,
+      'nano_market': true,
+      'nano_history': true
     },
     nav: [
       'hide',
@@ -40,10 +39,10 @@ const state = {
       'hide',
       'hide',
       'hide',
-      'hide',
-      'show'
+      'hide'
     ]
   },
+  locations: [],
   posts: {
     page: 1,
     list: [
@@ -84,7 +83,8 @@ const state = {
       current_page: 1,
       page_total: 1,
       column: [],
-      series: []
+      series: [],
+      total: 1
     }
   },
   table2: {
@@ -93,7 +93,8 @@ const state = {
       current_page: 1,
       page_total: 1,
       column: [],
-      series: []
+      series: [],
+      total: 1
     }
   },
   table3: {
@@ -102,7 +103,8 @@ const state = {
       current_page: 1,
       page_total: 1,
       column: [],
-      series: []
+      series: [],
+      total: 1
     }
   },
   table4: {
@@ -111,7 +113,8 @@ const state = {
       current_page: 1,
       page_total: 1,
       column: [],
-      series: []
+      series: [],
+      total: 1
     }
   },
   table5: {
@@ -121,7 +124,8 @@ const state = {
       current_page: 1,
       page_total: 1,
       column: [],
-      series: []
+      series: [],
+      total: 1
     }
   }
 }
@@ -152,6 +156,7 @@ const apiQueryTable = (path, query) => {
 const apiQueryTable1 = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
+    console.log(res)
     state.table1.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
   }, (res) => {
     // error callback
@@ -201,6 +206,18 @@ const apiQueryTable5 = (path, query) => {
     console.log(res)
   })
 }
+
+const locationsQuery = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.locations = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+    // console.log(state.chart.data)
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数
 const mutations = {
   POSTS_NEXT (state, offset) {
@@ -224,7 +241,7 @@ const mutations = {
   TABLE_UPDATE (state, tname, query) {
     state.table.name = tname
     state.chart.name = tname
-    if (tname === 'share_list' || tname === 'content_filter') {
+    if (tname === 'share_list' || tname === 'album_list') {
       apiQueryTable1(tname, query)
     } else if (tname === 'rest_statistics') {
       apiQueryTable(tname, query)
@@ -239,6 +256,9 @@ const mutations = {
     }else {
       state.table.data = ChartData[tname]
     }
+  },
+  LIST_UPDATE (state, cname, query) {
+    locationsQuery(cname, query)
   }
 }
 

@@ -8,6 +8,7 @@ import ActiveMapView from './ActiveMapView'
 import MapView from './MapView'
 import AreaView from './AreaView'
 import TableView from './TableView'
+import AlbumListView from './AlbumListView'
 import PostView from './PostView'
 import LocationActiveDetail from './LocationActiveDetail'
 import RestStatisticsView from './RestStatisticsView'
@@ -16,7 +17,6 @@ import CompetitorChartView from './CompetitorChartView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
 import LinkQueryView from './LinkQueryView'
-import ContentFilterView from './ContentFilterView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import store from './_store/store'
@@ -54,6 +54,9 @@ router.map({
   '/table/:tname': {
     component: TableView
   },
+  '/album_list/:tname': {
+    component: AlbumListView
+  },
   '/location_active_detail/:cname/:city': {
     component: LocationActiveDetail
   },
@@ -80,18 +83,10 @@ router.map({
   },
   '/link_query/:tname': {
     component: LinkQueryView
-  },
-  '/content_filter/:tname': {
-    component: ContentFilterView
   }
 })
 
-router.beforeEach(function ({to, from, next}) {
-  const tname = to.params.tname
-  if (tname === 'content_filter') {
-    next()
-    return
-  }
+router.beforeEach(function () {
   if (document.cookie.indexOf('isLogin=true') < 0) {
     router.go('/login')
   } else {
@@ -104,7 +99,6 @@ router.beforeEach(function ({to, from, next}) {
       store.state.userInfo.power = JSON.parse(getCookie('power'))
     }
   }
-  next()
 })
 
 router.redirect({
