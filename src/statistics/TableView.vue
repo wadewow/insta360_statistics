@@ -260,7 +260,7 @@ export default {
       this.endTime = store.state.endTime
       this.start = this.startTime
       this.end = this.endTime
-      this.pagesize = 15
+      this.pagesize = 10
       this.order = 'time_desc'
       this.type = 'all'
       this.page = 1
