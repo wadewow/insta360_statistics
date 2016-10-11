@@ -21,7 +21,7 @@
         <td style="width:20%"><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
         <td style="width:15%">
             <a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">
-                <img v-bind:src= "item.start_url" alt="{{ item.title }}" height="150px" width="150px"></img>
+                <img v-bind:src= "item.start_url" alt="{{ item.title }}" class="thumb"></img>
             </a>
         </td>
         <td style="width:8%">{{ item.week_prews }}</td>
@@ -96,5 +96,10 @@ export default {
   @import '../../_less/component/animation';
   .sort{
     cursor:pointer
+  }
+  .thumb{
+    border-radius: 50%;
+    height: 96px;
+    width: 96px;
   }
 </style>

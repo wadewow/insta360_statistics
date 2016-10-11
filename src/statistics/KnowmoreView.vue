@@ -17,6 +17,7 @@
         </tr>
     </tbody>
     </table>
+    <div class="mui-container-fluid page_tool">
     <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='firstPage'>首页</button>
     <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='prevPage'>上页</button>
     <span class="currentPage">{{ data.current_page }}</span> / <span class="totalPage">{{ data.page_total }}</span>
@@ -28,6 +29,7 @@
     <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='queryPage'>GO</button>
     <span> 总计 </span><span>{{ data.total }}</span><span> 条</span>
     <input type="hidden" id="total_page" number value="{{ data.page_total }}"></input>
+    </div>
     </div>
     <div class="mui-col-md-6" style="min-width:570px">
     <table class="mui-table mui-table--bordered">

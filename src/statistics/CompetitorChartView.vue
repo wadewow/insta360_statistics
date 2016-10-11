@@ -40,7 +40,8 @@
     <block :items="data"></block>
 </div>
   <chart :name="name" :data="data"></chart>
-   <div class="mui-row">
+<div class="mui-container-fluid">
+<div class="mui-row">
 <div class="mui-col-md-2">
     <div class="mui-select">
     <select v-model="commodity">
@@ -60,6 +61,7 @@
     </div>
     <div class="mui-col-md-7"></div>
    </div>
+  </div>
     <div id='tableContainer'>
     <table class="mui-table mui-table--bordered">
       <thead>
