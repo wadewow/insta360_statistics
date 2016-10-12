@@ -53,8 +53,7 @@ export default {
           'nano_share': true,
           'nano_use_condition': true,
           'nano_market': true,
-          'nano_history': true,
-          'content_filter': true
+          'nano_history': true
         }
         var powerJson = JSON.stringify(store.state.userInfo.power)
         document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()

@@ -1,13 +1,14 @@
 <template>
   <div>
+  <div class="mui-container-fluid">
   <div class="mui-row pikaday">
-    <div class="mui-col-md-4">
+    <div class="mui-col-md-3" style="min-width:260px;">
         <div class="period">
-        <a id="0" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button1 }}" @click="queryPeriod(0)">今天</a>
-        <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button2 }}" @click="queryPeriod(1)">昨天</a>
-        <a id="7" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button3 }}" @click="queryPeriod(7)">最近7天</a>
-        <a id="30" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button4 }}" @click="queryPeriod(30)">最近30天</a>
-        <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button5 }}" @click="queryPeriod(100)">全部</a>
+        <a id="0" class="mui-btn mui-btn--primary mui-btn--small period {{ button1 }}" @click="queryPeriod(0)">今天</a>
+        <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ button2 }}" @click="queryPeriod(1)">昨天</a>
+        <a id="7" class="mui-btn mui-btn--primary mui-btn--small period {{ button3 }}" @click="queryPeriod(7)">最近7天</a>
+        <a id="30" class="mui-btn mui-btn--primary mui-btn--small period {{ button4 }}" @click="queryPeriod(30)">最近30天</a>
+        <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ button5 }}" @click="queryPeriod(100)">全部</a>
         </div>
     </div>
     <div class="mui-col-md-2">
@@ -19,18 +20,21 @@
     <label>选择国家</label>
     </div>
     </div>
-    <div class="mui-col-md-2" style="min-width:190px;">
+    <div class="mui-col-md-3" style="min-width:150px;">
       <div class="" style="display:block;height:50px;padding-top:10px">
     <div class="mui-radio">
-        <label><input type="radio" name="type" value="all" v-model='type' checked @click="queryType('all')">全部</label>
+        <label><input type="radio" name="type" value="all" v-model='type' checked @click="queryType('all')">视频&图片</label>
     </div>
     <div class="mui-radio">
         <label><input type="radio" name="type" v-model='type' value="video" @click="queryType('video')">视频</label>
-   </div>
+    </div>
     <div class="mui-radio">
         <label><input type="radio" name="type" v-model='type' value="img" @click="queryType('img')">图片</label>
-   </div>
-   </div>
+    </div>
+    <div class="mui-radio">
+        <label><input type="radio" name="type" v-model='type' value="album" @click="queryType('album')">图集</label>
+    </div>
+    </div>
     </div>
 
     <div class="mui-col-md-3" style="min-width:235px">
@@ -49,7 +53,9 @@
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
     </div>
   </div>
-  <mytable1 :name="name" :data="data"></mytable1>
+  </div>
+  <mytable :name="name" :data="data"></mytable>
+  <div class="mui-container-fluid page_tool">
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='firstPage'>首页</button>
   <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='prevPage'>上页</button>
   <span class="currentPage">{{ data.current_page }}</span> / <span class="totalPage">{{ data.page_total }}</span>
@@ -62,29 +68,29 @@
   <span> 总计 </span><span>{{ data.total }}</span><span> 条</span>
   <input type="hidden" id="total_page" number value="{{ data.page_total }}"></input>
   </div>
+  </div>
 </template>
 
 <script>
-import Mytable1 from './_view/Mytable1'
+import Mytable from './_view/Mytable'
 import store from './_store/store'
 import moment from 'moment'
-import dict_json from './_store/dictionary.json'
-import { getTableName1, getTableData1, getButtonState } from './_store/getters'
+import { getTableName, getTableData, getLocations } from './_store/getters'
 
 export default {
   name: 'TableView',
 
   components: {
-    Mytable1
+    Mytable
   },
 
   store: store,
 
   vuex: {
     getters: {
-      name: getTableName1,
-      data: getTableData1,
-      buttonState: getButtonState
+      name: getTableName,
+      data: getTableData,
+      locations: getLocations
     }
   },
 
@@ -100,11 +106,17 @@ export default {
       start: '',
       end: '',
       skip: '',
-      locations: []
+      button1: '',
+      button2: '',
+      button3: '',
+      button4: '',
+      button5: '',
+      tname: 'content_filter'
     }
   },
 
   created () {
+    this.tname = 'content_filter'
     this.startTime = '2016-06-01'
     this.endTime = moment().format('YYYY-MM-DD')
     this.start = this.startTime
@@ -115,17 +127,15 @@ export default {
     this.pageSize = 10
     this.updateColor()
     this.skip = ''
-    for (var index in dict_json) {
-      this.locations.push(dict_json[index])
+
+    const query = {
     }
-    // this.locations.sort()
+    store.dispatch('LIST_UPDATE', 'location_share', query)
   },
 
   methods: {
     queryLocation () {
-      // this.start = this.startTime
-      // this.end = this.endTime
-
+      this.page = 1
       this.query()
     },
     queryDate () {
@@ -154,15 +164,7 @@ export default {
       this.start = this.startTime
       this.end = this.endTime
       this.page = 1
-      const tname = this.$route.params.tname
-      const query = {
-        new_time: val,
-        query_type: this.type,
-        query_order: this.order,
-        page_size: this.pageSize,
-        search_location: this.location
-      }
-      store.dispatch('TABLE_UPDATE', tname, query)
+      this.query()
     },
     queryPage () {
       var total = document.getElementById('total_page').value
@@ -204,13 +206,10 @@ export default {
       this.query()
     },
     sort (val) {
-      // alert(this.order)
-      // this.order = val
       this.page = 1
       this.query()
     },
     query () {
-      const tname = this.$route.params.tname
       const query = {
         search_location: this.location,
         start_time: this.start,
@@ -220,7 +219,7 @@ export default {
         query_order: this.order,
         page_size: this.pageSize
       }
-      store.dispatch('TABLE_UPDATE', tname, query)
+      store.dispatch('TABLE_UPDATE', this.tname, query)
       this.keepSame()
     },
     keepSame () {
@@ -228,21 +227,21 @@ export default {
       this.endTime = this.end
     },
     changeColor (val) {
-      store.state.button.button1 = ''
-      store.state.button.button2 = ''
-      store.state.button.button3 = ''
-      store.state.button.button4 = ''
-      store.state.button.button5 = ''
+      this.button1 = ''
+      this.button2 = ''
+      this.button3 = ''
+      this.button4 = ''
+      this.button5 = ''
       if (val === 0) {
-        store.state.button.button1 = 'active'
+        this.button1 = 'active'
       } else if (val === 1) {
-        store.state.button.button2 = 'active'
+        this.button2 = 'active'
       } else if (val === 7) {
-        store.state.button.button3 = 'active'
+        this.button3 = 'active'
       } else if (val === 30) {
-        store.state.button.button4 = 'active'
+        this.button4 = 'active'
       } else if (val === 100) {
-        store.state.button.button5 = 'active'
+        this.button5 = 'active'
       }
     },
     updateColor () {
@@ -266,12 +265,12 @@ export default {
     data ({ to }) {
       this.start = this.startTime
       this.end = this.endTime
-      this.pagesize = 15
+      this.pagesize = 10
       this.order = 'time_desc'
       this.type = 'all'
       this.page = 1
-      const tname = to.params.tname
       const query = {
+        search_location: this.location,
         start_time: this.start,
         end_time: this.end,
         page_size: this.pageSize,
@@ -279,7 +278,7 @@ export default {
         query_type: this.type,
         page_number: this.page
       }
-      store.dispatch('TABLE_UPDATE', tname, query)
+      store.dispatch('TABLE_UPDATE', this.tname, query)
       this.keepSame()
       this.updateColor()
     }
@@ -322,6 +321,12 @@ export default {
     .mui-textfield {
       margin-left: 16px;
     }
+    .active {
+      background: #EE7700
+    }
+    .active:hover {
+      background: #EE7700
+    }
     /*.period {
       display:inline;
     }*/
@@ -332,5 +337,8 @@ export default {
   }
   .skip {
     width:35px
+  }
+  .page_tool {
+    height:60px
   }
 </style>

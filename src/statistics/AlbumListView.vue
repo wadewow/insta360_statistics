@@ -1,7 +1,7 @@
 <template>
   <div>
   <div class="mui-row pikaday">
-    <div class="mui-col-md-4">
+    <div class="mui-col-md-5">
         <div class="period">
         <a id="0" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button1 }}" @click="queryPeriod(0)">今天</a>
         <a id="1" class="mui-btn mui-btn--primary mui-btn--small period {{ buttonState.button2 }}" @click="queryPeriod(1)">昨天</a>
@@ -19,21 +19,8 @@
     <label>选择国家</label>
     </div>
     </div>
-    <div class="mui-col-md-2" style="min-width:190px;">
-      <div class="" style="display:block;height:50px;padding-top:10px">
-    <div class="mui-radio">
-        <label><input type="radio" name="type" value="all" v-model='type' checked @click="queryType('all')">全部</label>
-    </div>
-    <div class="mui-radio">
-        <label><input type="radio" name="type" v-model='type' value="video" @click="queryType('video')">视频</label>
-   </div>
-    <div class="mui-radio">
-        <label><input type="radio" name="type" v-model='type' value="img" @click="queryType('img')">图片</label>
-   </div>
-   </div>
-    </div>
 
-    <div class="mui-col-md-3" style="min-width:235px">
+    <div class="mui-col-md-4" style="min-width:235px">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -94,7 +81,6 @@ export default {
     return {
       startTime: '',
       endTime: '',
-      type: 'all',
       page: 1,
       location: '',
       order: 'time_desc',
@@ -110,7 +96,6 @@ export default {
     this.endTime = store.state.endTime
     this.start = this.startTime
     this.end = this.endTime
-    this.type = 'all'
     this.page = 1
     this.order = 'time_desc'
     this.pageSize = 10
@@ -192,11 +177,6 @@ export default {
         this.query()
       }
     },
-    queryType (val) {
-      this.type = val
-      this.page = 1
-      this.query()
-    },
     sort (val) {
       // alert(this.order)
       // this.order = val
@@ -210,7 +190,6 @@ export default {
         start_time: this.start,
         end_time: this.end,
         page_number: this.page,
-        query_type: this.type,
         query_order: this.order,
         page_size: this.pageSize
       }
@@ -264,7 +243,6 @@ export default {
       this.end = this.endTime
       this.pagesize = 10
       this.order = 'time_desc'
-      this.type = 'all'
       this.page = 1
       const tname = to.params.tname
       const query = {
@@ -273,7 +251,6 @@ export default {
         end_time: this.end,
         page_size: this.pageSize,
         query_order: this.order,
-        query_type: this.type,
         page_number: this.page
       }
       store.dispatch('TABLE_UPDATE', tname, query)
@@ -329,8 +306,5 @@ export default {
   }
   .skip {
     width:35px
-  }
-  .page_tool {
-    height:60px
   }
 </style>

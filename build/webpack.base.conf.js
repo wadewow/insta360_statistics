@@ -2,7 +2,8 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    statistics: './src/statistics/entry.js'
+    statistics: './src/statistics/entry.js',
+    nano: './src/nano/entry.js'
   },
   output: {
     path: path.resolve(__dirname, '../dist/static'),

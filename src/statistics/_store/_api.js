@@ -19,12 +19,16 @@ export default {
     serialize: 'location_active_detail'
   },
   share_list: {
-    url: baseUrl + 'share_list',
-    serialize: 'share_list'
-  },
-  content_filter: {
     url: baseUrl + 'api/share/search',
     serialize: 'share_list'
+  },
+  album_list: {
+    url: baseUrl + 'api/album/album_list',
+    serialize: 'share_list'
+  },
+  share_locations: {
+    url: baseUrl + 'api/share/getlocationShareData',
+    serialize: 'share_locations'
   },
   month_share_trends: {
     url: baseUrl + 'api/share/month_share_trends',

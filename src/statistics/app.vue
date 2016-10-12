@@ -50,6 +50,9 @@
             <a href="#!/table/share_list" @click="click">分享内容列表</a>
           </li>
           <li>
+            <a href="#!/album_list/album_list" @click="click">分享图集列表</a>
+          </li>
+          <li>
             <a href="#!/chart/month_share_trends" @click="click">内容数量走势</a>
           </li>
           <li>
@@ -139,19 +142,6 @@
           </li>
           <li>
             <a href="#!/knowmore/knowmore" @click="click">Knowmore点击比例</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <template v-if="power['content_filter']">
-          <strong @click="toggleCollapse">内容筛选</strong>
-        </template>
-        <template v-else>
-          <strong style="cursor: not-allowed;">内容筛选</strong>
-        </template>
-        <ul class="nav" show="{{ nav[7] }}">
-          <li>
-            <a href="#!/content_filter/content_filter" @click="click">内容筛选</a>
           </li>
         </ul>
       </li>

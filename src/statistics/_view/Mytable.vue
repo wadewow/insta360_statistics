@@ -1,27 +1,33 @@
 <template>
-  <table id="myTable" class="mui-table mui-table--bordered">
+  <table id="myTable1" class="mui-table mui-table--bordered">
     <thead>
       <tr>
         <!--<th v-for="column in data['column']">{{ column }}</th>-->
         <th style="width:6%;min-width:48px;font-weight:500">类型</th>
-        <th style="width:16%;min-width:80px;font-weight:500;min-width:80px">地理位置</th>
-        <th style="width:30%;min-width:100px;font-weight:500">标题</th>
-        <th style="width:16%;font-weight:500">序列号</th>
+        <th style="width:11%;min-width:80px;font-weight:500;min-width:80px">地理位置</th>
+        <th style="width:20%;min-width:50px;font-weight:500">标题</th>
+        <th style="width:15%;min-width:50px;font-weight:500">缩略图</th>
         <th class="sort" style="width:8%;min-width:75px" id="week_prew" @click="sort('week_prew')" value="0">{{ week_prew }}</th>
         <th class="sort" style="width:8%;min-width:75px" id="view" @click="sort('view')" value="0">{{ view }}</th>
         <th class="sort" style="width:16%;min-width:55px" id="time" @click="sort('time')" value="1">{{ time }}</th>
+        <th style="width:16%;font-weight:500">序列号</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in data['series']">
         <!--<td v-for="i in item">{{ i }}</td>-->
         <td style="width:6%">{{ item.type }}</td>
-        <td style="width:16%">{{ item.share_location }}</td>
-        <td style="width:30%"><a href= "{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
-        <td style="width:16%">{{ item.serial_num }}</td>
+        <td style="width:11%">{{ item.share_location }}</td>
+        <td style="width:20%"><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
+        <td style="width:15%">
+            <a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">
+                <img v-bind:src= "item.start_url" alt="{{ item.title }}" class="thumb"></img>
+            </a>
+        </td>
         <td style="width:8%">{{ item.week_prews }}</td>
         <td style="width:8%">{{ item.view_times }}</td>
         <td style="width:16%">{{ item.time }}</td>
+        <td style="width:16%">{{ item.serial_num }}</td>
       </tr>
     </tbody>
   </table>
@@ -29,7 +35,7 @@
 
 <script>
 export default {
-  name: 'Mytable',
+  name: 'Mytable1',
   props: {
     name: String,
     data: Object
@@ -90,5 +96,10 @@ export default {
   @import '../../_less/component/animation';
   .sort{
     cursor:pointer
+  }
+  .thumb{
+    border-radius: 50%;
+    height: 96px;
+    width: 96px;
   }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <table id="myTable1" class="mui-table mui-table--bordered">
+  <table id="myTable" class="mui-table mui-table--bordered">
     <thead>
       <tr>
         <!--<th v-for="column in data['column']">{{ column }}</th>-->
@@ -21,7 +21,7 @@
         <td style="width:20%"><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
         <td style="width:15%">
             <a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">
-                <img v-bind:src= "item.start_url" alt="{{ item.title }}" height="140px" width="140px"></img>
+                <img v-bind:src= "item.start_url" alt="{{ item.title }}" class="thumb"></img>
             </a>
         </td>
         <td style="width:8%">{{ item.week_prews }}</td>
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: 'Mytable1',
+  name: 'Mytable',
   props: {
     name: String,
     data: Object
@@ -96,5 +96,10 @@ export default {
   @import '../../_less/component/animation';
   .sort{
     cursor:pointer
+  }
+  .thumb{
+    border-radius: 50%;
+    height: 96px;
+    width: 96px;
   }
 </style>
