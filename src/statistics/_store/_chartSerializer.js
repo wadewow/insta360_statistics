@@ -2116,7 +2116,7 @@ export default {
 
     const total = []
     for (var k in y) {
-      total.push(_.assign({'name': y[k]['name'], 'vlaue': '总计：' + _.sum(y[k]['data']), 'comment': '新增：' + (_.last(y[k]['data']) - _.head(y[k]['data']))}))
+      total.push(_.assign({'name': y[k]['name'], 'vlaue': '总计：' + _.last(y[k]['data']), 'comment': '新增：' + (_.last(y[k]['data']) - _.head(y[k]['data']))}))
     }
 
     return {
