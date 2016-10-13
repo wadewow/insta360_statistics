@@ -1655,7 +1655,7 @@ export default {
       title: {
         text: '店铺流量走势',
         x: 'left',
-        y: 30
+        y: 90
       },
       tooltip: {
         trigger: 'axis',
@@ -1682,15 +1682,15 @@ export default {
           // restore: { show: true },
           saveAsImage: { show: true }
         },
-        y: 30
+        y: 60
       },
       legend: {
         x: 'center',
         data: area,
-        itemWidth: 5,
-        top: -3,
-        itemGap: 3,
-        itemHeight: 10
+        itemWidth: 25,
+        top: -5,
+        itemGap: 20,
+        itemHeight: 16
         // selected: { 'PC端流量': false, '手机端流量': false }
       },
       xAxis: {
