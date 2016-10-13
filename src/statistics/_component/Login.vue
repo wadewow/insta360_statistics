@@ -57,8 +57,8 @@ export default {
         }
         var powerJson = JSON.stringify(store.state.userInfo.power)
         document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
-        location.reload()
         router.go('/chart/nano_active')
+        location.reload()
         return
       }
       const query = {
