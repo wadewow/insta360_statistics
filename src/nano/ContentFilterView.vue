@@ -34,6 +34,12 @@
     <div class="mui-radio">
         <label><input type="radio" name="type" v-model='type' value="album" @click="queryType('album')">图集</label>
     </div>
+    <div class="mui-checkbox">
+      <label>
+        <input type="checkbox" v-model='daily' value="false" @click="queryDaily()">
+          每日精选
+      </label>
+    </div>
     </div>
     </div>
 
@@ -111,7 +117,8 @@ export default {
       button3: '',
       button4: '',
       button5: '',
-      tname: 'content_filter'
+      tname: 'content_filter',
+      daily: false
     }
   },
 
@@ -127,7 +134,7 @@ export default {
     this.pageSize = 10
     this.updateColor()
     this.skip = ''
-
+    this.daily = false
     const query = {
     }
     store.dispatch('LIST_UPDATE', 'location_share', query)
@@ -205,6 +212,11 @@ export default {
       this.page = 1
       this.query()
     },
+    queryDaily () {
+      this.daily = !this.daily
+      this.page = 1
+      this.query()
+    },
     sort (val) {
       this.page = 1
       this.query()
@@ -217,7 +229,8 @@ export default {
         page_number: this.page,
         query_type: this.type,
         query_order: this.order,
-        page_size: this.pageSize
+        page_size: this.pageSize,
+        daily: this.daily
       }
       store.dispatch('TABLE_UPDATE', this.tname, query)
       this.keepSame()
@@ -269,6 +282,7 @@ export default {
       this.order = 'time_desc'
       this.type = 'all'
       this.page = 1
+      this.daily = false
       const query = {
         search_location: this.location,
         start_time: this.start,
@@ -276,7 +290,8 @@ export default {
         page_size: this.pageSize,
         query_order: this.order,
         query_type: this.type,
-        page_number: this.page
+        page_number: this.page,
+        daily: this.daily
       }
       store.dispatch('TABLE_UPDATE', this.tname, query)
       this.keepSame()
@@ -332,6 +347,9 @@ export default {
     }*/
     .mui-radio {
       display:inline;
+      margin-left:10px;
+    }
+    .mui-checkbox {
       margin-left:10px;
     }
   }

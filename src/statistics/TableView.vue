@@ -20,7 +20,7 @@
     </div>
     </div>
     <div class="mui-col-md-2" style="min-width:190px;">
-      <div class="" style="display:block;height:50px;padding-top:10px">
+    <div class="" style="display:block;height:50px;padding-top:10px">
     <div class="mui-radio">
         <label><input type="radio" name="type" value="all" v-model='type' checked @click="queryType('all')">全部</label>
     </div>
@@ -29,6 +29,12 @@
    </div>
     <div class="mui-radio">
         <label><input type="radio" name="type" v-model='type' value="img" @click="queryType('img')">图片</label>
+   </div>
+   <div class="mui-checkbox">
+      <label>
+        <input type="checkbox" v-model='daily' value="false" @click="queryDaily()">
+          每日精选
+      </label>
    </div>
    </div>
     </div>
@@ -101,7 +107,8 @@ export default {
       pageSize: 10,
       start: '',
       end: '',
-      skip: ''
+      skip: '',
+      daily: false
     }
   },
 
@@ -116,6 +123,7 @@ export default {
     this.pageSize = 10
     this.updateColor()
     this.skip = ''
+    this.daily = false
     const query = {
     }
     store.dispatch('LIST_UPDATE', 'share_locations', query)
@@ -197,6 +205,11 @@ export default {
       this.page = 1
       this.query()
     },
+    queryDaily () {
+      this.daily = !this.daily
+      this.page = 1
+      this.query()
+    },
     sort (val) {
       // alert(this.order)
       // this.order = val
@@ -212,7 +225,8 @@ export default {
         page_number: this.page,
         query_type: this.type,
         query_order: this.order,
-        page_size: this.pageSize
+        page_size: this.pageSize,
+        daily: this.daily
       }
       store.dispatch('TABLE_UPDATE', tname, query)
       this.keepSame()
@@ -266,6 +280,7 @@ export default {
       this.order = 'time_desc'
       this.type = 'all'
       this.page = 1
+      this.daily = false
       const tname = to.params.tname
       const query = {
         search_location: this.location,
@@ -274,7 +289,8 @@ export default {
         page_size: this.pageSize,
         query_order: this.order,
         query_type: this.type,
-        page_number: this.page
+        page_number: this.page,
+        daily: this.daily
       }
       store.dispatch('TABLE_UPDATE', tname, query)
       this.keepSame()
@@ -324,6 +340,9 @@ export default {
     }*/
     .mui-radio {
       display:inline;
+      margin-left:10px;
+    }
+    .mui-checkbox {
       margin-left:10px;
     }
   }
