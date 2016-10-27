@@ -18,7 +18,7 @@
         <!--<td v-for="i in item">{{ i }}</td>-->
         <td style="width:6%">{{ item.type }}</td>
         <td style="width:11%">{{ item.share_location }}</td>
-        <td style="width:20%"><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
+        <td style="width:20%"><i v-if="item.flag==1" class="iconfont">&#xe60f;</i><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
         <td style="width:15%">
             <a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">
                 <img v-bind:src= "item.start_url" alt="{{ item.title }}" class="thumb"></img>

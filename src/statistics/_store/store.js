@@ -156,7 +156,7 @@ const apiQueryTable = (path, query) => {
 const apiQueryTable1 = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
-    console.log(res)
+    // console.log(res)
     state.table1.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
   }, (res) => {
     // error callback

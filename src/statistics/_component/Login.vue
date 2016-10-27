@@ -57,8 +57,8 @@ export default {
         }
         var powerJson = JSON.stringify(store.state.userInfo.power)
         document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
-        location.reload()
         router.go('/chart/nano_active')
+        location.reload()
         return
       }
       const query = {
@@ -82,8 +82,8 @@ export default {
           document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
           lifeTime.setTime(lifeTime.getTime() - 1)
           document.cookie = 'nav=' + ';expires=' + lifeTime.toUTCString()
-          location.reload()
           router.go('/chart/nano_active')
+          location.reload()
         } else {
           store.state.isLogin = false
           this.tip = '账号或密码错误！'

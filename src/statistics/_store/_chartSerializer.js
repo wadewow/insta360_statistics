@@ -46,6 +46,22 @@ export default {
       y_week.push(sum_abroad + sum_native)
       x_week[k] = x_week[k].substring(5) + '~' + moment(x_week[k]).add(num - 1, 'days').format('MM-DD')
     }
+
+    if (x_week.length === 0 && x.length !== 0) {
+      const num = x.length
+      x_week.push(x[0].substring(5) + '~' + x[num - 1].substring(5))
+      sum_native = 0
+      sum_abroad = 0
+      for (count = 0; count < num; count++) {
+        date = moment(x[0]).add(count, 'days').format('YYYY-MM-DD')
+        sum_native += data[date]['native']
+        sum_abroad += data[date]['abroad']
+      }
+      y_week_native.push(sum_native)
+      y_week_abroad.push(sum_abroad)
+      y_week.push(sum_abroad + sum_native)
+    }
+
     for (var j in x) {
       x[j] = x[j].substring(5)
     }
@@ -76,6 +92,7 @@ export default {
       },
       tooltip: {
         trigger: 'axis',
+        // zlevel: 1,
         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
           type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
         },
@@ -83,10 +100,14 @@ export default {
           var sum = 0
           var res = params[0].name
           for (var i = 0, l = params.length; i < l; i++) {
-            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+            // console.log(params[i])
+            if (params[i].seriesName === '周激活数量') {
+              continue
+            }
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + (params[i].value === undefined ? '-' : params[i].value)
             sum += parseInt(params[i].value, 10)
           }
-          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部激活量' + ' : ' + sum
+          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部激活量' + ' : ' + (isNaN(sum) ? '-' : sum)
           return res
         }
       },
@@ -147,14 +168,18 @@ export default {
           type: 'line',
           data: y_native,
           stack: 'all',
-          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          xAxisIndex: 0,
+          yAxisIndex: 0
         },
         {
           name: '国外激活数量',
           type: 'line',
           data: y_abroad,
           stack: 'all',
-          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          xAxisIndex: 0,
+          yAxisIndex: 0
         }]
     }
   },
@@ -194,10 +219,10 @@ export default {
           var sum = 0
           var res = params[0].name
           for (var i = 0, l = params.length; i < l; i++) {
-            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + (params[i].value === undefined ? '-' : params[i].value)
             sum += parseInt(params[i].value, 10)
           }
-          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部数量' + ' : ' + sum
+          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部数量' + ' : ' + (isNaN(sum) ? '-' : sum)
           return res
         }
       },
@@ -371,10 +396,10 @@ export default {
           var sum = 0
           var res = params[0].name
           for (var i = 0, l = params.length; i < l; i++) {
-            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + (params[i].value === undefined ? '-' : params[i].value)
             sum += parseInt(params[i].value, 10)
           }
-          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '总浏览量' + ' : ' + sum
+          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '总浏览量' + ' : ' + (isNaN(sum) ? '-' : sum)
           return res
         }
       },
@@ -1630,7 +1655,7 @@ export default {
       title: {
         text: '店铺流量走势',
         x: 'left',
-        y: 30
+        y: 90
       },
       tooltip: {
         trigger: 'axis',
@@ -1641,10 +1666,10 @@ export default {
           var sum = 0
           var res = params[0].name
           for (var i = 0, l = params.length; i < l; i++) {
-            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + (params[i].value === undefined ? '-' : params[i].value)
             sum += parseInt(params[i].value, 10)
           }
-          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部' + ' : ' + sum
+          res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部' + ' : ' + (isNaN(sum) ? '-' : sum)
           return res
         }
       },
@@ -1657,15 +1682,15 @@ export default {
           // restore: { show: true },
           saveAsImage: { show: true }
         },
-        y: 30
+        y: 60
       },
       legend: {
         x: 'center',
         data: area,
-        itemWidth: 5,
-        top: -3,
-        itemGap: 3,
-        itemHeight: 10
+        itemWidth: 25,
+        top: -5,
+        itemGap: 20,
+        itemHeight: 16
         // selected: { 'PC端流量': false, '手机端流量': false }
       },
       xAxis: {
@@ -1675,88 +1700,7 @@ export default {
       series: _series
     }
   },
-  // buylink_store_trends: data => {
 
-  //   const x = []
-  //   const y_pc = []
-  //   const y_mobile = []
-  //   const y_all = []
-  //   for (var index in data) {
-  //     x.push(index)
-  //     y_pc.push(data[index]['pc'])
-  //     y_mobile.push(data[index]['mobile'])
-  //     y_all.push(data[index]['all'])
-  //   }
-
-  //   return {
-  //     total: [{
-  //       name: '全部流量',
-  //       value: _.sum(y_all)
-  //     },
-  //     {
-  //       name: 'PC端流量',
-  //       value: _.sum(y_pc)
-  //     },
-  //     {
-  //       name: '手机端流量',
-  //       value: _.sum(y_mobile)
-  //     }
-  //     ],
-  //     title: {
-  //       text: '店铺流量走势',
-  //       x: 'left'
-  //     },
-  //     tooltip: {
-  //       trigger: 'axis',
-  //       axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-  //         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-  //       },
-  //       formatter: function (params, ticket, callback) {
-  //         var sum = 0
-  //         var res = params[0].name
-  //         for (var i = 0, l = params.length; i < l; i++) {
-  //           res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + params[i].value
-  //           sum += parseInt(params[i].value, 10)
-  //         }
-  //         res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部流量' + ' : ' + sum
-  //         return res
-  //       }
-  //     },
-  //     toolbox: {
-  //       show: true,
-  //       feature: {
-  //         // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
-  //         dataView: { show: true, readOnly: false },
-  //         magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
-  //         // restore: { show: true },
-  //         saveAsImage: { show: true }
-  //       }
-  //     },
-  //     legend: {
-  //       x: 'center',
-  //       data: ['PC端流量', '手机端流量']
-  //       // selected: { 'PC端流量': false, '手机端流量': false }
-  //     },
-  //     xAxis: {
-  //       data: x // 横向则将data放到yAxis
-  //     },
-  //     yAxis: {},
-  //     series: [{
-  //       name: 'PC端流量',
-  //       type: 'line',
-  //       data: y_pc,
-  //       stack: 'all',
-  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
-  //     },
-  //     {
-  //       name: '手机端流量',
-  //       type: 'line',
-  //       data: y_mobile,
-  //       stack: 'all',
-  //       itemStyle: {normal: {areaStyle: {type: 'default'}}}
-  //     }]
-  //   }
-  // }
   use_condition: data => {
     const x = []
     const y_active = []
@@ -2172,7 +2116,7 @@ export default {
 
     const total = []
     for (var k in y) {
-      total.push(_.assign({'name': y[k]['name'], 'vlaue': '总计：' + _.sum(y[k]['data']), 'comment': '新增：' + (_.last(y[k]['data']) - _.head(y[k]['data']))}))
+      total.push(_.assign({'name': y[k]['name'], 'vlaue': '总计：' + _.last(y[k]['data']), 'comment': '新增：' + (_.last(y[k]['data']) - _.head(y[k]['data']))}))
     }
 
     return {
@@ -2389,7 +2333,7 @@ export default {
     }
   },
   sales_status: data => {
-    console.log(data)
+    // console.log(data)
     const locations = data['locations']
     var last_inventory_first = 0
     var last_inventory_lower = 0

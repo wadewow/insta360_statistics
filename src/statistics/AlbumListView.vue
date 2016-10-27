@@ -19,8 +19,16 @@
     <label>选择国家</label>
     </div>
     </div>
+    <div class="mui-col-md-1">
+    <div class="mui-checkbox">
+      <label>
+        <input type="checkbox" v-model='daily' value="false" @click="queryDaily()">
+          每日精选
+      </label>
+    </div>
+    </div>
 
-    <div class="mui-col-md-4" style="min-width:235px">
+    <div class="mui-col-md-3" style="min-width:235px">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -87,7 +95,8 @@ export default {
       pageSize: 10,
       start: '',
       end: '',
-      skip: ''
+      skip: '',
+      daily: false
     }
   },
 
@@ -101,6 +110,7 @@ export default {
     this.pageSize = 10
     this.updateColor()
     this.skip = ''
+    this.daily = false
     const query = {
     }
     store.dispatch('LIST_UPDATE', 'share_locations', query)
@@ -141,6 +151,11 @@ export default {
       this.page = 1
       store.state.startTime = this.start
       store.state.endTime = this.end
+      this.query()
+    },
+    queryDaily () {
+      this.daily = !this.daily
+      this.page = 1
       this.query()
     },
     queryPage () {
@@ -191,7 +206,8 @@ export default {
         end_time: this.end,
         page_number: this.page,
         query_order: this.order,
-        page_size: this.pageSize
+        page_size: this.pageSize,
+        daily: this.daily
       }
       store.dispatch('TABLE_UPDATE', tname, query)
       this.keepSame()
@@ -244,6 +260,7 @@ export default {
       this.pagesize = 10
       this.order = 'time_desc'
       this.page = 1
+      this.daily = false
       const tname = to.params.tname
       const query = {
         search_location: this.location,
@@ -251,7 +268,8 @@ export default {
         end_time: this.end,
         page_size: this.pageSize,
         query_order: this.order,
-        page_number: this.page
+        page_number: this.page,
+        daily: this.daily
       }
       store.dispatch('TABLE_UPDATE', tname, query)
       this.keepSame()
@@ -299,10 +317,6 @@ export default {
     /*.period {
       display:inline;
     }*/
-    .mui-radio {
-      display:inline;
-      margin-left:10px;
-    }
   }
   .skip {
     width:35px
