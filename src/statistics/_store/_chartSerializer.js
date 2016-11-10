@@ -78,12 +78,12 @@ export default {
       },
       {
         name: '国内激活量',
-        value: '大陆：' + (_.sum(y_native) - _.sum(y_special_region)),
-        comment: '港澳台：' + _.sum(y_special_region)
+        value: _.sum(y_native)
       },
       {
         name: '国外激活量',
-        value: _.sum(y_abroad)
+        value: '其他：' + (_.sum(y_abroad) - _.sum(y_special_region)),
+        comment: '港澳台：' + _.sum(y_special_region)
       }
       ],
       title: {
@@ -615,12 +615,12 @@ export default {
       },
         {
           name: '国内激活量',
-          value: '大陆：' + (total_native - special_region_total),
-          comment: '港澳台：' + special_region_total
+          value: total_native
         },
         {
           name: '国外激活量',
-          value: total_abroad
+          value: '其他：' + (total_abroad - special_region_total),
+          comment: '港澳台：' + special_region_total
         }
       ],
       top: {
