@@ -36,9 +36,6 @@
       <button @click="queryDate" class="mui-btn mui-btn--raised text-right">查询</button>
     </div>
   </div>
-<div class="mui-container-fluid">
-    <block :items="data"></block>
-</div>
   <chart :name="name" :data="data"></chart>
 <div class="mui-container-fluid">
 <div class="mui-row">
@@ -71,7 +68,7 @@
       </thead>
       <tbody>
         <tr v-for="item in data1['series']">
-          <td>{{ item.shop }}</td>
+          <td><a href="#!/store_detail/store_detail/{{ item.store_id }}">{{ item.shop }}</a></td>
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.sales }}</td>

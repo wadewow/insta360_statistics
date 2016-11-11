@@ -21,6 +21,7 @@
     "market_environment": "百度指数",
     "competitor_data": "30天销量/评论",
     "taobao_detail": "30天销量/评论",
+    "store_detail": "淘宝店30天销量",
     "error_condition": "错误异常",
     "sales_status": "销售情况",
     "electronic_sales": "自有电商渠道",

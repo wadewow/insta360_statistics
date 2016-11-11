@@ -134,7 +134,6 @@ const state = {
 const apiQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
-    // console.log(res)
     state.chart.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body), query.location)
     // console.log(state.chart.data)
   }, (res) => {

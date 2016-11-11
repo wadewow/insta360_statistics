@@ -474,7 +474,6 @@ export default {
           mark: { show: true },
           // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
           dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
           // restore: { show: true },
           saveAsImage: { show: true }
         }
@@ -1230,6 +1229,61 @@ export default {
       page_total: 1,
       column: column,
       series: data['data']
+    }
+  },
+  store_detail: (data, location) => {
+    const store = data['store']
+    data = data['data']
+    const x = []
+    const y = []
+
+    for (var index in data) {
+      x.push(index)
+      y.push(data[index])
+    }
+
+    return {
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: [{
+      }],
+      title: {
+        text: store + ' 淘宝店销量',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
+          dataView: { show: true, readOnly: false },
+          // restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      calculable: true,
+      legend: {
+        x: 'center',
+        data: [store + ' 淘宝店销量']
+      },
+      xAxis: {
+        data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: [{
+        name: store + ' 淘宝店销量',
+        type: 'line',
+        data: y,
+        itemStyle: {normal: {areaStyle: {type: 'default'}}}
+      }]
     }
   },
   nano_store: data => {
