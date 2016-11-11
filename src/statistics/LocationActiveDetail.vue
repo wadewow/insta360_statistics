@@ -32,7 +32,27 @@
 <div class="mui-container-fluid">
     <block :items="data"></block>
 </div>
+ <div class="mui-row">
+<div class="mui-col-md-10">
   <chart :name="name" :data="data"></chart>
+</div>
+<div class="mui-col-md-2">
+  <div style="overflow-y:auto;max-height:800px">
+      <table class="mui-table mui-table--bordered table">
+      <thead>
+        <tr>
+            <th>序列号</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in serialNumbers">
+            <td>{{ item }}</td>
+        </tr>
+        </tbody>
+          </table>
+  </div>
+          </div>
+          </div>
   </div>
 </template>
 <script>
@@ -40,7 +60,7 @@ import Chart from './_component/Chart'
 import Block from './_component/Block'
 import store from './_store/store'
 import moment from 'moment'
-import { getChartName, getChartData, getButtonState } from './_store/getters'
+import { getChartName, getChartData, getButtonState, getSerialNumbers } from './_store/getters'
 
 export default {
   name: 'LocationActiveDetail',
@@ -56,7 +76,8 @@ export default {
     getters: {
       name: getChartName,
       data: getChartData,
-      buttonState: getButtonState
+      buttonState: getButtonState,
+      serialNumbers: getSerialNumbers
     }
   },
 

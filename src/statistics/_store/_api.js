@@ -82,6 +82,10 @@ export default {
     url: baseUrl + 'api/share/month_share_trends/',
     serialize: 'content_production'
   },
+  location_active_list: {
+    url: baseUrl + 'api/active/area_active_list',
+    serialize: 'location_active_list'
+  },
   landing_page: {
     url: baseUrl + 'api/LandingPage',
     serialize: 'landing_page'

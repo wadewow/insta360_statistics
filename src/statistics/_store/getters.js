@@ -30,3 +30,4 @@ export const getPower = state => state.userInfo.power
 export const getNav = state => state.userInfo.nav
 export const getUsername = state => state.userInfo.username
 export const getLocations = state => state.locations
+export const getSerialNumbers = state => state.serial_numbers

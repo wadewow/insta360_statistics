@@ -43,6 +43,7 @@ const state = {
     ]
   },
   locations: [],
+  serial_numbers: [],
   posts: {
     page: 1,
     list: [
@@ -217,6 +218,18 @@ const locationsQuery = (path, query) => {
     console.log(res)
   })
 }
+
+const serialNumbersQuery = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.serial_numbers = JSON.parse(res.body)
+    // console.log(state.chart.data)
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数
 const mutations = {
   POSTS_NEXT (state, offset) {
@@ -236,6 +249,9 @@ const mutations = {
   CHART_UPDATE (state, cname, query) {
     state.chart.name = cname
     apiQuery(cname, query)
+    if (cname === 'location_active_detail') {
+      serialNumbersQuery('location_active_list', query)
+    }
   },
   TABLE_UPDATE (state, tname, query) {
     state.table.name = tname
