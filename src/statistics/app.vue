@@ -133,13 +133,29 @@
         </ul>
       </li>
       <li>
+        <template v-if="power['nano_media']">
+          <strong @click="toggleCollapse">新媒体监控</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">新媒体监控</strong>
+        </template>
+        <ul class="nav" show="{{ nav[6] }}">
+          <li>
+            <a href="#!/chart/fans_trend" @click="click">粉丝走势</a>
+          </li>
+          <!--<li>
+            <a href="" @click="click">文章监控</a>
+          </li>-->
+        </ul>
+      </li>
+      <li>
         <template v-if="power['nano_history']">
           <strong @click="toggleCollapse">历史总数</strong>
         </template>
         <template v-else>
           <strong style="cursor: not-allowed;">历史总数</strong>
         </template>
-        <ul class="nav" show="{{ nav[6] }}">
+        <ul class="nav" show="{{ nav[7] }}">
           <li>
             <a href="#!/rest_statistics/rest_statistics" @click="click">历史总数据</a>
           </li>

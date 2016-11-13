@@ -30,9 +30,11 @@ const state = {
       'nano_share': true,
       'nano_use_condition': true,
       'nano_market': true,
+      'nano_media': true,
       'nano_history': true
     },
     nav: [
+      'hide',
       'hide',
       'hide',
       'hide',
