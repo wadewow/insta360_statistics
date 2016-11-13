@@ -20,6 +20,9 @@
           <li>
             <a href="#!/electronic_sales/electronic_sales" @click="click">自有电商渠道</a>
           </li>
+          <li>
+            <a href="http://sales.internal.insta360.com/sales/bi/stores" target="_blank" @click="click">商家销售情况</a>
+          </li>
         </ul>
       </li>
       <li>
