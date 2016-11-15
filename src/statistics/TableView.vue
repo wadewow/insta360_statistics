@@ -219,8 +219,6 @@ export default {
       this.query()
     },
     sort (val) {
-      // alert(this.order)
-      // this.order = val
       this.page = 1
       this.query()
     },

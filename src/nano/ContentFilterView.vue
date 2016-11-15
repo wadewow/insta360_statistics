@@ -11,7 +11,7 @@
         <a id="100" class="mui-btn mui-btn--primary mui-btn--small period {{ button5 }}" @click="queryPeriod(100)">全部</a>
         </div>
     </div>
-    <div class="mui-col-md-2">
+    <div class="mui-col-md-1">
     <div class="mui-select">
     <select v-model="location" @change="queryLocation">
       <option value="">全部</option>
@@ -42,8 +42,13 @@
     </div>
     </div>
     </div>
-
-    <div class="mui-col-md-3" style="min-width:235px">
+    <div class="mui-col-md-2">
+      <div class="mui-textfield right">
+        <label for="serial_number">序列号</label>
+        <input type="text" v-model="serial_number" id="serial_number" placeholder="">
+      </div>
+    </div>
+    <div class="mui-col-md-2" style="min-width:235px">
       <div class="right" style="min-width:235px">
       <div class="mui-textfield right">
         <label for="end_time">To</label>
@@ -118,7 +123,8 @@ export default {
       button4: '',
       button5: '',
       tname: 'content_filter',
-      daily: false
+      daily: false,
+      serial_number: ''
     }
   },
 
@@ -135,6 +141,7 @@ export default {
     this.updateColor()
     this.skip = ''
     this.daily = false
+    this.serial_number = ''
     const query = {
     }
     store.dispatch('LIST_UPDATE', 'location_share', query)
@@ -143,6 +150,7 @@ export default {
   methods: {
     queryLocation () {
       this.page = 1
+      this.serial_number = ''
       this.query()
     },
     queryDate () {
@@ -230,7 +238,8 @@ export default {
         query_type: this.type,
         query_order: this.order,
         page_size: this.pageSize,
-        daily: this.daily
+        daily: this.daily,
+        serial_number: this.serial_number
       }
       store.dispatch('TABLE_UPDATE', this.tname, query)
       this.keepSame()
@@ -291,7 +300,8 @@ export default {
         query_order: this.order,
         query_type: this.type,
         page_number: this.page,
-        daily: this.daily
+        daily: this.daily,
+        serial_number: this.serial_number
       }
       store.dispatch('TABLE_UPDATE', this.tname, query)
       this.keepSame()
