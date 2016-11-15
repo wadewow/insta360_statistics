@@ -41,7 +41,7 @@
     <div class="mui-col-md-2">
       <div class="mui-textfield right">
         <label for="serial_number">序列号</label>
-        <input type="text" v-model="serial_number" id="serial_number" placeholder="">
+        <input type="text" v-model="serial_number" id="serial_number" v-on:keyup.enter="queryDate" placeholder="">
       </div>
     </div>
     <div class="mui-col-md-2" style="min-width:235px">
