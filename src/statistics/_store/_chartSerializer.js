@@ -2,7 +2,7 @@ import moment from 'moment'
 import _ from 'lodash'
 import dict_json from './dictionary.json'
 export default {
-  nano_active: data => {
+  nano_active: (data, location, start_time) => {
     const x = []
     const x_week = []
     const y_native = []
@@ -66,6 +66,14 @@ export default {
       x[j] = x[j].substring(5)
     }
 
+    var comment = '(未加200)'
+    var sum_all = _.sum(y_all)
+    var native_sum = _.sum(y_native)
+    if (start_time <= '2016-06-07') {
+      comment = ''
+      sum_all += 200
+      native_sum += 200
+    }
     return {
       top: {
         native: [],
@@ -73,12 +81,12 @@ export default {
       },
       total: [{
         name: '总激活量',
-        value: _.sum(y_all),
-        comment: '(未加200)'
+        value: sum_all,
+        comment: comment
       },
       {
         name: '国内激活量',
-        value: _.sum(y_native)
+        value: native_sum
       },
       {
         name: '国外激活量',
@@ -495,7 +503,7 @@ export default {
       }]
     }
   },
-  nano_active_map: data => {
+  nano_active_map: (data, location, start_time) => {
     const native_data = data['native']
     const abroad_data = data['abroad']
     const all_data = data['all']
@@ -541,9 +549,9 @@ export default {
       }
       return result
     }
-    const total_all = parseInt(data['all']['total'], 10)
-    const total_native = parseInt(data['native']['total'], 10)
-    const total_abroad = total_all - total_native
+    var total_all = parseInt(data['all']['total'], 10)
+    var total_native = parseInt(data['native']['total'], 10)
+    var total_abroad = total_all - total_native
     const _native_data = getNativeData()
     const _abroad_data = getAbroadData()
     const _native_top = []
@@ -606,11 +614,18 @@ export default {
       data: _abroad_data
     }
 
+    var comment = '(未加200)'
+    if (start_time <= '2016-06-07') {
+      comment = ''
+      total_all += 200
+      total_native += 200
+    }
+
     var option = {
       total: [{
         name: '总激活量',
         value: total_all,
-        comment: '(未加200)'
+        comment: comment
       },
         {
           name: '国内激活量',
