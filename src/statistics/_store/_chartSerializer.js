@@ -66,11 +66,9 @@ export default {
       x[j] = x[j].substring(5)
     }
 
-    var comment = '(未加200)'
     var sum_all = _.sum(y_all)
     var native_sum = _.sum(y_native)
     if (start_time <= '2016-06-07') {
-      comment = ''
       sum_all += 200
       native_sum += 200
     }
@@ -81,8 +79,7 @@ export default {
       },
       total: [{
         name: '总激活量',
-        value: sum_all,
-        comment: comment
+        value: sum_all
       },
       {
         name: '国内激活量',
@@ -614,9 +611,7 @@ export default {
       data: _abroad_data
     }
 
-    var comment = '(未加200)'
     if (start_time <= '2016-06-07') {
-      comment = ''
       total_all += 200
       total_native += 200
     }
@@ -624,8 +619,7 @@ export default {
     var option = {
       total: [{
         name: '总激活量',
-        value: total_all,
-        comment: comment
+        value: total_all
       },
         {
           name: '国内激活量',
