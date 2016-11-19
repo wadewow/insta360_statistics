@@ -15,6 +15,7 @@ import StoreDetail from './StoreDetail'
 import RestStatisticsView from './RestStatisticsView'
 import LandingPageView from './LandingPageView'
 import CompetitorChartView from './CompetitorChartView'
+import SearchIndexView from './SearchIndexView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
 import LinkQueryView from './LinkQueryView'
@@ -81,6 +82,9 @@ router.map({
   },
   '/electronic_sales/:cname': {
     component: ElectronicSalesView
+  },
+  '/search_index/:cname/:source': {
+    component: SearchIndexView
   },
   '/competitor_chart/:cname/:source': {
     component: CompetitorChartView

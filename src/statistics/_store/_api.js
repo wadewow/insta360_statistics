@@ -98,7 +98,7 @@ export default {
     url: baseUrl1 + 'user_distribution/',
     serialize: 'user_distribution'
   },
-  market_environment: {
+  search_index: {
     url: baseUrl1 + 'market_environment/',
     serialize: 'market_environment'
   },
