@@ -9,6 +9,8 @@ export default {
     const y_abroad = []
     const y_special_region = []
     const y_month = []
+    const y_month_native = []
+    const y_month_abroad = []
     const y_all = []
     const y_week_native = []
     const y_week_abroad = []
@@ -20,6 +22,8 @@ export default {
       y_special_region.push(data[index]['special_region'])
       y_all.push(data[index]['all'])
       y_month.push(data[index]['month_total'])
+      y_month_native.push(data[index]['month_native_total'])
+      y_month_abroad.push(data[index]['month_abroad_total'])
     }
     const length = x.length
     var start = moment(x[0]).diff(moment(x[0]).startOf('week'), 'days')
@@ -110,7 +114,7 @@ export default {
           for (var i = 0, l = length; i < l; i++) {
             // console.log(params[i])
             res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + (params[i].value === undefined ? '-' : params[i].value)
-            if (params[i].seriesName === '周激活数量' || params[i].seriesName === '30天激活量') {
+            if (params[i].seriesName === '周激活数量' || params[i].seriesName === '30天激活总量' || params[i].seriesName === '国内30天激活量' || params[i].seriesName === '国外30天激活量') {
               continue
             }
             sum += parseInt(params[i].value, 10)
@@ -134,7 +138,7 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['国内激活数量', '国外激活数量', '周激活数量', '30天激活量']
+        data: ['国内激活数量', '国外激活数量', '周激活数量', '国内30天激活量', '国外30天激活量', '30天激活总量']
         // selected: { '全部激活数量': false }
       },
       xAxis: [{
@@ -175,7 +179,25 @@ export default {
           yAxisIndex: 1
         },
         {
-          name: '30天激活量',
+          name: '国内30天激活量',
+          type: 'line',
+          data: y_month_native,
+          // stack: 'month',
+          // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          xAxisIndex: 0,
+          yAxisIndex: 1
+        },
+        {
+          name: '国外30天激活量',
+          type: 'line',
+          data: y_month_abroad,
+          // stack: 'month',
+          // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          xAxisIndex: 0,
+          yAxisIndex: 1
+        },
+        {
+          name: '30天激活总量',
           type: 'line',
           data: y_month,
           xAxisIndex: 0,
@@ -459,11 +481,13 @@ export default {
   location_active_detail: (data, location) => {
     const x = []
     const y = []
+    const y_month = []
     var total = 0
 
     for (var index in data) {
       x.push(data[index]['day_time'])
       y.push(data[index]['active_nums'])
+      y_month.push(data[index]['month_total'])
       total = total + parseInt(data[index]['active_nums'], 10)
     }
 
@@ -499,18 +523,26 @@ export default {
       calculable: true,
       legend: {
         x: 'center',
-        data: [location + '地区激活数量']
+        data: [location + '地区激活数量', '30天激活量']
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
       },
-      yAxis: {},
+      yAxis: [{name: '日激活'}, {name: '30天激活'}],
       series: [{
         name: location + '地区激活数量',
         type: 'line',
         data: y,
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      }]
+        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+        yAxisIndex: 0
+      },
+      {
+        name: '30天激活量',
+        type: 'line',
+        data: y_month,
+        yAxisIndex: 1
+      }
+      ]
     }
   },
   nano_active_map: (data, location, start_time) => {
