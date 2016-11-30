@@ -8,6 +8,7 @@ export default {
     const y_native = []
     const y_abroad = []
     const y_special_region = []
+    const y_month = []
     const y_all = []
     const y_week_native = []
     const y_week_abroad = []
@@ -18,6 +19,7 @@ export default {
       y_abroad.push(data[index]['abroad'])
       y_special_region.push(data[index]['special_region'])
       y_all.push(data[index]['all'])
+      y_month.push(data[index]['month_total'])
     }
     const length = x.length
     var start = moment(x[0]).diff(moment(x[0]).startOf('week'), 'days')
@@ -104,13 +106,17 @@ export default {
         formatter: function (params, ticket, callback) {
           var sum = 0
           var res = params[0].name
-          for (var i = 0, l = params.length; i < l; i++) {
+          var length = params.length
+          for (var i = 0, l = length; i < l; i++) {
             // console.log(params[i])
-            if (params[i].seriesName === '周激活数量') {
+            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + (params[i].value === undefined ? '-' : params[i].value)
+            if (params[i].seriesName === '周激活数量' || params[i].seriesName === '30天激活量') {
               continue
             }
-            res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>' + params[i].seriesName + ' : ' + (params[i].value === undefined ? '-' : params[i].value)
             sum += parseInt(params[i].value, 10)
+          }
+          if (length === 1) {
+            return res
           }
           res += '<br/>' + '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px"></span>' + '全部激活量' + ' : ' + (isNaN(sum) ? '-' : sum)
           return res
@@ -128,7 +134,7 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['国内激活数量', '国外激活数量', '周激活数量']
+        data: ['国内激活数量', '国外激活数量', '周激活数量', '30天激活量']
         // selected: { '全部激活数量': false }
       },
       xAxis: [{
@@ -137,7 +143,7 @@ export default {
       {
         data: x_week
       }],
-      yAxis: [{name: '日激活'}, {name: '周激活'}],
+      yAxis: [{name: '日激活'}, {name: '周/月激活'}],
       series: [
         // {
         //   name: '全部激活数量',
@@ -166,6 +172,13 @@ export default {
           type: 'line',
           data: y_week,
           xAxisIndex: 1,
+          yAxisIndex: 1
+        },
+        {
+          name: '30天激活量',
+          type: 'line',
+          data: y_month,
+          xAxisIndex: 0,
           yAxisIndex: 1
         },
         {
