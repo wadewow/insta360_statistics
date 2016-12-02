@@ -20,7 +20,8 @@
         <td style="width:11%">{{ item.share_location }}</td>
         <td style="width:20%"><i v-if="item.flag==1" class="iconfont">&#xe60f;</i><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
         <td style="width:15%">
-            <a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">
+            <!--<a href="{{ item.start_url|replace }}" title="{{ item.title }}" target="_blank">-->
+            <a :href="replace(item.type, item.start_url, item.page_url)" title="{{ item.title }}" target="_blank">
                 <img v-bind:src= "item.start_url" alt="{{ item.title }}" class="thumb"></img>
             </a>
         </td>
@@ -48,6 +49,14 @@ export default {
     }
   },
   methods: {
+    replace (type, img, page) {
+      if (type === '图片') {
+        var res = img.replace('http://nano.insta360.com/public/media/thumb', 'http://insta360-hangzhou.oss-cn-hangzhou.aliyuncs.com/nano/private/media/jpg').replace('start.jpg', '.jpg')
+        return res
+      }else {
+        return page
+      }
+    },
     sort (v) {
       var val = ''
       if (v === 'time') {
