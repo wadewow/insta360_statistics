@@ -6,7 +6,7 @@
         <th style="width:6%;min-width:48px;font-weight:500">类型</th>
         <th style="width:11%;min-width:80px;font-weight:500;min-width:80px">地理位置</th>
         <th style="width:20%;min-width:50px;font-weight:500">标题</th>
-        <th style="width:15%;min-width:50px;font-weight:500">缩略图</th>
+        <th style="width:15%;min-width:50px;font-weight:500">缩略图（点击查看原图）</th>
         <th class="sort" style="width:8%;min-width:75px" id="week_prew" @click="sort('week_prew')" value="0">{{ week_prew }}</th>
         <th class="sort" style="width:8%;min-width:75px" id="view" @click="sort('view')" value="0">{{ view }}</th>
         <th class="sort" style="width:16%;min-width:55px" id="time" @click="sort('time')" value="1">{{ time }}</th>
