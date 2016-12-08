@@ -2201,18 +2201,17 @@ export default {
 
     var count = 0
     // var _sum = 0
+    const last_key = _.findLastKey(data)
+    for (var i in data[last_key]) {
+      area.push(i)
+      var temp = []
+      y.push(_.assign({'name': i, 'data': temp}))
+    }
     for (var index in data) {
       x.push(index)
-      if (count === 0) {
-        for (var i in data[index]) {
-          area.push(i)
-          var temp = []
-          y.push(_.assign({'name': i, 'data': temp}))
-        }
-      }
       for (var j in y) {
         // _sum += data[index][y[j]['name']]
-        y[j]['data'].push(data[index][y[j]['name']])
+        y[j]['data'].push(isNaN(data[index][y[j]['name']]) ? 0 : data[index][y[j]['name']])
       }
       count++
     }
