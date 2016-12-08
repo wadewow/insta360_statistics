@@ -1,7 +1,4 @@
 <template>
-  <!--<div>
-    <simpletable :name="name" :data="data"></simpletable>
-  </div>-->
     <div>
     <table style="width:300px" class="mui-table mui-table--bordered">
       <thead>
@@ -38,7 +35,6 @@
 </template>
 
 <script>
-import Simpletable from './_component/Simpletable'
 import store from './_store/store'
 import { getTableName, getTableData } from './_store/getters'
 
@@ -46,7 +42,6 @@ export default {
   name: 'RestStatisticsView',
 
   components: {
-    Simpletable
   },
 
   store: store,

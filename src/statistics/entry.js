@@ -19,6 +19,9 @@ import SearchIndexView from './SearchIndexView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
 import LinkQueryView from './LinkQueryView'
+import SupportArticleView from './support/SupportArticleView'
+import FeebackListView from './support/FeebackListView'
+import SearchView from './support/SearchView'
 import Router from 'vue-router'
 import echarts from '../_directives/echarts'
 import store from './_store/store'
@@ -91,6 +94,15 @@ router.map({
   },
   '/link_query/:tname': {
     component: LinkQueryView
+  },
+  '/support/article/:tname': {
+    component: SupportArticleView
+  },
+  '/support/feedback/:tname/:post_id': {
+    component: FeebackListView
+  },
+  '/support/search/:tname': {
+    component: SearchView
   }
 })
 

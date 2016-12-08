@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import Mytable from './_view/Mytable'
 import store from './_store/store'
 import moment from 'moment'
 import { getTableName4, getTableData4, getButtonState } from './_store/getters'
@@ -70,7 +69,6 @@ export default {
   name: 'TableView',
 
   components: {
-    Mytable
   },
 
   store: store,

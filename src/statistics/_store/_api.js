@@ -90,6 +90,26 @@ export default {
     url: baseUrl + 'api/LandingPage',
     serialize: 'landing_page'
   },
+  tutorial: {
+    url: baseUrl + 'api/support/getSupportHelpInfo?type=2',
+    serialize: 'support_table'
+  },
+  faq: {
+    url: baseUrl + 'api/support/getSupportHelpInfo?type=1',
+    serialize: 'support_table'
+  },
+  feedback_tutorial: {
+    url: baseUrl + 'api/support/getSupportFeedBack',
+    serialize: 'feedback_table'
+  },
+  feedback_faq: {
+    url: baseUrl + 'api/support/getSupportFeedBack',
+    serialize: 'feedback_table'
+  },
+  search: {
+    url: baseUrl + 'api/support/getsearchInfo',
+    serialize: 'search'
+  },
   use_condition: {
     url: baseUrl1 + 'use_condition/',
     serialize: 'use_condition'

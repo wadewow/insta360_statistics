@@ -28,5 +28,10 @@
     "link_query": "导流链接查询",
     "content_production": "内容生产",
     "landing_page": "新LandingPage点击购买情况",
-    "fans_trend": "粉丝走势"
+    "fans_trend": "粉丝走势",
+    "tutorial": "使用教程",
+    "faq": "常见问题",
+    "feedback_tutorial": "使用教程 / 问题反馈",
+    "feedback_faq": "常见问题 / 问题反馈",
+    "search": "搜索页"
 }

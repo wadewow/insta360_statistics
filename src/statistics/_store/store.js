@@ -130,6 +130,36 @@ const state = {
       series: [],
       total: 1
     }
+  },
+  support_table: {
+    name: 'support_table',
+    data: {
+      current_page: 1,
+      page_total: 1,
+      column: [],
+      series: [],
+      total: 1
+    }
+  },
+  feedback_table: {
+    name: 'feedback_table',
+    data: {
+      current_page: 1,
+      page_total: 1,
+      column: [],
+      series: [],
+      total: 1
+    }
+  },
+  search_table: {
+    name: 'search_table',
+    data: {
+      current_page: 1,
+      page_total: 1,
+      column: [],
+      series: [],
+      total: 1
+    }
   }
 }
 
@@ -209,6 +239,41 @@ const apiQueryTable5 = (path, query) => {
   })
 }
 
+const apiQuerySupportTable = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.support_table.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+    state.support_table.name = path
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
+const apiQuerySearchTable = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.search_table.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
+const apiQueryFeedbackTable = (path, query) => {
+  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+    // success callback
+    // console.log(res)
+    state.feedback_table.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
+    state.feedback_table.name = path.substring(9)
+  }, (res) => {
+    // error callback
+    console.log(res)
+  })
+}
+
 const locationsQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
@@ -270,6 +335,12 @@ const mutations = {
       apiQueryTable4(tname, query)
     } else if (tname === 'taobao_detail') {
       apiQueryTable5(tname, query)
+    } else if (tname === 'tutorial' || tname === 'faq') {
+      apiQuerySupportTable(tname, query)
+    } else if (tname === 'feedback_tutorial' || tname === 'feedback_faq') {
+      apiQueryFeedbackTable(tname, query)
+    } else if (tname === 'search') {
+      apiQuerySearchTable(tname, query)
     }else {
       state.table.data = ChartData[tname]
     }

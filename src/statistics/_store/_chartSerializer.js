@@ -1275,6 +1275,36 @@ export default {
       series: data['data']
     }
   },
+  support_table: data => {
+    const column = ['序号', '文章标题', '浏览数', '是否有帮助（是/否）', '问题反馈']
+    return {
+      current_page: data['current_page'],
+      page_total: data['page_total'],
+      total: data['total'],
+      column: column,
+      series: data['data']
+    }
+  },
+  feedback_table: data => {
+    const column = ['时间', '邮箱地址', '问题反馈']
+    return {
+      current_page: data['current_page'],
+      page_total: data['page_total'],
+      total: data['total'],
+      column: column,
+      series: data['data']
+    }
+  },
+  search: data => {
+    const column = ['序号', '时间', '关键词', '邮箱地址', '问题反馈']
+    return {
+      current_page: data['current_page'],
+      page_total: data['page_total'],
+      total: data['total'],
+      column: column,
+      series: data['data']
+    }
+  },
   taobao_detail: data => {
     const column = ['店铺', '商品名', '价格', '近30天销量', '链接', '地区', '淘宝/天猫']
     return {
