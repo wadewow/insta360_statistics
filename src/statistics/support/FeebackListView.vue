@@ -1,9 +1,11 @@
 <template>
   <div>
-    <div class="mui-row">
-      <div class="mui-col-md-10"></div>
+    <div class="mui-row" style="margin-top:10px">
+      <div class="mui-col-md-10">
+        <div class="mui--text-title"><strong>{{ data.title }}</strong></div>
+      </div>
       <div class="mui-col-md-2">
-        <a href="#!/support/article/{{ name }}" class="mui-btn mui-btn--raised right">返回</a>
+        <a href="#!/support/article/{{ name }}?back=true" class="mui-btn mui-btn--raised right">返回</a>
       </div>
     </div>
     <div>
@@ -22,17 +24,17 @@
     </tbody>
     </table>
   <div class="mui-container-fluid page_tool">
-  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='firstPage'>首页</button>
-  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='prevPage'>上页</button>
-  <span class="currentPage">{{ data.current_page }}</span> / <span class="totalPage">{{ data.page_total }}</span>
-  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='nextPage'>下页</button>
-  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='lastPage'>尾页</button>
-  <span>跳转到第</span>
-  <input id="skip" class="skip" type="text" v-model="skip" v-on:keyup.enter="queryPage"></input>
-  <span>页</span>
-  <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='queryPage'>GO</button>
-  <span> 总计 </span><span>{{ data.total }}</span><span> 条</span>
-  <input type="hidden" id="total_page" number value="{{ data.page_total }}"></input>
+    <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='firstPage'>首页</button>
+    <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='prevPage'>上页</button>
+    <span class="currentPage">{{ data.current_page }}</span> / <span class="totalPage">{{ data.page_total }}</span>
+    <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='nextPage'>下页</button>
+    <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='lastPage'>尾页</button>
+    <span>跳转到第</span>
+    <input id="skip" class="skip" type="text" v-model="skip" v-on:keyup.enter="queryPage"></input>
+    <span>页</span>
+    <button class="mui-btn mui-btn--small mui-btn--raised mui-btn--primary" @click='queryPage'>GO</button>
+    <span> 总计 </span><span>{{ data.total }}</span><span> 条</span>
+    <input type="hidden" id="total_page" number value="{{ data.page_total }}"></input>
   </div>
   </div>
   </div>
@@ -150,13 +152,6 @@ export default {
 <style lang="less">
   @import "../../_less/v2/base";
   @import "../../_less/component/animation";
-  .pikaday {
-    overflow: auto;
-    padding: 1em;
-    .mui-textfield {
-      margin-left: 16px;
-    }
-  }
   .skip {
     width:35px
   }

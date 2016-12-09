@@ -38,30 +38,6 @@ export default {
   methods: {
     submit (ev) {
       ev.preventDefault()
-      if (this.username === 'ciel' && this.password === '1122334') {
-        var lifeTime = new Date()
-        this.tip = ''
-        store.state.isLogin = true
-        lifeTime.setTime(lifeTime.getTime() + 1000 * 60 * 60 * 2)
-        store.state.userInfo.username = 'insta360_admin'
-        document.cookie = 'isLogin=' + 'true' + ';expires=' + lifeTime.toUTCString()
-        document.cookie = 'username=' + store.state.userInfo.username + ';expires=' + lifeTime.toUTCString()
-        store.state.userInfo.power = {
-          'nano_sales': true,
-          'nano_activation': true,
-          'nano_link': true,
-          'nano_share': true,
-          'nano_use_condition': true,
-          'nano_market': true,
-          'nano_media': true,
-          'nano_history': true
-        }
-        var powerJson = JSON.stringify(store.state.userInfo.power)
-        document.cookie = 'power=' + powerJson + ';expires=' + lifeTime.toUTCString()
-        router.go('/chart/nano_active')
-        location.reload()
-        return
-      }
       const query = {
         username: this.username,
         password: this.password

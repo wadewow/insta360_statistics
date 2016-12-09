@@ -31,9 +31,11 @@ const state = {
       'nano_use_condition': true,
       'nano_market': true,
       'nano_media': true,
+      'nano_support': true,
       'nano_history': true
     },
     nav: [
+      'hide',
       'hide',
       'hide',
       'hide',
@@ -144,6 +146,7 @@ const state = {
   feedback_table: {
     name: 'feedback_table',
     data: {
+      title: '',
       current_page: 1,
       page_total: 1,
       column: [],
@@ -239,8 +242,8 @@ const apiQueryTable5 = (path, query) => {
   })
 }
 
-const apiQuerySupportTable = (path, query) => {
-  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+const apiQuerySupportTable = (path, query, header) => {
+  Vue.http.get(Api[path].url, { params: query, headers: header }).then((res) => {
     // success callback
     // console.log(res)
     state.support_table.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
@@ -251,8 +254,8 @@ const apiQuerySupportTable = (path, query) => {
   })
 }
 
-const apiQuerySearchTable = (path, query) => {
-  Vue.http.get(Api[path].url, { params: query }).then((res) => {
+const apiQuerySearchTable = (path, query, header) => {
+  Vue.http.get(Api[path].url, { params: query, headers: header }).then((res) => {
     // success callback
     // console.log(res)
     state.search_table.data = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
@@ -320,7 +323,7 @@ const mutations = {
       serialNumbersQuery('location_active_list', query)
     }
   },
-  TABLE_UPDATE (state, tname, query) {
+  TABLE_UPDATE (state, tname, query, header) {
     state.table.name = tname
     state.chart.name = tname
     if (tname === 'share_list' || tname === 'album_list') {
@@ -336,11 +339,11 @@ const mutations = {
     } else if (tname === 'taobao_detail') {
       apiQueryTable5(tname, query)
     } else if (tname === 'tutorial' || tname === 'faq') {
-      apiQuerySupportTable(tname, query)
+      apiQuerySupportTable(tname, query, header)
     } else if (tname === 'feedback_tutorial' || tname === 'feedback_faq') {
       apiQueryFeedbackTable(tname, query)
     } else if (tname === 'search') {
-      apiQuerySearchTable(tname, query)
+      apiQuerySearchTable(tname, query, header)
     }else {
       state.table.data = ChartData[tname]
     }

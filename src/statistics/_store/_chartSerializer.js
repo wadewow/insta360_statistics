@@ -1288,6 +1288,7 @@ export default {
   feedback_table: data => {
     const column = ['时间', '邮箱地址', '问题反馈']
     return {
+      title: data['title'],
       current_page: data['current_page'],
       page_total: data['page_total'],
       total: data['total'],

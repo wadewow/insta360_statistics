@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="mui-row" style="margin-top:10px">
+      <div class="mui-col-md-2">
+        <div class="mui-radio" style="display:inline">
+            <label><input type="radio" name="language" v-model='language' value="cn" checked @click="queryLanguage('cn')">中文</label>
+        </div>
+        <div class="mui-radio" style="display:inline">
+            <label><input type="radio" name="language" v-model='language' value="en" @click="queryLanguage('en')">英文</label>
+        </div>
+      </div>
+      <div class="mui-col-md-10"></div>
+    </div>
     <table class="mui-table mui-table--bordered">
       <thead>
         <tr>
@@ -55,7 +66,8 @@ export default {
     return {
       page: 1,
       pageSize: 20,
-      skip: ''
+      skip: '',
+      language: 'cn'
     }
   },
 
@@ -63,6 +75,7 @@ export default {
     this.page = 1
     this.pageSize = 20
     this.skip = ''
+    this.language = 'cn'
   },
 
   filters: {
@@ -75,6 +88,10 @@ export default {
   },
 
   methods: {
+    queryLanguage (val) {
+      this.language = val
+      this.query()
+    },
     queryPage () {
       var total = document.getElementById('total_page').value
       var val = this.skip
@@ -115,21 +132,26 @@ export default {
         page_number: this.page,
         page_size: this.pageSize
       }
-      store.dispatch('TABLE_UPDATE', tname, query)
+      const header = {
+        lang: this.language
+      }
+      store.dispatch('TABLE_UPDATE', tname, query, header)
     }
   },
 
   route: {
     data ({ to }) {
       this.pagesize = 20
-      // this.type = 'all'
       this.page = 1
       const tname = to.params.tname
       const query = {
         page_size: this.pageSize,
         page_number: this.page
       }
-      store.dispatch('TABLE_UPDATE', tname, query)
+      const header = {
+        lang: this.language
+      }
+      store.dispatch('TABLE_UPDATE', tname, query, header)
     }
   }
 
@@ -139,13 +161,6 @@ export default {
 <style lang="less">
   @import "../../_less/v2/base";
   @import "../../_less/component/animation";
-  .pikaday {
-    overflow: auto;
-    padding: 1em;
-    .mui-textfield {
-      margin-left: 16px;
-    }
-  }
   .skip {
     width:35px
   }

@@ -1,4 +1,5 @@
 const baseUrl = 'http://statistics.internal.insta360.com/'
+// const baseUrl = 'http://192.168.3.59/php.docker.statistics/src/'
 const baseUrl1 = 'http://crawler.internal.insta360.com/crawler/'
 // const baseUrl1 = 'http://localhost:8000/crawler/'
 export default {

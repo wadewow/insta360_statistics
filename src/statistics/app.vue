@@ -149,13 +149,32 @@
         </ul>
       </li>
       <li>
+        <template v-if="power['nano_support']">
+          <strong @click="toggleCollapse">服务与支持</strong>
+        </template>
+        <template v-else>
+          <strong style="cursor: not-allowed;">服务与支持</strong>
+        </template>
+        <ul class="nav" show="{{ nav[7] }}">
+          <li>
+            <a href="#!/support/search/search" @click="click">搜索页</a>
+          </li>
+          <li>
+            <a href="#!/support/article/faq" @click="click">常见问题</a>
+          </li>
+          <li>
+            <a href="#!/support/article/tutorial" @click="click">使用教程</a>
+          </li>
+        </ul>
+      </li>
+      <li>
         <template v-if="power['nano_history']">
           <strong @click="toggleCollapse">历史总数</strong>
         </template>
         <template v-else>
           <strong style="cursor: not-allowed;">历史总数</strong>
         </template>
-        <ul class="nav" show="{{ nav[7] }}">
+        <ul class="nav" show="{{ nav[8] }}">
           <li>
             <a href="#!/rest_statistics/rest_statistics" @click="click">历史总数据</a>
           </li>
