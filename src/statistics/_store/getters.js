@@ -6,6 +6,7 @@
 // }
 import dict_name from './dict_name.json'
 import dict_comment from './dict_comment.json'
+import api from './_api.js'
 export const getPostsPage = state => state.posts.page
 export const getPostsList = state => state.posts.list
 export const getPostsItem = state => state.posts.post
@@ -37,3 +38,4 @@ export const getNav = state => state.userInfo.nav
 export const getUsername = state => state.userInfo.username
 export const getLocations = state => state.locations
 export const getSerialNumbers = state => state.serial_numbers
+export const getExportFeedBack = state => api['export_feedback'].url

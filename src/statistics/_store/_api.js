@@ -111,6 +111,10 @@ export default {
     url: baseUrl + 'api/support/getsearchInfo',
     serialize: 'search'
   },
+  export_feedback: {
+    url: baseUrl + 'api/support/output_csv'
+    // serialize: 'export_feedback'
+  },
   use_condition: {
     url: baseUrl1 + 'use_condition/',
     serialize: 'use_condition'

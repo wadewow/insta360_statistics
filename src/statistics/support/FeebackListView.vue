@@ -5,7 +5,8 @@
         <div class="mui--text-title"><strong>{{ data.title }}</strong></div>
       </div>
       <div class="mui-col-md-2">
-        <a href="#!/support/article/{{ name }}?back=true" class="mui-btn mui-btn--raised right">返回</a>
+        <a href="{{ api }}?post_id={{ post_id }}" class="mui-btn mui-btn--raised mui-btn--accent">导出</a>
+        <a href="#!/support/article/{{ name }}?back=true" class="mui-btn mui-btn--raised">返回</a>
       </div>
     </div>
     <div>
@@ -42,7 +43,7 @@
 
 <script>
 import store from '../_store/store'
-import { getFeedbackTableName, getFeedbackTableData } from '../_store/getters'
+import { getFeedbackTableName, getFeedbackTableData, getExportFeedBack } from '../_store/getters'
 
 export default {
   name: 'TableView',
@@ -55,7 +56,8 @@ export default {
   vuex: {
     getters: {
       name: getFeedbackTableName,
-      data: getFeedbackTableData
+      data: getFeedbackTableData,
+      api: getExportFeedBack
     }
   },
 
