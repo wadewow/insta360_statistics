@@ -21,7 +21,7 @@
         <td style="width:20%"><i v-if="item.flag==1" class="iconfont">&#xe60f;</i><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
         <td style="width:15%">
             <a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">
-                <img v-bind:src= "item.start_url" alt="{{ item.title }}" class="thumb"></img>
+                <img v-bind:src= "item.start_url|modify" alt="{{ item.title }}" class="thumb"></img>
             </a>
         </td>
         <td style="width:8%">{{ item.week_prews }}</td>
@@ -86,6 +86,10 @@ export default {
       if (s.length > 40) {
         s = s.substring(0, 40) + '...'
       }
+      return s
+    },
+    modify (s) {
+      s = s.replace('http://nano.insta360.com', 'https://static.insta360.com/share')
       return s
     }
   }
