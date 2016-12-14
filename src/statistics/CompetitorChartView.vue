@@ -72,7 +72,7 @@
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.sales }}</td>
-          <td><a target="_blank" href="{{ item.link }}">{{ item.link }}</a></td>
+          <td><a target="_blank" href="http://h5.m.taobao.com/awp/core/detail.htm?id={{ item.store_id }}">http://h5.m.taobao.com/awp/core/detail.htm?id={{ item.store_id }}</a></td>
           <td>{{ item.location }}</td>
           <td v-if="item.is_tmall==0">淘宝</td>
           <td v-else>天猫</td>
