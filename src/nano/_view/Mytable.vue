@@ -51,7 +51,7 @@ export default {
   methods: {
     replace (type, img, page) {
       if (type === '图片') {
-        var res = img.replace('http://nano.insta360.com/public/media/thumb', 'http://insta360-hangzhou.oss-cn-hangzhou.aliyuncs.com/nano/private/media/jpg').replace('start.jpg', '.jpg')
+        var res = img.replace('http://nano.insta360.com/public/media/thumb', '//insta360-hangzhou.oss-cn-hangzhou.aliyuncs.com/nano/private/media/jpg').replace('start.jpg', '.jpg')
         return res
       }else {
         return page

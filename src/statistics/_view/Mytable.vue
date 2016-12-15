@@ -89,7 +89,7 @@ export default {
       return s
     },
     modify (s) {
-      s = s.replace('http://nano.insta360.com', 'https://static.insta360.com/share')
+      s = s.replace('http://nano.insta360.com', '//static.insta360.com/share')
       return s
     }
   }
