@@ -2165,7 +2165,7 @@ export default {
       }
       for (var j in y) {
         // _sum += data[index][y[j]['name']]
-        y[j]['data'].push(data[index][y[j]['name']])
+        y[j]['data'].push(data[index][y[j]['name']] === undefined ? 0 : data[index][y[j]['name']])
       }
       count++
     }
@@ -2180,12 +2180,12 @@ export default {
       total.push(_.assign({'name': y[k]['name'], 'vlaue': _.sum(y[k]['data'])}))
     }
 
-    const select = {}
-    for (var a in area) {
-      var name = area[a]
-      select[name] = false
-    }
-    select['insta360'] = true
+    // const select = {}
+    // for (var a in area) {
+    //   var name = area[a]
+    //   select[name] = false
+    // }
+    // select['insta360'] = true
 
     return {
       top: {
@@ -2215,8 +2215,7 @@ export default {
       },
       legend: {
         x: 'center',
-        data: area,
-        selected: select
+        data: area
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
