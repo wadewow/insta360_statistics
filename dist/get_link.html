@@ -60,7 +60,7 @@
     </form>
 
 
-    <form class="result hidden">
+    <form id="result" class="result hidden">
         <h2>生成结果</h2>
         <div class="mui-row">
             <div class="mui-col-md-10">
@@ -105,7 +105,6 @@
             $("#link-url").attr("href",data.buylink);
             $('.result').show()
         }
-
       });
 
     $("#select").change(function() {
@@ -116,6 +115,10 @@
            $(".custom-url-field").hide()
         }
     });
+
+    $('#result').submit(function(ev) {
+        ev.preventDefault()
+    })
 
     $('#copy').zclip({
         path: "//cdn.bootcss.com/zclip/1.1.2/ZeroClipboard.swf",
