@@ -14,6 +14,7 @@
     <div class="mui-select">
     <select v-model="location" @change="queryLocation">
       <option value="">全部</option>
+      <option value="海外">海外</option>
       <option v-for="loc in locations" value="{{ loc }}" >{{ loc }}</option>
     </select>
     <label>选择国家</label>
