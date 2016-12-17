@@ -18,7 +18,7 @@
         <!--<td v-for="i in item">{{ i }}</td>-->
         <td style="width:6%">{{ item.type }}</td>
         <td style="width:11%">{{ item.share_location }}</td>
-        <td style="width:20%"><i v-if="item.flag==1" class="iconfont">&#xe60f;</i><a href="{{ item.page_url }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
+        <td style="width:20%"><i v-if="item.flag==1" class="iconfont">&#xe60f;</i><a href="{{ item.page_url|replace }}?uns=true" title="{{ item.title }}" target="_blank">{{ item.title|substring }}</a></td>
         <td style="width:15%">
             <!--<a href="{{ item.start_url|replace }}" title="{{ item.title }}" target="_blank">-->
             <a :href="replace(item.type, item.start_url, item.page_url)" title="{{ item.title }}" target="_blank">
@@ -95,6 +95,10 @@ export default {
       if (s.length > 40) {
         s = s.substring(0, 40) + '...'
       }
+      return s
+    },
+    replace (s) {
+      s = s.replace('http://nano.insta360.com', 'https://s.insta360.com')
       return s
     },
     modify (s) {
