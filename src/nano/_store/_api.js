@@ -1,4 +1,4 @@
-const baseUrl = 'http://statistics.internal.insta360.com/'
+const baseUrl = 'https://statistics.insta360.com/'
 
 export default {
   content_filter: {
