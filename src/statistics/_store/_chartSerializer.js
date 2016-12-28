@@ -1276,7 +1276,19 @@ export default {
     }
   },
   support_table: data => {
-    const column = ['序号', '文章标题', '浏览数', '是否有帮助（是/否）', '问题反馈']
+    const column = ['序号', '文章标题', '浏览数', '是/否有帮助（满意度）', '问题反馈']
+    for (var index in data['data']) {
+      var scale = String(data['data'][index]['help_scale'])
+      var temp = scale.split('/')
+      var helpful = Number(temp[0])
+      var helpless = Number(temp[1])
+      var total = helpful + helpless
+      var percent = 0
+      if (total !== 0) {
+        percent = _.round(helpful * 100.0 / total, 1)
+      }
+      data['data'][index]['help_scale'] = scale + ' (' + percent + '%)'
+    }
     return {
       current_page: data['current_page'],
       page_total: data['page_total'],
