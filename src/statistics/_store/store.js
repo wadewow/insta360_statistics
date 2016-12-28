@@ -338,7 +338,7 @@ const mutations = {
       apiQueryTable4(tname, query)
     } else if (tname === 'taobao_detail') {
       apiQueryTable5(tname, query)
-    } else if (tname === 'tutorial' || tname === 'faq') {
+    } else if (tname === 'tutorial' || tname === 'faq' || tname === 'manual') {
       apiQuerySupportTable(tname, query, header)
     } else if (tname === 'feedback_tutorial' || tname === 'feedback_faq') {
       apiQueryFeedbackTable(tname, query)

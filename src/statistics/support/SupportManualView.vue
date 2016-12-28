@@ -22,8 +22,6 @@
           <td>{{ index + 1 }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.views }}</td>
-          <td>{{ item.help_scale }}</td>
-          <td><a href="#!/support/feedback/feedback_{{ name }}/{{ item.post_id }}">查看全部</a></td>
         </tr>
     </tbody>
     </table>
@@ -68,8 +66,7 @@ export default {
       pageSize: 20,
       skip: '',
       language: 'cn',
-      product: '',
-      tname: ''
+      product: ''
     }
   },
 
@@ -79,7 +76,6 @@ export default {
     this.skip = ''
     this.language = 'cn'
     this.product = ''
-    this.tname = ''
   },
 
   methods: {
@@ -142,15 +138,12 @@ export default {
       if (to.query.product !== undefined) {
         product = to.query.product
       }
-      const tname = to.params.tname
-      if (this.product !== product || this.tname !== tname) {
+      if (this.product !== product) {
         this.page = 1
         this.language = 'cn'
       }
-
+      const tname = to.params.tname
       this.product = product
-      this.tname = tname
-
       const query = {
         page_size: this.pageSize,
         page_number: this.page,

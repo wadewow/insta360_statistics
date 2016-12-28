@@ -1285,6 +1285,16 @@ export default {
       series: data['data']
     }
   },
+  support_manual_table: data => {
+    const column = ['序号', '文章标题', '浏览数']
+    return {
+      current_page: data['current_page'],
+      page_total: data['page_total'],
+      total: data['total'],
+      column: column,
+      series: data['data']
+    }
+  },
   feedback_table: data => {
     const column = ['时间', '邮箱地址', '问题反馈']
     return {

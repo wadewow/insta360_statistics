@@ -9,7 +9,15 @@
             <label><input type="radio" name="language" v-model='language' value="en" @click="queryLanguage('en')">英文</label>
         </div>
       </div>
-      <div class="mui-col-md-10"></div>
+      <div class="mui-col-md-2">
+        <div class="mui-radio" style="display:inline">
+            <label><input type="radio" name="option" v-model='option' value="guide" checked @click="queryOption('guide')">入门指南</label>
+        </div>
+        <div class="mui-radio" style="display:inline">
+            <label><input type="radio" name="option" v-model='option' value="tutorial" @click="queryOption('tutorial')">进阶教程</label>
+        </div>
+      </div>
+      <div class="mui-col-md-8"></div>
     </div>
     <table class="mui-table mui-table--bordered">
       <thead>
@@ -68,8 +76,8 @@ export default {
       pageSize: 20,
       skip: '',
       language: 'cn',
-      product: '',
-      tname: ''
+      product: 'air',
+      option: 'guide'
     }
   },
 
@@ -78,14 +86,17 @@ export default {
     this.pageSize = 20
     this.skip = ''
     this.language = 'cn'
-    this.product = ''
-    this.tname = ''
+    this.product = 'air'
+    this.option = 'guide'
   },
 
   methods: {
     queryLanguage (val) {
       this.language = val
-      this.page = 1
+      this.query()
+    },
+    queryOption (val) {
+      this.option = val
       this.query()
     },
     queryPage () {
@@ -127,7 +138,8 @@ export default {
       const query = {
         page_number: this.page,
         page_size: this.pageSize,
-        product_type: this.product
+        product_type: this.product,
+        product_option: this.option
       }
       const header = {
         lang: this.language
@@ -138,23 +150,12 @@ export default {
 
   route: {
     data ({ to }) {
-      var product = this.product
-      if (to.query.product !== undefined) {
-        product = to.query.product
-      }
       const tname = to.params.tname
-      if (this.product !== product || this.tname !== tname) {
-        this.page = 1
-        this.language = 'cn'
-      }
-
-      this.product = product
-      this.tname = tname
-
       const query = {
         page_size: this.pageSize,
         page_number: this.page,
-        product_type: this.product
+        product_type: this.product,
+        product_option: this.option
       }
       const header = {
         lang: this.language

@@ -160,10 +160,28 @@
             <a href="#!/support/search/search" @click="click">搜索页</a>
           </li>
           <li>
-            <a href="#!/support/article/faq" @click="click">常见问题</a>
+            <a href="#!/support/article/faq?product=nano" @click="click">Nano常见问题</a>
           </li>
           <li>
-            <a href="#!/support/article/tutorial" @click="click">使用教程</a>
+            <a href="#!/support/article/tutorial?product=nano" @click="click">Nano使用教程</a>
+          </li>
+          <li>
+            <a href="#!/support/manual/manual?product=nano" @click="click">Nano使用说明书</a>
+          </li>
+          <li>
+            <a href="#!/support/article/faq?product=air" @click="click">Air常见问题</a>
+          </li>
+          <li>
+            <a href="#!/support/air/tutorial/tutorial?product=air" @click="click">Air使用教程</a>
+          </li>
+          <li>
+            <a href="#!/support/manual/manual?product=air" @click="click">Air使用说明书</a>
+          </li>
+          <li>
+            <a href="#!/support/article/faq?product=4k" @click="click">4K常见问题</a>
+          </li>
+          <li>
+            <a href="#!/support/article/tutorial?product=4k" @click="click">4K使用教程</a>
           </li>
         </ul>
       </li>

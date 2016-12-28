@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="mui-row" style="margin-top:10px">
-      <div class="mui-col-md-10">
+      <div class="mui-col-md-9">
         <div class="mui--text-title"><strong>{{ data.title }}</strong></div>
       </div>
-      <div class="mui-col-md-2">
+      <div class="mui-col-md-3">
         <a href="{{ api }}?post_id={{ post_id }}" class="mui-btn mui-btn--raised mui-btn--accent">导出</a>
-        <a href="#!/support/article/{{ name }}?back=true" class="mui-btn mui-btn--raised">返回</a>
+        <a href="javascript:history.go(-1);" class="mui-btn mui-btn--raised">返回</a>
       </div>
     </div>
     <div>
@@ -135,7 +135,6 @@ export default {
   route: {
     data ({ to }) {
       this.pagesize = 20
-      // this.type = 'all'
       this.page = 1
       this.post_id = to.params.post_id
       const tname = to.params.tname
@@ -147,7 +146,6 @@ export default {
       store.dispatch('TABLE_UPDATE', tname, query)
     }
   }
-
 }
 </script>
 

@@ -92,12 +92,16 @@ export default {
     serialize: 'landing_page'
   },
   tutorial: {
-    url: baseUrl + 'api/support/getSupportHelpInfo?type=2',
+    url: baseUrl + 'api/support/getSupportHelpInfos?product_option=tutorial',
     serialize: 'support_table'
   },
   faq: {
-    url: baseUrl + 'api/support/getSupportHelpInfo?type=1',
+    url: baseUrl + 'api/support/getSupportHelpInfos?product_option=faq',
     serialize: 'support_table'
+  },
+  manual: {
+    url: baseUrl + 'api/support/getSupportHelpInfos?product_option=manual',
+    serialize: 'support_manual_table'
   },
   feedback_tutorial: {
     url: baseUrl + 'api/support/getSupportFeedBack',

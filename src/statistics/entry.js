@@ -20,6 +20,8 @@ import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
 import LinkQueryView from './LinkQueryView'
 import SupportArticleView from './support/SupportArticleView'
+import SupportManualView from './support/SupportManualView'
+import AirTutorialView from './support/AirTutorialView'
 import FeebackListView from './support/FeebackListView'
 import SearchView from './support/SearchView'
 import Router from 'vue-router'
@@ -97,6 +99,12 @@ router.map({
   },
   '/support/article/:tname': {
     component: SupportArticleView
+  },
+  '/support/manual/:tname': {
+    component: SupportManualView
+  },
+  '/support/air/tutorial/:tname': {
+    component: AirTutorialView
   },
   '/support/feedback/:tname/:post_id': {
     component: FeebackListView
