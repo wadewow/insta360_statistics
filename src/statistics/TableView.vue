@@ -148,7 +148,6 @@ export default {
       this.start = this.startTime
       this.end = this.endTime
       this.page = 1
-      this.keepSame()
       store.state.startTime = this.start
       store.state.endTime = this.end
       this.query()

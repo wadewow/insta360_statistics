@@ -16,6 +16,7 @@ import RestStatisticsView from './RestStatisticsView'
 import LandingPageView from './LandingPageView'
 import CompetitorChartView from './CompetitorChartView'
 import SearchIndexView from './SearchIndexView'
+import ShareChannelView from './ShareChannelView'
 import KnowmoreView from './KnowmoreView'
 import LoginView from './LoginView'
 import LinkQueryView from './LinkQueryView'
@@ -90,6 +91,9 @@ router.map({
   },
   '/search_index/:cname/:source': {
     component: SearchIndexView
+  },
+  '/share_channel/:cname': {
+    component: ShareChannelView
   },
   '/competitor_chart/:cname/:source': {
     component: CompetitorChartView

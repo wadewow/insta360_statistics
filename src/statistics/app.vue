@@ -56,6 +56,9 @@
             <a href="#!/album_list/album_list" @click="click">分享图集列表</a>
           </li>
           <li>
+            <a href="#!/share_channel/share_channel" @click="click">分享渠道占比</a>
+          </li>
+          <li>
             <a href="#!/chart/month_share_trends" @click="click">内容数量走势</a>
           </li>
           <li>

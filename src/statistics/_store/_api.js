@@ -163,6 +163,10 @@ export default {
     url: baseUrl1 + 'store_detail/',
     serialize: 'store_detail'
   },
+  share_channel: {
+    url: baseUrl1 + 'share_channel/',
+    serialize: 'share_channel'
+  },
   login: {
     url: baseUrl1 + 'login/',
     serialize: 'login'

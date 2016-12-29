@@ -2166,9 +2166,9 @@ export default {
       series: [_china, _world]
       // series: [_world]
     }
-
     return option
   },
+
   market_environment: data => {
     const x = []
     const area = []
@@ -2241,6 +2241,80 @@ export default {
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
+      },
+      yAxis: {},
+      series: _series
+    }
+  },
+
+  share_channel: data => {
+    const versions = data['versions']
+    data = data['data']
+    const x = []
+    const area = []
+    const y = []
+
+    var count = 0
+    var _sum = 0
+    const last_key = _.findLastKey(data)
+    for (var i in data[last_key]) {
+      area.push(i)
+      var temp = []
+      y.push(_.assign({'name': i, 'data': temp}))
+    }
+
+    for (var index in data) {
+      x.push(index)
+      for (var j in y) {
+        var value = data[index][y[j]['name']] === undefined ? 0 : data[index][y[j]['name']]
+        _sum += value
+        y[j]['data'].push(value)
+      }
+      count++
+    }
+
+    const _series = []
+    for (var item in y) {
+      _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
+    }
+
+    const total = []
+    for (var k in y) {
+      var sum = _.sum(y[k]['data'])
+      total.push(_.assign({'name': y[k]['name'], 'vlaue': _.sum(y[k]['data']), 'comment': _.round(sum * 100 / _sum, 1) + '%'}))
+    }
+
+    return {
+      versions: versions,
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: total,
+      title: {
+        text: '分享渠道',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: area
+      },
+      xAxis: {
+        data: x
       },
       yAxis: {},
       series: _series
