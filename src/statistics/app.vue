@@ -106,10 +106,10 @@
         </template>
         <ul class="nav" show="{{ nav[4] }}">
           <li>
-            <a href="#!/search_index/search_index/baidu" @click="click">搜索指数</a>
+            <a href="#!/search_index/search_index" @click="click">搜索指数</a>
           </li>
           <li>
-            <a href="#!/competitor_chart/competitor_data/taobao" @click="click">30天销量/评论</a>
+            <a href="#!/competitor_chart/competitor_data" @click="click">30天销量/评论</a>
           </li>
         </ul>
       </li>

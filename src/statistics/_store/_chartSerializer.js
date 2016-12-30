@@ -2197,10 +2197,11 @@ export default {
       _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
     }
 
-    const total = []
+    var total = []
     for (var k in y) {
-      total.push(_.assign({'name': y[k]['name'], 'vlaue': _.sum(y[k]['data'])}))
+      total.push(_.assign({'name': y[k]['name'], 'value': _.sum(y[k]['data'])}))
     }
+    total = _.orderBy(total, ['value'], ['desc'])
 
     // const select = {}
     // for (var a in area) {
@@ -2216,7 +2217,7 @@ export default {
       },
       total: total,
       title: {
-        text: '百度指数',
+        text: '搜索指数',
         x: 'left'
       },
       tooltip: {
@@ -2278,11 +2279,13 @@ export default {
       _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
     }
 
-    const total = []
+    var total = []
     for (var k in y) {
       var sum = _.sum(y[k]['data'])
-      total.push(_.assign({'name': y[k]['name'], 'vlaue': _.sum(y[k]['data']), 'comment': _.round(sum * 100 / _sum, 1) + '%'}))
+      var percent = _.round(sum * 100 / _sum, 1)
+      total.push(_.assign({'name': y[k]['name'], 'value': _.sum(y[k]['data']), 'comment': (isNaN(percent) ? 0 : percent) + '%'}))
     }
+    total = _.orderBy(total, ['value'], ['desc'])
 
     return {
       versions: versions,
@@ -2347,11 +2350,11 @@ export default {
       _series.push(_.assign({'name': y[item]['name'], 'type': 'line', 'stack': 'all', 'data': y[item]['data'], 'itemStyle': {normal: {areaStyle: {type: 'default'}}}}))
     }
 
-    const total = []
+    var total = []
     for (var k in y) {
-      total.push(_.assign({'name': y[k]['name'], 'vlaue': '总计：' + _.last(y[k]['data']), 'comment': '新增：' + (_.last(y[k]['data']) - _.head(y[k]['data']))}))
+      total.push(_.assign({'name': y[k]['name'], 'value': '总计：' + _.last(y[k]['data']), 'comment': '新增：' + (_.last(y[k]['data']) - _.head(y[k]['data']))}))
     }
-
+    _.reverse(total)
     return {
       top: {
         native: [],

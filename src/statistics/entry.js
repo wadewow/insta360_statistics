@@ -89,13 +89,13 @@ router.map({
   '/electronic_sales/:cname': {
     component: ElectronicSalesView
   },
-  '/search_index/:cname/:source': {
+  '/search_index/:cname': {
     component: SearchIndexView
   },
   '/share_channel/:cname': {
     component: ShareChannelView
   },
-  '/competitor_chart/:cname/:source': {
+  '/competitor_chart/:cname': {
     component: CompetitorChartView
   },
   '/link_query/:tname': {
