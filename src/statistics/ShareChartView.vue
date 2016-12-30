@@ -188,6 +188,7 @@ export default {
       this.endTime = store.state.endTime
       this.start = this.startTime
       this.end = this.endTime
+      this.version = '1.6.3'
       const cname = to.params.cname
       const query = {
         start_time: this.start,

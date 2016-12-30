@@ -56,7 +56,7 @@
             <a href="#!/album_list/album_list" @click="click">分享图集列表</a>
           </li>
           <li>
-            <a href="#!/share_channel/share_channel" @click="click">分享渠道占比</a>
+            <a href="#!/share_chart/share_channel" @click="click">分享渠道占比</a>
           </li>
           <li>
             <a href="#!/chart/month_share_trends" @click="click">内容数量走势</a>
@@ -124,11 +124,11 @@
           <li>
             <a href="#!/chart/use_condition" @click="click">用户概况</a>
           </li>
-          <!--<li>
-            <a href="#!/chart/content_production" @click="click">内容生产</a>
-          </li>-->
           <li>
             <a href="#!/map/user_distribution" @click="click">APP用户区域分布</a>
+          </li>
+          <li>
+            <a href="#!/share_chart/share_count" @click="click">分享转化率</a>
           </li>
           <li>
             <a href="#!/chart/error_condition" @click="click">错误异常</a>

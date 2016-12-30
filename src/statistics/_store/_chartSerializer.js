@@ -2323,6 +2323,108 @@ export default {
       series: _series
     }
   },
+
+  share_count: data => {
+    const versions = data['versions']
+    data = data['data']
+    const x = []
+    const y_try = []
+    const y_success = []
+    const y_percent = []
+    for (var index in data) {
+      x.push(index)
+      y_try.push(data[index]['share_count'])
+      y_success.push(data[index]['success_count'])
+      y_percent.push(data[index]['percent'])
+    }
+    var try_sum = _.sum(y_try)
+    var success_sum = _.sum(y_success)
+    var percent = isNaN(success_sum * 100.0 / try_sum) ? 0 : (success_sum * 100.0 / try_sum)
+    return {
+      versions: versions,
+      top: {
+        native: [],
+        abroad: []
+      },
+      total: [{
+        name: '进入分享页次数',
+        value: try_sum
+      },
+      {
+        name: '成功分享数',
+        value: success_sum
+      },
+      {
+        name: '分享转化率',
+        value: _.round(percent, 1) + '%'
+      }
+      ],
+      title: {
+        text: '分享转化率',
+        x: 'left'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        x: 'center',
+        data: ['进入分享页次数', '成功分享数', '分享转化率(%)']
+      },
+      xAxis: {
+        data: x
+      },
+      yAxis: [
+        {
+        },
+        {
+          name: '百分比',
+          type: 'value',
+          axisLabel: {
+            formatter: function (value) {
+              return value + ' %'
+            }
+          },
+          splitLine: {
+            show: false
+          }
+          // max: 100
+        }],
+      series: [
+        {
+          name: '进入分享页次数',
+          type: 'line',
+          data: y_try,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '成功分享数',
+          type: 'line',
+          data: y_success,
+          stack: 'all',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          yAxisIndex: 1,
+          name: '分享转化率(%)',
+          type: 'line',
+          data: y_percent
+        }]
+    }
+  },
+
   fans_trend: data => {
     const x = []
     const area = []

@@ -1,7 +1,7 @@
 const baseUrl = 'https://statistics.insta360.com/'
 // const baseUrl = 'http://192.168.3.59/php.docker.statistics/src/'
-const baseUrl1 = 'http://crawler.internal.insta360.com/crawler/'
-// const baseUrl1 = 'http://localhost:8000/crawler/'
+// const baseUrl1 = 'http://crawler.internal.insta360.com/crawler/'
+const baseUrl1 = 'http://localhost:8000/crawler/'
 export default {
   nano_active: {
     url: baseUrl + 'nano_active',
@@ -166,6 +166,10 @@ export default {
   share_channel: {
     url: baseUrl1 + 'share_channel/',
     serialize: 'share_channel'
+  },
+  share_count: {
+    url: baseUrl1 + 'share_count/',
+    serialize: 'share_count'
   },
   login: {
     url: baseUrl1 + 'login/',
