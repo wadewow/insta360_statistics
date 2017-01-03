@@ -2556,19 +2556,30 @@ export default {
   error_condition: data => {
     const x = []
     const y_total = []
+    const y_rate = []
+    var start_time = 0
     for (var index in data) {
       x.push(data[index]['date'])
       y_total.push(data[index]['total_error'])
+      y_rate.push(_.round(data[index]['error_rate'] * 100, 1))
+      start_time += data[index]['total_error'] / data[index]['error_rate']
     }
+    const error_sum = _.sum(y_total)
+    const rate_avg = _.round(error_sum * 100 / start_time, 1)
     return {
       top: {
         native: [],
         abroad: []
       },
-      total: [{
-        name: '错误数',
-        value: _.sum(y_total)
-      }
+      total: [
+        {
+          name: '错误数',
+          value: error_sum
+        },
+        {
+          name: '错误率',
+          value: rate_avg + '%'
+        }
       ],
       title: {
         text: '错误异常',
@@ -2592,18 +2603,38 @@ export default {
       },
       legend: {
         x: 'center',
-        data: ['错误数']
+        data: ['错误数', '错误率(%)']
       },
       xAxis: {
         data: x // 横向则将data放到yAxis
       },
-      yAxis: {},
+      yAxis: [
+        {
+        },
+        {
+          name: '百分比',
+          type: 'value',
+          axisLabel: {
+            formatter: function (value) {
+              return value + ' %'
+            }
+          },
+          splitLine: {
+            show: false
+          }
+        }],
       series: [
         {
           name: '错误数',
           type: 'line',
           data: y_total,
           itemStyle: {normal: {areaStyle: {type: 'default'}}}
+        },
+        {
+          name: '错误率(%)',
+          type: 'line',
+          data: y_rate,
+          yAxisIndex: 1
         }]
     }
   },
