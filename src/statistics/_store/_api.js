@@ -79,10 +79,6 @@ export default {
     url: baseUrl + 'api/buylinkCustom',
     serialize: 'link_query'
   },
-  content_production: {
-    url: baseUrl + 'api/share/month_share_trends/',
-    serialize: 'content_production'
-  },
   location_active_list: {
     url: baseUrl + 'api/active/area_active_list',
     serialize: 'location_active_list'

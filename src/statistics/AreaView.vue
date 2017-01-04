@@ -76,7 +76,6 @@ export default {
     this.endTime = store.state.endTime
     this.start = this.startTime
     this.end = this.endTime
-    // this.is_native = 0
     this.updateColor()
   },
 

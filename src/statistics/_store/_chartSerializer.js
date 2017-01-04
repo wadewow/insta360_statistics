@@ -1,7 +1,9 @@
 import moment from 'moment'
 import _ from 'lodash'
 import dict_json from './dictionary.json'
+import store from './store'
 export default {
+  store: store,
   nano_active: (data, location, start_time) => {
     const x = []
     const x_week = []
@@ -17,13 +19,13 @@ export default {
     const y_week = []
     for (var index in data) {
       x.push(index)
-      y_native.push(data[index]['native'])
-      y_abroad.push(data[index]['abroad'])
-      y_special_region.push(data[index]['special_region'])
-      y_all.push(data[index]['all'])
-      y_month.push(data[index]['month_total'])
-      y_month_native.push(data[index]['month_native_total'])
-      y_month_abroad.push(data[index]['month_abroad_total'])
+      y_native.push(_.round(data[index]['native'] * store.state.multiple))
+      y_abroad.push(_.round(data[index]['abroad'] * store.state.multiple))
+      y_special_region.push(_.round(data[index]['special_region'] * store.state.multiple))
+      y_all.push(_.round(data[index]['all'] * store.state.multiple))
+      y_month.push(_.round(data[index]['month_total'] * store.state.multiple))
+      y_month_native.push(_.round(data[index]['month_native_total'] * store.state.multiple))
+      y_month_abroad.push(_.round(data[index]['month_abroad_total'] * store.state.multiple))
     }
     const length = x.length
     var start = moment(x[0]).diff(moment(x[0]).startOf('week'), 'days')
@@ -44,8 +46,8 @@ export default {
           num--
           break
         }
-        sum_native += data[date]['native']
-        sum_abroad += data[date]['abroad']
+        sum_native += _.round(data[date]['native'] * store.state.multiple)
+        sum_abroad += _.round(data[date]['abroad'] * store.state.multiple)
       }
       y_week_native.push(sum_native)
       y_week_abroad.push(sum_abroad)
@@ -60,8 +62,8 @@ export default {
       sum_abroad = 0
       for (count = 0; count < num; count++) {
         date = moment(x[0]).add(count, 'days').format('YYYY-MM-DD')
-        sum_native += data[date]['native']
-        sum_abroad += data[date]['abroad']
+        sum_native += _.round(data[date]['native'] * store.state.multiple)
+        sum_abroad += _.round(data[date]['abroad'] * store.state.multiple)
       }
       y_week_native.push(sum_native)
       y_week_abroad.push(sum_abroad)
@@ -229,8 +231,8 @@ export default {
     const y_image = []
     for (var index in data) {
       x.push(data[index]['time'])
-      y_video.push(parseInt(data[index]['share_video_nums'], 10))
-      y_image.push(parseInt(data[index]['share_image_nums'], 10))
+      y_video.push(_.round(parseInt(data[index]['share_video_nums'], 10) * store.state.multiple))
+      y_image.push(_.round(parseInt(data[index]['share_image_nums'], 10) * store.state.multiple))
     }
     return {
       top: {
@@ -301,112 +303,16 @@ export default {
       }]
     }
   },
-  content_production: data => {
-    const x = []
-    const y_video = []
-    const y_image = []
-    const y_length = []
-    for (var index in data) {
-      x.push(data[index]['time'])
-      y_video.push(parseInt(data[index]['share_video_nums'], 10))
-      y_image.push(parseInt(data[index]['share_image_nums'], 10))
-      y_length.push(parseInt(data[index]['video_duration'], 10))
-    }
-    var y_length_sum = _.sum(y_length)
-    var duration = moment.duration(y_length_sum, 'seconds')
-    return {
-      top: {
-        native: [],
-        abroad: []
-      },
-      total: [{
-        name: '累计图片数量',
-        value: _.sum(y_image)
-      },
-      {
-        name: '累计视频数量',
-        value: _.sum(y_video)
-      },
-      {
-        name: '累计视频时长',
-        value: duration.hours() + 'h ' + duration.minutes() + 'm ' + duration.seconds() + 's'
-      }
-      ],
-      title: {
-        text: '内容生产',
-        x: 'left'
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-      },
-      toolbox: {
-        show: true,
-        feature: {
-          mark: { show: true },
-          // dataZoom: { show: true, title: {dataZoom: '区域缩放', dataZoomReset: '区域缩放后退'}},
-          dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['stack', 'tiled'], title: {stack: '切换为面积图', tiled: '切换为折线图'}},
-          restore: { show: true },
-          saveAsImage: { show: true }
-        }
-      },
-      legend: {
-        x: 'center',
-        data: ['图片数量', '视频数量', '视频时长(s)']
-      },
-      xAxis: {
-        data: x // 横向则将data放到yAxis
-      },
-      yAxis: [
-        {
-        },
-        {
-          name: '时长',
-          type: 'value',
-          axisLabel: {
-            formatter: function (value) {
-              return value + ' s'
-            }
-          },
-          splitLine: {
-            show: false
-          }
-        }],
-      series: [{
-        name: '图片数量',
-        type: 'line',
-        data: y_image,
-        stack: 'all',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      },
-      {
-        name: '视频数量',
-        type: 'line',
-        data: y_video,
-        stack: 'all',
-        itemStyle: {normal: {areaStyle: {type: 'default'}}}
-      },
-      {
-        name: '视频时长(s)',
-        type: 'line',
-        data: y_length,
-        yAxisIndex: 1
-      }]
-    }
-  },
   share_visitor_trend: data => {
     const x = []
     const y_video = []
     const y_image = []
     for (var index in data) {
       x.push(index)
-      y_video.push(parseInt(data[index]['视频'], 10))
-      y_image.push(parseInt(data[index]['图片'], 10))
+      y_video.push(_.round(parseInt(data[index]['视频'], 10) * store.state.multiple))
+      y_image.push(_.round(parseInt(data[index]['图片'], 10) * store.state.multiple))
     }
-    const total_imgage = _.sum(y_image)
+    const total_image = _.sum(y_image)
     const total_video = _.sum(y_video)
 
     return {
@@ -416,7 +322,7 @@ export default {
       },
       total: [{
         name: '图片浏览量',
-        value: total_imgage
+        value: total_image
       },
       {
         name: '视频浏览量',
@@ -486,9 +392,9 @@ export default {
 
     for (var index in data) {
       x.push(data[index]['day_time'])
-      y.push(data[index]['active_nums'])
-      y_month.push(data[index]['month_total'])
-      total = total + parseInt(data[index]['active_nums'], 10)
+      y.push(_.round(data[index]['active_nums'] * store.state.multiple))
+      y_month.push(_.round(data[index]['month_total'] * store.state.multiple))
+      total = total + _.round(parseInt(data[index]['active_nums'], 10) * store.state.multiple)
     }
 
     return {
@@ -551,13 +457,13 @@ export default {
     const all_data = data['all']
     var max = 500
     if (!_.isEmpty(all_data['data'])) {
-      var m = all_data['data'][0]['total']
+      var m = _.round(all_data['data'][0]['total'] * store.state.multiple)
       max = (parseInt(m / 100, 10) + 1) * 100
     }
     function getNativeData () {
       const result = []
       for (var index in native_data['data']) {
-        result.push(_.assign({'name': native_data['data'][index]['location'], 'value': native_data['data'][index]['total']}))
+        result.push(_.assign({'name': native_data['data'][index]['location'], 'value': _.round(native_data['data'][index]['total'] * store.state.multiple)}))
       }
       return result
     }
@@ -587,19 +493,20 @@ export default {
     function getAbroadData () {
       const result = []
       for (var index in abroad_data['data']) {
-        result.push(_.assign({'name': abroad_data['data'][index]['location'], 'value': abroad_data['data'][index]['total'], 'itemStyle': itemStyle}))
+        result.push(_.assign({'name': abroad_data['data'][index]['location'], 'value': _.round(abroad_data['data'][index]['total'] * store.state.multiple), 'itemStyle': itemStyle}))
       }
       return result
     }
-    var total_all = parseInt(data['all']['total'], 10)
-    var total_native = parseInt(data['native']['total'], 10)
+    var total_all = _.round(parseInt(data['all']['total'], 10) * store.state.multiple)
+    var total_native = _.round(parseInt(data['native']['total'], 10) * store.state.multiple)
     var total_abroad = total_all - total_native
     const _native_data = getNativeData()
     const _abroad_data = getAbroadData()
     const _native_top = []
     const _abroad_top = []
-    const special_region_total = data['special_region']['total']
+    const special_region_total = _.round(data['special_region']['total'] * store.state.multiple)
     for (var i in _native_data) {
+      _native_data[i]['value'] = _native_data[i]['value']
       _native_top.push(_native_data[i])
     }
     for (var j in _abroad_data) {
@@ -742,14 +649,14 @@ export default {
     var m = 499
     var k = 0
     for (var n in abroad_data) {
-      m = abroad_data[n]['total']
+      m = _.round(abroad_data[n]['total'] * store.state.multiple)
       if (k === 1) {
         break
       }
       k++
     }
     for (var o in native_data) {
-      var temp = native_data[o]['total']
+      var temp = _.round(native_data[o]['total'] * store.state.multiple)
       if (temp > m) {
         m = temp
       }
@@ -759,7 +666,7 @@ export default {
     function getNativeData () {
       const result = []
       for (var index in native_data) {
-        result.push(_.assign({'name': index, 'value': native_data[index]['total']}))
+        result.push(_.assign({'name': index, 'value': _.round(native_data[index]['total'] * store.state.multiple)}))
       }
       return result
     }
@@ -789,7 +696,7 @@ export default {
     function getAbroadData () {
       const result = []
       for (var index in abroad_data) {
-        result.push(_.assign({'name': index, 'value': abroad_data[index]['total'], 'itemStyle': itemStyle}))
+        result.push(_.assign({'name': index, 'value': _.round(abroad_data[index]['total'] * store.state.multiple), 'itemStyle': itemStyle}))
       }
       return result
     }
@@ -953,18 +860,22 @@ export default {
     var m = 499
     var k = 0
     for (var n in abroad_data) {
-      m = abroad_data[n]
+      abroad_data[n] = _.round(abroad_data[n] * store.state.multiple)
       if (k === 1) {
-        break
+        m = abroad_data[n]
       }
       k++
     }
+    k = 0
     for (var o in native_data) {
-      var temp = native_data[o]
-      if (temp > m) {
-        m = temp
+      native_data[o] = _.round(native_data[o] * store.state.multiple)
+      if (k === 0) {
+        var temp = native_data[o]
+        if (temp > m) {
+          m = temp
+        }
       }
-      break
+      k++
     }
     var max = (parseInt(m / 100, 10) + 1) * 100
     function getNativeData () {
@@ -1173,9 +1084,9 @@ export default {
       }
     }
     return {
-      total: data['total'],
+      total: _.round(data['total'] * store.state.multiple),
       current_page: data['current_page'],
-      page_total: page_total,
+      page_total: _.round(page_total * store.state.multiple),
       column: column,
       series: data['data']
     }
@@ -1598,7 +1509,7 @@ export default {
       }
       for (var j in y) {
         // _sum += data[index][y[j]['name']]
-        y[j]['data'].push(data[index][y[j]['name']])
+        y[j]['data'].push(_.round(data[index][y[j]['name']] * store.state.multiple))
       }
       count++
     }
@@ -1663,7 +1574,7 @@ export default {
       }
       for (var j in y) {
         // _sum += data[index][y[j]['name']]
-        y[j]['data'].push(data[index][y[j]['name']])
+        y[j]['data'].push(_.round(data[index][y[j]['name']] * store.state.multiple))
       }
       count++
     }
@@ -1728,7 +1639,7 @@ export default {
       }
       for (var j in y) {
         // _sum += data[index][y[j]['name']]
-        y[j]['data'].push(data[index][y[j]['name']])
+        y[j]['data'].push(_.round(data[index][y[j]['name']] * store.state.multiple))
       }
       count++
     }
@@ -1869,8 +1780,8 @@ export default {
     const y_duration = []
     for (var index in data) {
       x.push(data[index]['date'])
-      y_active.push(data[index]['active_user'])
-      y_new.push(data[index]['new_user'])
+      y_active.push(_.round(data[index]['active_user'] * store.state.multiple))
+      y_new.push(_.round(data[index]['new_user'] * store.state.multiple))
       y_duration.push(data[index]['duration'])
     }
     var avgDuration = _.round(_.mean(y_duration), 0)
@@ -1886,7 +1797,7 @@ export default {
       },
       {
         name: '日均活跃用户',
-        value: _.round(_.mean(y_active))
+        value: _.mean(y_active)
       },
       {
         name: '平均使用时长',
@@ -1965,18 +1876,22 @@ export default {
     var m = 499
     var k = 0
     for (var n in abroad_data) {
-      m = abroad_data[n]['total']
+      abroad_data[n]['total'] = _.round(abroad_data[n]['total'] * store.state.multiple)
       if (k === 1) {
-        break
+        m = abroad_data[n]['total']
       }
       k++
     }
+    k = 0
     for (var o in native_data) {
-      var temp = native_data[o]['total']
-      if (temp > m) {
-        m = temp
+      native_data[o]['total'] = _.round(native_data[o]['total'] * store.state.multiple)
+      if (k === 0) {
+        var temp = native_data[o]['total']
+        if (temp > m) {
+          m = temp
+        }
       }
-      break
+      k++
     }
     var max = (parseInt(m / 100, 10) + 1) * 100
     function getNativeData () {
@@ -2202,13 +2117,6 @@ export default {
       total.push(_.assign({'name': y[k]['name'], 'value': _.sum(y[k]['data'])}))
     }
     total = _.orderBy(total, ['value'], ['desc'])
-
-    // const select = {}
-    // for (var a in area) {
-    //   var name = area[a]
-    //   select[name] = false
-    // }
-    // select['insta360'] = true
 
     return {
       top: {
@@ -2494,6 +2402,19 @@ export default {
       series: _series
     }
   },
+  location_active_list: data=> {
+    const n = data.length
+    const length = _.round(n * store.state.multiple)
+    var result = []
+    for (var i = 0;i < length;i++) {
+      var index = i
+      if (index >= n) {
+        index = index % n
+      }
+      result.push(data[index])
+    }
+    return result
+  },
   user_area: data => {
     const x = []
     const area = []
@@ -2510,7 +2431,7 @@ export default {
         }
       }
       for (var j in y) {
-        y[j]['data'].push(data[index][y[j]['name']])
+        y[j]['data'].push(_.round(data[index][y[j]['name']] * store.state.multiple))
       }
       count++
     }
@@ -2521,6 +2442,10 @@ export default {
     }
 
     return {
+      top: {
+        native: [],
+        abroad: []
+      },
       total: [],
       title: {
         text: '新增用户Top10区域对比面积图',

@@ -11,6 +11,8 @@ Vue.use(Vuex)
 Vue.use(VueResource)
 // 创建一个对象来保存应用启动时的初始状态
 const state = {
+  mode: 1,
+  multiple: 1,
   startTime: moment().subtract(29, 'days').format('YYYY-MM-DD'),
   endTime: moment().format('YYYY-MM-DD'),
   button: {
@@ -293,7 +295,7 @@ const serialNumbersQuery = (path, query) => {
   Vue.http.get(Api[path].url, { params: query }).then((res) => {
     // success callback
     // console.log(res)
-    state.serial_numbers = JSON.parse(res.body)
+    state.serial_numbers = ChartSerializer[Api[path].serialize](JSON.parse(res.body))
     // console.log(state.chart.data)
   }, (res) => {
     // error callback

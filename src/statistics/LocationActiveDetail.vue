@@ -45,7 +45,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in serialNumbers">
+        <tr v-for="item in serialNumbers" track-by="$index">
             <td>{{ item }}</td>
         </tr>
         </tbody>

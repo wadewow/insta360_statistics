@@ -188,6 +188,7 @@
           </li>
         </ul>
       </li>
+      <template v-if="mode != 0">
       <li>
         <template v-if="power['nano_history']">
           <strong @click="toggleCollapse">历史总数</strong>
@@ -204,6 +205,7 @@
           </li>
         </ul>
       </li>
+      </template>
     </ul>
   </div>
   <header id="header">
@@ -235,7 +237,7 @@
 
 <script>
 import store from './_store/store'
-import { getChartList, getChartName, getChartComment, getPower, getNav, getUsername } from './_store/getters'
+import { getChartList, getChartName, getChartComment, getPower, getNav, getUsername, getMode } from './_store/getters'
 export default {
 
   store: store,
@@ -249,7 +251,8 @@ export default {
       comment: getChartComment,
       power: getPower,
       nav: getNav,
-      username: getUsername
+      username: getUsername,
+      mode: getMode
     }
   },
 
