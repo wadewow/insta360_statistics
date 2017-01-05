@@ -2417,21 +2417,22 @@ export default {
   },
   user_area: data => {
     const x = []
-    const area = []
+    const area = data['locations']
     const y = []
+    data = data['data']
 
     var count = 0
     for (var index in data) {
       x.push(index)
       if (count === 0) {
-        for (var i in data[index]) {
-          area.push(i)
+        for (var i in area) {
+          // area.push(i)
           var temp = []
-          y.push(_.assign({'name': i, 'data': temp}))
+          y.push(_.assign({'name': area[i], 'data': temp}))
         }
       }
       for (var j in y) {
-        y[j]['data'].push(_.round(data[index][y[j]['name']] * store.state.multiple))
+        y[j]['data'].push(_.round((data[index][y[j]['name']] !== undefined ? data[index][y[j]['name']] : 0) * store.state.multiple))
       }
       count++
     }
