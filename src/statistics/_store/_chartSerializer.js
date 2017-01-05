@@ -1797,7 +1797,7 @@ export default {
       },
       {
         name: '日均活跃用户',
-        value: _.mean(y_active)
+        value: _.round(_.mean(y_active))
       },
       {
         name: '平均使用时长',
