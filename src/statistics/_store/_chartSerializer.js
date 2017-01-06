@@ -2006,11 +2006,11 @@ export default {
         value: total_all
       },
         {
-          name: '国内新增用户',
+          name: '内地新增用户',
           value: total_native
         },
         {
-          name: '国外新增用户',
+          name: '海外新增用户',
           value: total_abroad
         }
       ],
