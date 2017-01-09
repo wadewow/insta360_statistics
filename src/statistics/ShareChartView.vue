@@ -13,6 +13,7 @@
     <div class="mui-col-md-2">
     <div class="mui-select">
     <select v-model="version" @change="query">
+      <option value="all">所有版本</option>
       <option v-for="version in data['versions']" value="{{ version }}" >{{ version }}</option>
     </select>
     <label>选择版本</label>
@@ -83,7 +84,7 @@ export default {
       start: '',
       end: '',
       type: 'img',
-      version: '1.6.3'
+      version: 'all'
     }
   },
 
@@ -94,7 +95,7 @@ export default {
     this.end = this.endTime
     this.updateColor()
     this.type = 'img'
-    this.version = '1.6.3'
+    this.version = 'all'
   },
 
   methods: {
@@ -188,7 +189,7 @@ export default {
       this.endTime = store.state.endTime
       this.start = this.startTime
       this.end = this.endTime
-      this.version = '1.6.3'
+      this.version = 'all'
       const cname = to.params.cname
       const query = {
         start_time: this.start,
